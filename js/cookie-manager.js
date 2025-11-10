@@ -48,6 +48,7 @@ const CookieManager = {
       // Banner solo aparece si NO hay consentimiento guardado
       if (!hasConsent) {
         banner.style.display = 'flex';
+        banner.style.opacity = '1';
         console.log('📋 Banner de cookies mostrado (primera visita)');
       } else {
         banner.style.display = 'none';
@@ -65,6 +66,7 @@ const CookieManager = {
       banner.style.opacity = '0';
       setTimeout(() => {
         banner.style.display = 'none';
+        banner.style.opacity = '1'; // Reset para próxima vez si es necesario
       }, 300);
     }
   },
