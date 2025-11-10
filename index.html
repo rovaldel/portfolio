@@ -7,7 +7,7 @@
     
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
 
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
     <link rel="stylesheet" href="css/animate.css">
@@ -24,562 +24,569 @@
     <link rel="stylesheet" href="css/icomoon.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/chatbot.css">
+    <link rel="stylesheet" href="css/cookie-banner.css">
   </head>
   <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
-	  
-	  
-    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar ftco-navbar-light site-navbar-target" id="ftco-navbar">
-	    <div class="container">
-	      <a class="navbar-brand" href="index.html"><span>R</span>odrigo</a>
-	      <button class="navbar-toggler js-fh5co-nav-toggle fh5co-nav-toggle" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-	        <span class="oi oi-menu"></span> Menu
-	      </button>
+    
+    <!-- Banner de Cookies -->
+    <div id="cookie-banner" class="cookie-banner">
+      <div class="cookie-text">
+        Utilizamos cookies para mejorar tu experiencia. Las cookies necesarias son esenciales para el funcionamiento del sitio. <a href="#" onclick="event.preventDefault(); alert('Política de cookies: Usamos Google Analytics para analizar cómo los visitantes utilizan nuestro sitio.')">Más información</a>
+      </div>
+      <div class="cookie-buttons">
+        <button class="cookie-btn cookie-btn-necessary" id="cookie-necessary">Necesarias</button>
+        <button class="cookie-btn cookie-btn-reject" id="cookie-reject">Rechazar</button>
+        <button class="cookie-btn cookie-btn-accept" id="cookie-accept">Aceptar Todo</button>
+      </div>
+    </div>
 
-	      <div class="collapse navbar-collapse" id="ftco-nav">
-	        <ul class="navbar-nav nav ml-auto">
-	          <li class="nav-item"><a href="#home-section" class="nav-link"><span>Inicio</span></a></li>
-	          <li class="nav-item"><a href="#about-section" class="nav-link"><span>Sobre mi</span></a></li>
-	          <li class="nav-item"><a href="#resume-section" class="nav-link"><span>Curriculum</span></a></li>
-	          <li class="nav-item"><a href="#services-section" class="nav-link"><span>Servicios</span></a></li>
-	          <li class="nav-item"><a href="#projects-section" class="nav-link"><span>Proyectos</span></a></li>
-	          <li class="nav-item"><a href="#blog-section" class="nav-link"><span>Mi Blog</span></a></li>
-	          <li class="nav-item"><a href="#contact-section" class="nav-link"><span>Contactos</span></a></li>
-	        </ul>
-	      </div>
-	    </div>
-	  </nav>
-	  <section class="hero-wrap js-fullheight">
+    <!-- Google Analytics (se cargará si el usuario acepta) -->
+    <script id="ga-script"></script>
+    
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar ftco-navbar-light site-navbar-target" id="ftco-navbar">
+      <div class="container">
+        <a class="navbar-brand" href="index.html"><span>R</span>odrigo</a>
+        <button class="navbar-toggler js-fh5co-nav-toggle fh5co-nav-toggle" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="oi oi-menu"></span> Menu
+        </button>
+
+        <div class="collapse navbar-collapse" id="ftco-nav">
+          <ul class="navbar-nav nav ml-auto">
+            <li class="nav-item"><a href="#home-section" class="nav-link"><span>Inicio</span></a></li>
+            <li class="nav-item"><a href="#about-section" class="nav-link"><span>Sobre mi</span></a></li>
+            <li class="nav-item"><a href="#resume-section" class="nav-link"><span>Curriculum</span></a></li>
+            <li class="nav-item"><a href="#services-section" class="nav-link"><span>Servicios</span></a></li>
+            <li class="nav-item"><a href="#projects-section" class="nav-link"><span>Proyectos</span></a></li>
+            <li class="nav-item"><a href="#blog-section" class="nav-link"><span>Mi Blog</span></a></li>
+            <li class="nav-item"><a href="#contact-section" class="nav-link"><span>Contactos</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <section class="hero-wrap js-fullheight">
       <div class="overlay"></div>
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight justify-content-center align-items-center">
           <div class="col-lg-8 col-md-6 ftco-animate d-flex align-items-center">
-          	<div class="text text-center">
-          		<span class="subheading">¡Hola!, soy</span>
-		  				<h1>Rodrigo Valdelvira</h1>
-			  				<h2>Soy 
-								  <span
-								     class="txt-rotate"
-								     data-period="2000"
-								     data-rotate='[ "AI Engineer.", "Data Scientist.", "Project Manager." ]'></span>
-								</h2>
-							</div>
+            <div class="text text-center">
+              <span class="subheading">¡Hola!, soy</span>
+              <h1>Rodrigo Valdelvira</h1>
+              <h2>Soy 
+                <span
+                  class="txt-rotate"
+                  data-period="2000"
+                  data-rotate='[ "AI Engineer.", "Data Scientist.", "Project Manager." ]'></span>
+              </h2>
             </div>
           </div>
         </div>
       </div>
       <div class="mouse">
-				<a href="#" class="mouse-icon">
-					<div class="mouse-wheel"><span class="ion-ios-arrow-round-down"></span></div>
-				</a>
-			</div>
+        <a href="#" class="mouse-icon">
+          <div class="mouse-wheel"><span class="ion-ios-arrow-round-down"></span></div>
+        </a>
+      </div>
     </section>
 
     <section class="ftco-about img ftco-section ftco-no-pt ftco-no-pb" id="about-section">
-    	<div class="container">
-    		<div class="row d-flex no-gutters">
-    			<div class="col-md-6 col-lg-6 d-flex">
-    				<div class="img-about img d-flex align-items-stretch">
-    					<div class="overlay"></div>
-	    				<div class="img d-flex align-self-stretch align-items-center" style="background-image:url(images/about.png);">
-	    				</div>
-    				</div>
-    			</div>
-    			<div class="col-md-6 col-lg-6 pl-md-5 py-5">
-    				<div class="row justify-content-start pb-3">
-		          <div class="col-md-12 heading-section ftco-animate">
-		          	<h1 class="big">About</h1>
-		            <h2 class="mb-4">Sobre mi</h2>
-		            <p>
-					Soy ingeniero especializado en <strong>Inteligencia Artificial aplicada</strong> y <strong>automatización de procesos</strong>.
-					Tras más de una década combinando la ingeniería y el desarrollo tecnológico, hoy me dedico a diseñar y desplegar soluciones
-					que convierten los datos en decisiones reales y las ideas en productos inteligentes.
-					</p>
-					<p>
-					He liderado proyectos de IA para organizaciones como <strong>Fundación ONCE</strong> o <strong>TalentTools</strong>, donde he
-					desarrollado sistemas de recomendación, asistentes virtuales basados en LLMs y pipelines de datos en <strong>Azure</strong> y <strong>GCP</strong>.
-					Mi enfoque combina la visión técnica del <em>AI Engineer</em> con la planificación y estrategia propias del <em>Project Manager</em>.
-					</p>
-					<p>
-					Me apasiona crear soluciones que generen impacto: desde <strong>chatbots inteligentes</strong> hasta <strong>agentes de voz</strong> como <a href="https://www.leadia.es" target="_blank">Leadia</a>,
-					mi objetivo es acercar la IA a las empresas de forma práctica, segura y escalable.
-					</p>
-		            <ul class="about-info mt-4 px-md-0 px-2">
-		            	<li class="d-flex"><span>Nombre:</span> <span>Rodrigo Valdelvira Ortigosa</span></li>
-		            	<!-- <li class="d-flex"><span>Fecha de nacimiento:</span> <span>Julio 29, 1987</span></li> -->
-		            	<li class="d-flex"><span>Dirección:</span> <span>Logroño (La Rioja) España</span></li>
-		            	<!-- <li class="d-flex"><span>Zip code:</span> <span>26006</span></li> -->
-		            	<li class="d-flex"><span>Email:</span> <span>rodrigo.valdelvira@gmail.com</span></li>
-		            	<li class="d-flex"><span>Teléfono: </span> <span>+34 653 850 674</span></li>
-		            </ul>
-		          </div>
-		        </div>
-	          <div class="counter-wrap ftco-animate d-flex mt-md-3">
+      <div class="container">
+        <div class="row d-flex no-gutters">
+          <div class="col-md-6 col-lg-6 d-flex">
+            <div class="img-about img d-flex align-items-stretch">
+              <div class="overlay"></div>
+              <div class="img d-flex align-self-stretch align-items-center" style="background-image:url(images/about.png);"></div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-6 pl-md-5 py-5">
+            <div class="row justify-content-start pb-3">
+              <div class="col-md-12 heading-section ftco-animate">
+                <h1 class="big">About</h1>
+                <h2 class="mb-4">Sobre mi</h2>
+                <p>
+                  <span>Soy ingeniero especializado en <strong>Inteligencia Artificial aplicada</strong> y <strong>automatización de procesos</strong>.
+                  Tras más de una década combinando la ingeniería y el desarrollo tecnológico, hoy me dedico a diseñar y desplegar soluciones
+                  que convierten los datos en decisiones reales y las ideas en productos inteligentes.</span>
+                </p>
+                <p>
+                  <span>He liderado proyectos de IA para organizaciones como <strong>Fundación ONCE</strong> o <strong>TalentTools</strong>, donde he
+                  desarrollado sistemas de recomendación, asistentes virtuales basados en LLMs y pipelines de datos en <strong>Azure</strong> y <strong>GCP</strong>.
+                  Mi enfoque combina la visión técnica del <em>AI Engineer</em> con la planificación y estrategia propias del <em>Project Manager</em>.</span>
+                </p>
+                <p>
+                  <span>Me apasiona crear soluciones que generen impacto: desde <strong>chatbots inteligentes</strong> hasta <strong>agentes de voz</strong> como <a href="https://www.leadia.es" target="_blank">Leadia</a>,
+                  mi objetivo es acercar la IA a las empresas de forma práctica, segura y escalable.</span>
+                </p>
+                <ul class="about-info mt-4 px-md-0 px-2">
+                  <li class="d-flex"><span>Nombre:</span> <span>Rodrigo Valdelvira Ortigosa</span></li>
+                  <!-- <li class="d-flex"><span>Fecha de nacimiento:</span> <span>Julio 29, 1987</span></li> -->
+                  <li class="d-flex"><span>Dirección:</span> <span>Logroño (La Rioja) España</span></li>
+                  <!-- <li class="d-flex"><span>Zip code:</span> <span>26006</span></li> -->
+                  <li class="d-flex"><span>Email:</span> <span>rodrigo.valdelvira@gmail.com</span></li>
+                  <li class="d-flex"><span>Teléfono: </span> <span>+34 653 850 674</span></li>
+                </ul>
+              </div>
+            </div>
+            <div class="counter-wrap ftco-animate d-flex mt-md-3">
               <div class="text">
-              	<p class="mb-4">
-	                <span class="number" data-number="13">0</span>
-	                <span>Años de Experiencia</span>
+                <p class="mb-4">
+                  <span class="number" data-number="13">0</span>
+                  <span>Años de Experiencia</span>
                 </p>
                 <p><a href="data/Rodrigo_Valdelvira_CV.pdf" class="btn btn-primary py-3 px-3" download>Descargar CV</a></p>
               </div>
-	          </div>
-	        </div>
+            </div>
+          </div>
         </div>
-    	</div>
+      </div>
     </section>
 
     <section class="ftco-section ftco-no-pb goto-here" id="resume-section">
-    	<div class="container">
-    		<div class="row">
-    			<div class="col-md-3">
-				    <nav id="navi">
-					    <ul>
-					      <li><a href="#page-1">Educación</a></li>
-					      <li><a href="#page-2">Experiencia</a></li>
-					      <li><a href="#page-3">Habilidades</a></li>
-					      <li><a href="#page-4">Idiomas</a></li>
-					    </ul>
-					  </nav>
-					</div>
-					<div class="col-md-9">
-					  <div id="page-1" class= "page one">
-					  	<h2 class="heading">Educación</h2>
-<div class="education-section">
-    <h2 class="heading">Educación y Formación</h2>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3">
+            <nav id="navi">
+              <ul>
+                <li><a href="#page-1">Educación</a></li>
+                <li><a href="#page-2">Experiencia</a></li>
+                <li><a href="#page-3">Habilidades</a></li>
+                <li><a href="#page-4">Idiomas</a></li>
+              </ul>
+            </nav>
+          </div>
+          <div class="col-md-9">
+            <div id="page-1" class="page one">
+              <h2 class="heading">Educación</h2>
+              <div class="education-section">
+                <h2 class="heading">Educación y Formación</h2>
 
-    <div class="resume-wrap d-flex ftco-animate">
-        <div class="icon d-flex align-items-center justify-content-center">
-            <span class="bi bi-mortarboard-fill"></span>
-        </div>
-        <div class="text pl-3">
-            <span class="date">oct. 2020 - dic. 2021</span>
-            <h2>Máster Oficial - Big Data</h2>
-            <span class="position">Universidad Europea Miguel de Cervantes (UEMC) - Valladolid - España</span>
-            <p>Formación especializada en el análisis, procesamiento y gestión de grandes volúmenes de datos, con una base sólida para el desarrollo de soluciones de Inteligencia Artificial</p>
-        </div>
-    </div>
+                <div class="resume-wrap d-flex ftco-animate">
+                  <div class="icon d-flex align-items-center justify-content-center">
+                    <span class="bi bi-mortarboard-fill"></span>
+                  </div>
+                  <div class="text pl-3">
+                    <span class="date">oct. 2020 - dic. 2021</span>
+                    <h2>Máster Oficial - Big Data</h2>
+                    <span class="position">Universidad Europea Miguel de Cervantes (UEMC) - Valladolid - España</span>
+                    <p><span>Formación especializada en el análisis, procesamiento y gestión de grandes volúmenes de datos, con una base sólida para el desarrollo de soluciones de Inteligencia Artificial</span></p>
+                  </div>
+                </div>
 
-    <div class="resume-wrap d-flex ftco-animate">
-        <div class="icon d-flex align-items-center justify-content-center">
-            <span class="bi bi-mortarboard-fill"></span>
-        </div>
-        <div class="text pl-3">
-            <span class="date">sep. 2009 - sep. 2011</span>
-            <h2>Ingeniería Industrial</h2>
-            <span class="position">Universidad de La Rioja (UR) - Logroño - España</span>
-            <p>Estudios para la obtención del título de Licenciatura, enfocados en la dirección de proyectos, gestión de procesos y sistemas industriales</p>
-        </div>
-    </div>
+                <div class="resume-wrap d-flex ftco-animate">
+                  <div class="icon d-flex align-items-center justify-content-center">
+                    <span class="bi bi-mortarboard-fill"></span>
+                  </div>
+                  <div class="text pl-3">
+                    <span class="date">sep. 2009 - sep. 2011</span>
+                    <h2>Ingeniería Industrial</h2>
+                    <span class="position">Universidad de La Rioja (UR) - Logroño - España</span>
+                    <p><span>Estudios para la obtención del título de Licenciatura, enfocados en la dirección de proyectos, gestión de procesos y sistemas industriales</span></p>
+                  </div>
+                </div>
 
-    <div class="resume-wrap d-flex ftco-animate">
-        <div class="icon d-flex align-items-center justify-content-center">
-            <span class="bi bi-mortarboard-fill"></span>
-        </div>
-        <div class="text pl-3">
-            <span class="date">sep. 2005 - sep. 2009</span>
-            <h2>Ingeniería Técnica Industrial Especializada en Mecánica</h2>
-            <span class="position">Universidad de La Rioja (UR) - Logroño - España</span>
-            <p>Formación técnica fundamental en diseño de productos, cálculo de estructuras, análisis mecánico y procesos de fabricación</p>
-        </div>
-    </div>
+                <div class="resume-wrap d-flex ftco-animate">
+                  <div class="icon d-flex align-items-center justify-content-center">
+                    <span class="bi bi-mortarboard-fill"></span>
+                  </div>
+                  <div class="text pl-3">
+                    <span class="date">sep. 2005 - sep. 2009</span>
+                    <h2>Ingeniería Técnica Industrial Especializada en Mecánica</h2>
+                    <span class="position">Universidad de La Rioja (UR) - Logroño - España</span>
+                    <p><span>Formación técnica fundamental en diseño de productos, cálculo de estructuras, análisis mecánico y procesos de fabricación</span></p>
+                  </div>
+                </div>
 
-    <div class="resume-wrap d-flex ftco-animate">
-        <div class="icon d-flex align-items-center justify-content-center">
-            <span class="bi bi-award-fill"></span>
-        </div>
-        <div class="text pl-3">
-            <span class="date">ene. 2012 - oct. 2012</span>
-            <h2>Certificado - Advanced C1</h2>
-            <span class="position">Chichester College - Chichester - Reino Unido</span>
-            <p>Certificación de nivel avanzado de competencia en el idioma inglés</p>
-        </div>
-    </div>
+                <div class="resume-wrap d-flex ftco-animate">
+                  <div class="icon d-flex align-items-center justify-content-center">
+                    <span class="bi bi-award-fill"></span>
+                  </div>
+                  <div class="text pl-3">
+                    <span class="date">ene. 2012 - oct. 2012</span>
+                    <h2>Certificado - Advanced C1</h2>
+                    <span class="position">Chichester College - Chichester - Reino Unido</span>
+                    <p><span>Certificación de nivel avanzado de competencia en el idioma inglés</span></p>
+                  </div>
+                </div>
 
-    <div class="resume-wrap d-flex ftco-animate">
-        <div class="icon d-flex align-items-center justify-content-center">
-            <span class="bi bi-award-fill"></span>
-        </div>
-        <div class="text pl-3">
-            <span class="date">oct. 2017 - nov. 2017</span>
-            <h2>Certificado - Goethe Zertifikat B1</h2>
-            <span class="position">Carl Duisberg - Berlin - Alemania</span>
-            <p>Certificación de nivel intermedio de competencia en el idioma alemán</p>
-        </div>
-    </div>
-</div>
+                <div class="resume-wrap d-flex ftco-animate">
+                  <div class="icon d-flex align-items-center justify-content-center">
+                    <span class="bi bi-award-fill"></span>
+                  </div>
+                  <div class="text pl-3">
+                    <span class="date">oct. 2017 - nov. 2017</span>
+                    <h2>Certificado - Goethe Zertifikat B1</h2>
+                    <span class="position">Carl Duisberg - Berlin - Alemania</span>
+                    <p><span>Certificación de nivel intermedio de competencia en el idioma alemán</span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-<div id="page-2" class= "page two">
-    <h2 class="heading">Experience</h2>
-    <div class="resume-wrap d-flex ftco-animate">
-        <div class="icon d-flex align-items-center justify-content-center">
-            <span class="bi bi-briefcase-fill"></span>
-        </div>
-        <div class="text pl-3">
-            <span class="date">abr. 2021 - Presente</span>
-            <h2>Data Scientist - AI Engineer - Project Manager</h2>
-            <span class="position">TalentTools - Logroño - Remoto</span>
-            <p>
-                Como Data Scientist, AI Engineer y Project Manager, mis responsabilidades incluyen:
-<ul>
-                    <li><strong>Coordinación, desarrollo y despliegue en Azure/GCP</strong> de sistemas de recomendación de demandantes/ofertas para el proyecto InclunIA (Fundación ONCE)</li>
-                    <li><strong>Diseño y desarrollo</strong> de un técnico de selección virtual basado en LLMs (chatbot inteligente) para facilitar procesos de <strong>reclutamiento inclusivo</strong> (Habla con InclunlA - Fundación ONCE)</li>
-                    <li>Desarrollo y mantenimiento de <strong>pipelines de datos</strong> para analítica, visualización y entrenamiento de modelos (Dat4me - TalentTools)</li>
-                    <li>Diseño e implementación del chatbot Orientador Profesional basado en LLMs (Clara - UPSA).</li>
-                    <li>Desarrollo de <strong>recomendador colaborativo híbrido</strong> que optimiza el matching entre perfil profesional y ocupaciones (2KBot - TalentTools)</li>
-                    <li><strong>Coordinación del área de datos</strong>: definición de estrategia técnica, <strong>gestión de proyectos IA</strong> y evaluación de tecnologías emergentes</li>
-                </ul>
-                <br>
-                <strong>Logros Destacados:</strong>
-                <ul>
-                    <li><strong>Reducción del tiempo de análisis de datos de talento en un 65%</strong> mediante automatización inteligente</li>
-                    <li><strong>Despliegue seguro en Azure/GCP</strong> de soluciones IA interoperables con ERP/CRM</li>
-                    <li>Integración de <strong>interpretabilidad y trazabilidad</strong> en modelos de recomendación y chatbots (Habla con IncluniA)</li>
-                </ul>
-            </p>
-        </div>
-    </div>
-    <div class="resume-wrap d-flex ftco-animate">
-        <div class="icon d-flex align-items-center justify-content-center">
-            <span class="bi bi-briefcase-fill"></span>
-        </div>
-        <div class="text pl-3">
-            <span class="date">sep. 2012 - abr. 2021</span>
-            <h2>Ingeniero de Diseño y Desarollo de Producto</h2>
-            <span class="position">CMP Automotive Group - Logroño - España</span>
-            <p>
-                <ul>
-                    <li>Gestión técnica de nuevos productos antivibratorios, cubriendo desde la oferta hasta la producción</li>
-                    <li>Diseño CAD 3D y análisis FEA (Finite Element Analysis) de componentes mecánicos</li>
-                    <li>Coordinación de fabricación, ensayos y validación de prototipos</li>
-                    <li>Seguimiento técnico con clientes internacionales durante todo el ciclo de desarrollo</li>
-                </ul>
-            </p>
-        </div>
-    </div>
-    <div class="resume-wrap d-flex ftco-animate">
-        <div class="icon d-flex align-items-center justify-content-center">
-            <span class="bi bi-briefcase-fill"></span>
-        </div>
-        <div class="text pl-3">
-            <span class="date">jul. 2012 - ago. 2012</span>
-            <h2>Ingeniero de Instalaciones</h2>
-            <span class="position">POPE (Building Services Consulting Engineers) - Chichester - Reino Unido</span>
-            <p>
-                <ul>
-                    <li>Elaboración de planos y cálculos de instalaciones HVAC (calefacción, ventilación y aire acondicionado), ACS y saneamiento</li>
-                    <li>Apoyo en el dimensionamiento de sistemas de energías renovables (solar térmica, FV, biomasa, geotermia)</li>
-                </ul>
-            </p>
-        </div>
-    </div>
-    <div class="resume-wrap d-flex ftco-animate">
-        <div class="icon d-flex align-items-center justify-content-center">
-            <span class="bi bi-briefcase-fill"></span>
-        </div>
-        <div class="text pl-3">
-            <span class="date">sep. 2011 - dic. 2012</span>
-            <h2>Investigador</h2>
-            <span class="position">GI-TENECO (Grupo Termodinámica aplicada, energía y construcción) - Logroño - España </span>
-            <p>
-                <ul>
-                    <li>Análisis del consumo energético mundial y nacional</li>
-                    <li>Estimación del potencial de biomasa y residuos energéticamente aprovechables en La Rioja</li>
-                </ul>
-            </p>
-        </div>
-    </div>
-</div>
-	    				
-					  </div>
+            <div id="page-2" class="page two">
+              <h2 class="heading">Experience</h2>
+              <div class="resume-wrap d-flex ftco-animate">
+                <div class="icon d-flex align-items-center justify-content-center">
+                  <span class="bi bi-briefcase-fill"></span>
+                </div>
+                <div class="text pl-3">
+                  <span class="date">abr. 2021 - Presente</span>
+                  <h2>Data Scientist - AI Engineer - Project Manager</h2>
+                  <span class="position">TalentTools - Logroño - Remoto</span>
+                  <p>
+                    <span>Como Data Scientist, AI Engineer y Project Manager, mis responsabilidades incluyen:</span>
+                    <ul>
+                      <li><span><strong>Coordinación, desarrollo y despliegue en Azure/GCP</strong> de sistemas de recomendación de demandantes/ofertas para el proyecto InclunIA (Fundación ONCE)</span></li>
+                      <li><span><strong>Diseño y desarrollo</strong> de un técnico de selección virtual basado en LLMs (chatbot inteligente) para facilitar procesos de <strong>reclutamiento inclusivo</strong> (Habla con InclunlA - Fundación ONCE)</span></li>
+                      <li><span>Desarrollo y mantenimiento de <strong>pipelines de datos</strong> para analítica, visualización y entrenamiento de modelos (Dat4me - TalentTools)</span></li>
+                      <li><span>Diseño e implementación del chatbot Orientador Profesional basado en LLMs (Clara - UPSA).</span></li>
+                      <li><span>Desarrollo de <strong>recomendador colaborativo híbrido</strong> que optimiza el matching entre perfil profesional y ocupaciones (2KBot - TalentTools)</span></li>
+                      <li><span><strong>Coordinación del área de datos</strong>: definición de estrategia técnica, <strong>gestión de proyectos IA</strong> y evaluación de tecnologías emergentes</span></li>
+                    </ul>
+                    <br>
+                    <strong>Logros Destacados:</strong>
+                    <ul>
+                      <li><span><strong>Reducción del tiempo de análisis de datos de talento en un 65%</strong> mediante automatización inteligente</span></li>
+                      <li><span><strong>Despliegue seguro en Azure/GCP</strong> de soluciones IA interoperables con ERP/CRM</span></li>
+                      <li><span>Integración de <strong>interpretabilidad y trazabilidad</strong> en modelos de recomendación y chatbots (Habla con IncluniA)</span></li>
+                    </ul>
+                  </p>
+                </div>
+              </div>
+              <div class="resume-wrap d-flex ftco-animate">
+                <div class="icon d-flex align-items-center justify-content-center">
+                  <span class="bi bi-briefcase-fill"></span>
+                </div>
+                <div class="text pl-3">
+                  <span class="date">sep. 2012 - abr. 2021</span>
+                  <h2>Ingeniero de Diseño y Desarollo de Producto</h2>
+                  <span class="position">CMP Automotive Group - Logroño - España</span>
+                  <p>
+                    <ul>
+                      <li><span>Gestión técnica de nuevos productos antivibratorios, cubriendo desde la oferta hasta la producción</span></li>
+                      <li><span>Diseño CAD 3D y análisis FEA (Finite Element Analysis) de componentes mecánicos</span></li>
+                      <li><span>Coordinación de fabricación, ensayos y validación de prototipos</span></li>
+                      <li><span>Seguimiento técnico con clientes internacionales durante todo el ciclo de desarrollo</span></li>
+                    </ul>
+                  </p>
+                </div>
+              </div>
+              <div class="resume-wrap d-flex ftco-animate">
+                <div class="icon d-flex align-items-center justify-content-center">
+                  <span class="bi bi-briefcase-fill"></span>
+                </div>
+                <div class="text pl-3">
+                  <span class="date">jul. 2012 - ago. 2012</span>
+                  <h2>Ingeniero de Instalaciones</h2>
+                  <span class="position">POPE (Building Services Consulting Engineers) - Chichester - Reino Unido</span>
+                  <p>
+                    <ul>
+                      <li><span>Elaboración de planos y cálculos de instalaciones HVAC (calefacción, ventilación y aire acondicionado), ACS y saneamiento</span></li>
+                      <li><span>Apoyo en el dimensionamiento de sistemas de energías renovables (solar térmica, FV, biomasa, geotermia)</span></li>
+                    </ul>
+                  </p>
+                </div>
+              </div>
+              <div class="resume-wrap d-flex ftco-animate">
+                <div class="icon d-flex align-items-center justify-content-center">
+                  <span class="bi bi-briefcase-fill"></span>
+                </div>
+                <div class="text pl-3">
+                  <span class="date">sep. 2011 - dic. 2012</span>
+                  <h2>Investigador</h2>
+                  <span class="position">GI-TENECO (Grupo Termodinámica aplicada, energía y construcción) - Logroño - España </span>
+                  <p>
+                    <ul>
+                      <li><span>Análisis del consumo energético mundial y nacional</span></li>
+                      <li><span>Estimación del potencial de biomasa y residuos energéticamente aprovechables en La Rioja</span></li>
+                    </ul>
+                  </p>
+                </div>
+              </div>
+            </div>
 
-					<div id="page-3" class="page three">
-					<h2 class="heading">Habilidades</h2>
+            <div id="page-3" class="page three">
+              <h2 class="heading">Habilidades</h2>
 
-					<div class="row">
-						<!-- IA y Machine Learning -->
-						<div class="col-md-6 animate-box">
-						<div class="progress-wrap ftco-animate">
-							<h3>Inteligencia Artificial y Machine Learning</h3>
-							<div class="progress">
-							<div class="progress-bar color-1" role="progressbar" aria-valuenow="95"
-								aria-valuemin="0" aria-valuemax="100" style="width:95%">
-								<span>95%</span>
-							</div>
-							</div>
-							<p class="small text-muted mt-2">
-							Scikit-learn, TensorFlow, PyTorch, Keras, LangChain, LangGraph, HuggingFace, NLP, RAG, embeddings, agentes autónomos.
-							</p>
-						</div>
-						</div>
+              <div class="row">
+                <!-- IA y Machine Learning -->
+                <div class="col-md-6 animate-box">
+                  <div class="progress-wrap ftco-animate">
+                    <h3>Inteligencia Artificial y Machine Learning</h3>
+                    <div class="progress">
+                      <div class="progress-bar color-1" role="progressbar" aria-valuenow="95"
+                        aria-valuemin="0" aria-valuemax="100" style="width:95%">
+                        <span>95%</span>
+                      </div>
+                    </div>
+                    <p class="small text-muted mt-2">
+                      <span>Scikit-learn, TensorFlow, PyTorch, Keras, LangChain, LangGraph, HuggingFace, NLP, RAG, embeddings, agentes autónomos.</span>
+                    </p>
+                  </div>
+                </div>
 
-						<!-- Ingeniería de Datos y MLOps -->
-						<div class="col-md-6 animate-box">
-						<div class="progress-wrap ftco-animate">
-							<h3>Ingeniería de Datos y MLOps</h3>
-							<div class="progress">
-							<div class="progress-bar color-2" role="progressbar" aria-valuenow="90"
-								aria-valuemin="0" aria-valuemax="100" style="width:90%">
-								<span>90%</span>
-							</div>
-							</div>
-							<p class="small text-muted mt-2">
-							Python, Pandas, NumPy, MLFlow, Docker, CI/CD, FastAPI, BigQuery, PostgreSQL, MongoDB, Redis, Supabase, ChromaDB.
-							</p>
-						</div>
-						</div>
+                <!-- Ingeniería de Datos y MLOps -->
+                <div class="col-md-6 animate-box">
+                  <div class="progress-wrap ftco-animate">
+                    <h3>Ingeniería de Datos y MLOps</h3>
+                    <div class="progress">
+                      <div class="progress-bar color-2" role="progressbar" aria-valuenow="90"
+                        aria-valuemin="0" aria-valuemax="100" style="width:90%">
+                        <span>90%</span>
+                      </div>
+                    </div>
+                    <p class="small text-muted mt-2">
+                      <span>Python, Pandas, NumPy, MLFlow, Docker, CI/CD, FastAPI, BigQuery, PostgreSQL, MongoDB, Redis, Supabase, ChromaDB.</span>
+                    </p>
+                  </div>
+                </div>
 
-						<!-- Backend y APIs -->
-						<div class="col-md-6 animate-box">
-						<div class="progress-wrap ftco-animate">
-							<h3>Desarrollo Backend y APIs</h3>
-							<div class="progress">
-							<div class="progress-bar color-3" role="progressbar" aria-valuenow="85"
-								aria-valuemin="0" aria-valuemax="100" style="width:85%">
-								<span>85%</span>
-							</div>
-							</div>
-							<p class="small text-muted mt-2">
-							FastAPI, Flask, Node.js, REST APIs, integración con LLMs, microservicios, arquitectura modular.
-							</p>
-						</div>
-						</div>
+                <!-- Backend y APIs -->
+                <div class="col-md-6 animate-box">
+                  <div class="progress-wrap ftco-animate">
+                    <h3>Desarrollo Backend y APIs</h3>
+                    <div class="progress">
+                      <div class="progress-bar color-3" role="progressbar" aria-valuenow="85"
+                        aria-valuemin="0" aria-valuemax="100" style="width:85%">
+                        <span>85%</span>
+                      </div>
+                    </div>
+                    <p class="small text-muted mt-2">
+                      <span>FastAPI, Flask, Node.js, REST APIs, integración con LLMs, microservicios, arquitectura modular.</span>
+                    </p>
+                  </div>
+                </div>
 
-						<!-- Frontend, DevOps y Cloud -->
-						<div class="col-md-6 animate-box">
-						<div class="progress-wrap ftco-animate">
-							<h3>Frontend, DevOps y Cloud</h3>
-							<div class="progress">
-							<div class="progress-bar color-4" role="progressbar" aria-valuenow="80"
-								aria-valuemin="0" aria-valuemax="100" style="width:80%">
-								<span>80%</span>
-							</div>
-							</div>
-							<p class="small text-muted mt-2">
-							Angular, JavaScript, HTML, CSS, Azure (WebApps, LogicApps, Blob Storage), GCP (Cloud Run, BigQuery, Workflows).
-							</p>
-						</div>
-						</div>
-					</div>
+                <!-- Frontend, DevOps y Cloud -->
+                <div class="col-md-6 animate-box">
+                  <div class="progress-wrap ftco-animate">
+                    <h3>Frontend, DevOps y Cloud</h3>
+                    <div class="progress">
+                      <div class="progress-bar color-4" role="progressbar" aria-valuenow="80"
+                        aria-valuemin="0" aria-valuemax="100" style="width:80%">
+                        <span>80%</span>
+                      </div>
+                    </div>
+                    <p class="small text-muted mt-2">
+                      <span>Angular, JavaScript, HTML, CSS, Azure (WebApps, LogicApps, Blob Storage), GCP (Cloud Run, BigQuery, Workflows).</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
 
-					<div class="row mt-5">
-						<div class="col-md-12 text-center">
-						<p class="text-muted">
-							También cuento con experiencia en coordinación de proyectos de IA, gestión técnica y evaluación de tecnologías emergentes.
-						</p>
-						</div>
-					</div>
-					</div>
+              <div class="row mt-5">
+                <div class="col-md-12 text-center">
+                  <p class="text-muted">
+                    <span>También cuento con experiencia en coordinación de proyectos de IA, gestión técnica y evaluación de tecnologías emergentes.</span>
+                  </p>
+                </div>
+              </div>
+            </div>
 
+            <div id="page-4" class="page four">
+              <h2 class="heading">Idiomas y Experiencia Internacional</h2>
 
-<div id="page-4" class="page four">
-  <h2 class="heading">Idiomas y Experiencia Internacional</h2>
+              <!-- Español -->
+              <div class="resume-wrap d-flex ftco-animate">
+                <div class="icon d-flex align-items-center justify-content-center">
+                  <span class="bi bi-translate"></span>
+                </div>
+                <div class="text pl-3">
+                  <span class="date">Idioma Nativo</span>
+                  <h2>Español</h2>
+                  <span class="position">Lengua materna</span>
+                  <p><span>Nativo. Comunicación profesional, técnica y escrita en proyectos y documentación de ingeniería e inteligencia artificial.</span></p>
+                </div>
+              </div>
 
-  <!-- Español -->
-  <div class="resume-wrap d-flex ftco-animate">
-    <div class="icon d-flex align-items-center justify-content-center">
-      <span class="bi bi-translate"></span>
-    </div>
-    <div class="text pl-3">
-      <span class="date">Idioma Nativo</span>
-      <h2>Español</h2>
-      <span class="position">Lengua materna</span>
-      <p>Nativo. Comunicación profesional, técnica y escrita en proyectos y documentación de ingeniería e inteligencia artificial.</p>
-    </div>
-  </div>
+              <!-- Inglés -->
+              <div class="resume-wrap d-flex ftco-animate">
+                <div class="icon d-flex align-items-center justify-content-center">
+                  <span class="bi bi-translate"></span>
+                </div>
+                <div class="text pl-3">
+                  <span class="date">C1 – Certificado Advanced</span>
+                  <h2>Inglés</h2>
+                  <span class="position">Chichester College – Reino Unido</span>
+                  <p><span>Certificado oficial Cambridge Advanced (C1). Estancia de 10 meses en Chichester, Reino Unido (2012), con experiencia laboral y académica en entorno internacional.</span></p>
+                </div>
+              </div>
 
-  <!-- Inglés -->
-  <div class="resume-wrap d-flex ftco-animate">
-    <div class="icon d-flex align-items-center justify-content-center">
-      <span class="bi bi-translate"></span>
-    </div>
-    <div class="text pl-3">
-      <span class="date">C1 – Certificado Advanced</span>
-      <h2>Inglés</h2>
-      <span class="position">Chichester College – Reino Unido</span>
-      <p>Certificado oficial Cambridge Advanced (C1). Estancia de 10 meses en Chichester, Reino Unido (2012), con experiencia laboral y académica en entorno internacional.</p>
-    </div>
-  </div>
-
-  <!-- Alemán -->
-  <div class="resume-wrap d-flex ftco-animate">
-    <div class="icon d-flex align-items-center justify-content-center">
-      <span class="bi bi-translate"></span>
-    </div>
-    <div class="text pl-3">
-      <span class="date">B1 – Goethe-Zertifikat</span>
-      <h2>Alemán</h2>
-      <span class="position">Carl Duisberg – Berlín, Alemania</span>
-      <p>Certificado Goethe-Zertifikat B1 (2017). Estancias en Koblenz (4 meses, 2016) y Berlín (2 meses, 2017) para perfeccionamiento del idioma y colaboración en proyectos internacionales.</p>
-    </div>
-  </div>
-</div>
-
-
-			  </div>
-    	</div>
-		</section>
-
-
-	<section class="ftco-section" id="services-section">
-		<div class="container-fluid px-md-5">
-			<div class="row justify-content-center py-5 mt-5">
-			<div class="col-md-12 heading-section text-center ftco-animate">
-				<h1 class="big big-2">Servicios</h1>
-				<h2 class="mb-4">Servicios</h2>
-				<p>Desarrollo soluciones inteligentes que transforman los datos en decisiones. Desde la automatización hasta el despliegue de modelos de IA personalizados.</p>
-			</div>
-			</div>
-			<div class="row">
-
-			<div class="col-md-4 text-center d-flex ftco-animate">
-				<a href="#" class="services-1 shadow">
-				<span class="icon">
-					<i class="flaticon-analysis"></i>
-				</span>
-				<div class="desc">
-					<h3 class="mb-5">Soluciones de IA y Chatbots</h3>
-					<p>Diseño y desarrollo de asistentes virtuales y chatbots basados en LLMs (LangChain, LangGraph, HuggingFace) para automatizar atención al cliente, selección de personal o soporte interno.</p>
-				</div>
-				</a>
-			</div>
-
-			<div class="col-md-4 text-center d-flex ftco-animate">
-				<a href="#" class="services-1 shadow">
-				<span class="icon">
-					<i class="flaticon-innovation"></i>
-				</span>
-				<div class="desc">
-					<h3 class="mb-5">Ingeniería de Datos y Automatización</h3>
-					<p>Desarrollo de pipelines de datos y procesos automatizados para analítica, visualización o entrenamiento de modelos en entornos cloud (Azure, GCP).</p>
-				</div>
-				</a>
-			</div>
-
-			<div class="col-md-4 text-center d-flex ftco-animate">
-				<a href="#" class="services-1 shadow">
-				<span class="icon">
-					<i class="flaticon-idea"></i>
-				</span>
-				<div class="desc">
-					<h3 class="mb-5">Machine Learning y Modelos Predictivos</h3>
-					<p>Creación de modelos de predicción y sistemas de recomendación personalizados que ayudan a tomar decisiones basadas en datos.</p>
-				</div>
-				</a>
-			</div>
-
-			<div class="col-md-4 text-center d-flex ftco-animate">
-				<a href="#" class="services-1 shadow">
-				<span class="icon">
-					<i class="flaticon-ux-design"></i>
-				</span>
-				<div class="desc">
-					<h3 class="mb-5">MLOps y Despliegue en Producción</h3>
-					<p>Integración de modelos en entornos reales mediante Docker, MLFlow, CI/CD y APIs en FastAPI. Desde la idea hasta el despliegue escalable.</p>
-				</div>
-				</a>
-			</div>
-
-			<div class="col-md-4 text-center d-flex ftco-animate">
-				<a href="#" class="services-1 shadow">
-				<span class="icon">
-					<i class="flaticon-flasks"></i>
-				</span>
-				<div class="desc">
-					<h3 class="mb-5">Analítica y Visualización de Datos</h3>
-					<p>Desarrollo de dashboards e informes interactivos con Python, Power BI o Looker Studio para obtener insights accionables y claros.</p>
-				</div>
-				</a>
-			</div>
-
-			<div class="col-md-4 text-center d-flex ftco-animate">
-				<a href="#" class="services-1 shadow">
-				<span class="icon">
-					<i class="flaticon-ideas"></i>
-				</span>
-				<div class="desc">
-					<h3 class="mb-5">Gestión de Proyectos de IA</h3>
-					<p>Dirección técnica y coordinación integral de proyectos de inteligencia artificial, combinando visión estratégica y ejecución técnica.</p>
-				</div>
-				</a>
-			</div>
-
-			</div>
-		</div>
-	</section>
-
-	<section class="ftco-section ftco-project" id="projects-section">
-	<div class="container-fluid px-md-0">
-		<div class="row no-gutters justify-content-center pb-5">
-		<div class="col-md-12 heading-section text-center ftco-animate">
-			<h1 class="big big-2">Proyectos</h1>
-			<h2 class="mb-4">Proyectos Personales</h2>
-			<p>Algunos de los proyectos que he desarrollado combinando IA, automatización y voz.</p>
-		</div>
-		</div>
-
-		<div class="row no-gutters justify-content-center">
-		<div class="col-md-6 col-lg-4">
-			<a href="https://www.leadia.es" target="_blank" rel="noopener noreferrer">
-			<div class="project img ftco-animate d-flex justify-content-center align-items-center"
-				style="background-image: url(images/leadia.jpg);">
-				<div class="overlay"></div>
-				<div class="text text-center p-4">
-				<h3>Leadia</h3>
-				<span>Asistente de Voz con Inteligencia Artificial</span>
-				<p class="mt-3">Un agente de voz basado en IA que atiende llamadas, responde consultas y automatiza la gestión de leads para empresas.</p>
-				</div>
-			</div>
-			</a>
-		</div>
-		</div>
-	</div>
-	</section>
-
-
-<section class="ftco-section ftco-no-pt ftco-no-pb ftco-counter img bg-light" id="section-counter">
-  <div class="container-fluid px-md-5">
-    <div class="row d-md-flex align-items-center">
-
-      <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
-        <div class="block-18 shadow">
-          <div class="text">
-            <strong class="number" data-number="13">0</strong>
-            <span>Años de experiencia técnica</span>
+              <!-- Alemán -->
+              <div class="resume-wrap d-flex ftco-animate">
+                <div class="icon d-flex align-items-center justify-content-center">
+                  <span class="bi bi-translate"></span>
+                </div>
+                <div class="text pl-3">
+                  <span class="date">B1 – Goethe-Zertifikat</span>
+                  <h2>Alemán</h2>
+                  <span class="position">Carl Duisberg – Berlín, Alemania</span>
+                  <p><span>Certificado Goethe-Zertifikat B1 (2017). Estancias en Koblenz (4 meses, 2016) y Berlín (2 meses, 2017) para perfeccionamiento del idioma y colaboración en proyectos internacionales.</span></p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+    </section>
 
-      <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
-        <div class="block-18 shadow">
-          <div class="text">
-            <strong class="number" data-number="6">0</strong>
-            <span>Proyectos de IA desarrollados</span>
+    <section class="ftco-section" id="services-section">
+      <div class="container-fluid px-md-5">
+        <div class="row justify-content-center py-5 mt-5">
+          <div class="col-md-12 heading-section text-center ftco-animate">
+            <h1 class="big big-2">Servicios</h1>
+            <h2 class="mb-4">Servicios</h2>
+            <p><span>Desarrollo soluciones inteligentes que transforman los datos en decisiones. Desde la automatización hasta el despliegue de modelos de IA personalizados.</span></p>
+          </div>
+        </div>
+        <div class="row">
+
+          <div class="col-md-4 text-center d-flex ftco-animate">
+            <a href="#" class="services-1 shadow">
+              <span class="icon">
+                <i class="flaticon-analysis"></i>
+              </span>
+              <div class="desc">
+                <h3 class="mb-5">Soluciones de IA y Chatbots</h3>
+                <p><span>Diseño y desarrollo de asistentes virtuales y chatbots basados en LLMs (LangChain, LangGraph, HuggingFace) para automatizar atención al cliente, selección de personal o soporte interno.</span></p>
+              </div>
+            </a>
+          </div>
+
+          <div class="col-md-4 text-center d-flex ftco-animate">
+            <a href="#" class="services-1 shadow">
+              <span class="icon">
+                <i class="flaticon-innovation"></i>
+              </span>
+              <div class="desc">
+                <h3 class="mb-5">Ingeniería de Datos y Automatización</h3>
+                <p><span>Desarrollo de pipelines de datos y procesos automatizados para analítica, visualización o entrenamiento de modelos en entornos cloud (Azure, GCP).</span></p>
+              </div>
+            </a>
+          </div>
+
+          <div class="col-md-4 text-center d-flex ftco-animate">
+            <a href="#" class="services-1 shadow">
+              <span class="icon">
+                <i class="flaticon-idea"></i>
+              </span>
+              <div class="desc">
+                <h3 class="mb-5">Machine Learning y Modelos Predictivos</h3>
+                <p><span>Creación de modelos de predicción y sistemas de recomendación personalizados que ayudan a tomar decisiones basadas en datos.</span></p>
+              </div>
+            </a>
+          </div>
+
+          <div class="col-md-4 text-center d-flex ftco-animate">
+            <a href="#" class="services-1 shadow">
+              <span class="icon">
+                <i class="flaticon-ux-design"></i>
+              </span>
+              <div class="desc">
+                <h3 class="mb-5">MLOps y Despliegue en Producción</h3>
+                <p><span>Integración de modelos en entornos reales mediante Docker, MLFlow, CI/CD y APIs en FastAPI. Desde la idea hasta el despliegue escalable.</span></p>
+              </div>
+            </a>
+          </div>
+
+          <div class="col-md-4 text-center d-flex ftco-animate">
+            <a href="#" class="services-1 shadow">
+              <span class="icon">
+                <i class="flaticon-flasks"></i>
+              </span>
+              <div class="desc">
+                <h3 class="mb-5">Analítica y Visualización de Datos</h3>
+                <p><span>Desarrollo de dashboards e informes interactivos con Python, Power BI o Looker Studio para obtener insights accionables y claros.</span></p>
+              </div>
+            </a>
+          </div>
+
+          <div class="col-md-4 text-center d-flex ftco-animate">
+            <a href="#" class="services-1 shadow">
+              <span class="icon">
+                <i class="flaticon-ideas"></i>
+              </span>
+              <div class="desc">
+                <h3 class="mb-5">Gestión de Proyectos de IA</h3>
+                <p><span>Dirección técnica y coordinación integral de proyectos de inteligencia artificial, combinando visión estratégica y ejecución técnica.</span></p>
+              </div>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="ftco-section ftco-project" id="projects-section">
+      <div class="container-fluid px-md-0">
+        <div class="row no-gutters justify-content-center pb-5">
+          <div class="col-md-12 heading-section text-center ftco-animate">
+            <h1 class="big big-2">Proyectos</h1>
+            <h2 class="mb-4">Proyectos Personales</h2>
+            <p><span>Algunos de los proyectos que he desarrollado combinando IA, automatización y voz.</span></p>
+          </div>
+        </div>
+
+        <div class="row no-gutters justify-content-center">
+          <div class="col-md-6 col-lg-4">
+            <a href="https://www.leadia.es" target="_blank" rel="noopener noreferrer">
+              <div class="project img ftco-animate d-flex justify-content-center align-items-center"
+                style="background-image: url(images/leadia.jpg);">
+                <div class="overlay"></div>
+                <div class="text text-center p-4">
+                  <h3>Leadia</h3>
+                  <span>Asistente de Voz con Inteligencia Artificial</span>
+                  <p class="mt-3"><span>Un agente de voz basado en IA que atiende llamadas, responde consultas y automatiza la gestión de leads para empresas.</span></p>
+                </div>
+              </div>
+            </a>
           </div>
         </div>
       </div>
+    </section>
 
-      <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
-        <div class="block-18 shadow">
-          <div class="text">
-            <strong class="number" data-number="4">0</strong>
-            <span>Despliegues en Azure / GCP</span>
+    <section class="ftco-section ftco-no-pt ftco-no-pb ftco-counter img bg-light" id="section-counter">
+      <div class="container-fluid px-md-5">
+        <div class="row d-md-flex align-items-center">
+
+          <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+            <div class="block-18 shadow">
+              <div class="text">
+                <strong class="number" data-number="13">0</strong>
+                <span>Años de experiencia técnica</span>
+              </div>
+            </div>
           </div>
+
+          <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+            <div class="block-18 shadow">
+              <div class="text">
+                <strong class="number" data-number="6">0</strong>
+                <span>Proyectos de IA desarrollados</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+            <div class="block-18 shadow">
+              <div class="text">
+                <strong class="number" data-number="4">0</strong>
+                <span>Despliegues en Azure / GCP</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+            <div class="block-18 shadow">
+              <div class="text">
+                <strong class="number" data-number="65">0</strong>
+                <span>% de mejora en automatización de procesos</span>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
-
-      <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
-        <div class="block-18 shadow">
-          <div class="text">
-            <strong class="number" data-number="65">0</strong>
-            <span>% de mejora en automatización de procesos</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-
+    </section>
 
     <section class="ftco-section" id="blog-section">
       <div class="container">
@@ -587,58 +594,55 @@
           <div class="col-md-7 heading-section text-center ftco-animate">
             <h1 class="big big-2">Blog</h1>
             <h2 class="mb-4">Mi Blog</h2>
-            <p>Un viaje diario por la IA, la tecnología y la innovación, curado y generado por IA, con un toque humano detrás de escena.</p>
+            <p><span>Un viaje diario por la IA, la tecnología y la innovación, curado y generado por IA, con un toque humano detrás de escena.</span></p>
           </div>
         </div>
         <div class="row d-flex">
           <div class="col-md-4 d-flex ftco-animate">
-          	<div class="blog-entry justify-content-end">
-              <a href="single.html" class="block-20" style="background-image: url('images/image_1.jpg');">
-              </a>
+            <div class="blog-entry justify-content-end">
+              <a href="single.html" class="block-20" style="background-image: url('images/image_1.jpg');"></a>
               <div class="text mt-3 float-right d-block">
                 <h3 class="heading"><a href="single.html">Why Lead Generation is Key for Business Growth</a></h3>
                 <div class="d-flex align-items-center mb-3 meta">
-	                <p class="mb-0">
-	                	<span class="mr-2">Sept. 12, 2019</span>
-	                	<a href="#" class="mr-2">Admin</a>
-	                	<a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a>
-	                </p>
+                  <p class="mb-0">
+                    <span class="mr-2">Sept. 12, 2019</span>
+                    <a href="#" class="mr-2">Admin</a>
+                    <a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a>
+                  </p>
                 </div>
-                <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+                <p><span>A small river named Duden flows by their place and supplies it with the necessary regelialia.</span></p>
               </div>
             </div>
           </div>
           <div class="col-md-4 d-flex ftco-animate">
-          	<div class="blog-entry justify-content-end">
-              <a href="single.html" class="block-20" style="background-image: url('images/image_2.jpg');">
-              </a>
+            <div class="blog-entry justify-content-end">
+              <a href="single.html" class="block-20" style="background-image: url('images/image_2.jpg');"></a>
               <div class="text mt-3 float-right d-block">
                 <h3 class="heading"><a href="single.html">Why Lead Generation is Key for Business Growth</a></h3>
                 <div class="d-flex align-items-center mb-3 meta">
-	                <p class="mb-0">
-	                	<span class="mr-2">Sept. 12, 2019</span>
-	                	<a href="#" class="mr-2">Admin</a>
-	                	<a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a>
-	                </p>
+                  <p class="mb-0">
+                    <span class="mr-2">Sept. 12, 2019</span>
+                    <a href="#" class="mr-2">Admin</a>
+                    <a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a>
+                  </p>
                 </div>
-                <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+                <p><span>A small river named Duden flows by their place and supplies it with the necessary regelialia.</span></p>
               </div>
             </div>
           </div>
           <div class="col-md-4 d-flex ftco-animate">
-          	<div class="blog-entry">
-              <a href="single.html" class="block-20" style="background-image: url('images/image_3.jpg');">
-              </a>
+            <div class="blog-entry">
+              <a href="single.html" class="block-20" style="background-image: url('images/image_3.jpg');"></a>
               <div class="text mt-3 float-right d-block">
                 <h3 class="heading"><a href="single.html">Why Lead Generation is Key for Business Growth</a></h3>
                 <div class="d-flex align-items-center mb-3 meta">
-	                <p class="mb-0">
-	                	<span class="mr-2">Sept. 12, 2019</span>
-	                	<a href="#" class="mr-2">Admin</a>
-	                	<a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a>
-	                </p>
+                  <p class="mb-0">
+                    <span class="mr-2">Sept. 12, 2019</span>
+                    <a href="#" class="mr-2">Admin</a>
+                    <a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a>
+                  </p>
                 </div>
-                <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+                <p><span>A small river named Duden flows by their place and supplies it with the necessary regelialia.</span></p>
               </div>
             </div>
           </div>
@@ -647,72 +651,72 @@
     </section>
 
     <section class="ftco-section ftco-hireme img" style="background-image: url(images/bg_1.jpg)">
-    	<div class="overlay"></div>
-			<div class="container">
-				<div class="row justify-content-center">
-					<div class="col-md-7 ftco-animate text-center">
-						<h2>Estoy <span>Disponible</span> como freelance</h2>
-						<p>Apasionado por la IA y la automatización, ayudo a transformar ideas en soluciones prácticas y escalables.</p>
-						<p class="mb-0"><a href="#" class="btn btn-primary py-3 px-5"> Contrátame</a></p>
-					</div>
-				</div>
-			</div>
-		</section>
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-7 ftco-animate text-center">
+            <h2>Estoy <span>Disponible</span> como freelance</h2>
+            <p><span>Apasionado por la IA y la automatización, ayudo a transformar ideas en soluciones prácticas y escalables.</span></p>
+            <p class="mb-0"><a href="#" class="btn btn-primary py-3 px-5"> Contrátame</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <section class="ftco-section contact-section ftco-no-pb" id="contact-section">
       <div class="container">
-      	<div class="row justify-content-center mb-5 pb-3">
+        <div class="row justify-content-center mb-5 pb-3">
           <div class="col-md-7 heading-section text-center ftco-animate">
             <h1 class="big big-2">Contacto</h1>
             <h2 class="mb-4">Contacta conmigo</h2>
-            <p>¿Tienes una idea o un reto relacionado con inteligencia artificial? Escríbeme y encontraremos la mejor solución juntos.</p>
+            <p><span>¿Tienes una idea o un reto relacionado con inteligencia artificial? Escríbeme y encontraremos la mejor solución juntos.</span></p>
           </div>
         </div>
 
         <div class="row d-flex contact-info mb-5">
           <div class="col-md-6 col-lg-3 d-flex ftco-animate">
-          	<div class="align-self-stretch box text-center p-4 shadow">
-          		<div class="icon d-flex align-items-center justify-content-center">
-          			<span class="icon-map-signs"></span>
-          		</div>
-          		<div>
-	          		<h3 class="mb-4">Dirección</h3>
-		            <p>Logroño - La Rioja - España</p>
-		          </div>
-	          </div>
+            <div class="align-self-stretch box text-center p-4 shadow">
+              <div class="icon d-flex align-items-center justify-content-center">
+                <span class="icon-map-signs"></span>
+              </div>
+              <div>
+                <h3 class="mb-4">Dirección</h3>
+                <p><span>Logroño - La Rioja - España</span></p>
+              </div>
+            </div>
           </div>
           <div class="col-md-6 col-lg-3 d-flex ftco-animate">
-          	<div class="align-self-stretch box text-center p-4 shadow">
-          		<div class="icon d-flex align-items-center justify-content-center">
-          			<span class="icon-phone2"></span>
-          		</div>
-          		<div>
-	          		<h3 class="mb-4">Número de Contacto</h3>
-		            <p><a href="tel://1234567920">+ 34 653 850 674</a></p>
-	            </div>
-	          </div>
+            <div class="align-self-stretch box text-center p-4 shadow">
+              <div class="icon d-flex align-items-center justify-content-center">
+                <span class="icon-phone2"></span>
+              </div>
+              <div>
+                <h3 class="mb-4">Número de Contacto</h3>
+                <p><span><a href="tel://1234567920">+ 34 653 850 674</a></span></p>
+              </div>
+            </div>
           </div>
           <div class="col-md-6 col-lg-3 d-flex ftco-animate">
-          	<div class="align-self-stretch box text-center p-4 shadow">
-          		<div class="icon d-flex align-items-center justify-content-center">
-          			<span class="icon-paper-plane"></span>
-          		</div>
-          		<div>
-	          		<h3 class="mb-4">Email</h3>
-		            <p><a href="mailto:info@yoursite.com">rodrigo.valdelvira@gmail.com</a></p>
-		          </div>
-	          </div>
+            <div class="align-self-stretch box text-center p-4 shadow">
+              <div class="icon d-flex align-items-center justify-content-center">
+                <span class="icon-paper-plane"></span>
+              </div>
+              <div>
+                <h3 class="mb-4">Email</h3>
+                <p><span><a href="mailto:info@yoursite.com">rodrigo.valdelvira@gmail.com</a></span></p>
+              </div>
+            </div>
           </div>
           <div class="col-md-6 col-lg-3 d-flex ftco-animate">
-          	<div class="align-self-stretch box text-center p-4 shadow">
-          		<div class="icon d-flex align-items-center justify-content-center">
-          			<span class="icon-globe"></span>
-          		</div>
-          		<div>
-	          		<h3 class="mb-4">Website</h3>
-		            <p><a href="#">rodrigovaldelvira.com</a></p>
-	            </div>
-	          </div>
+            <div class="align-self-stretch box text-center p-4 shadow">
+              <div class="icon d-flex align-items-center justify-content-center">
+                <span class="icon-globe"></span>
+              </div>
+              <div>
+                <h3 class="mb-4">Website</h3>
+                <p><span><a href="#">rodrigovaldelvira.com</a></span></p>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -735,16 +739,14 @@
                 <input type="submit" value="Enviar Mensaje" class="btn btn-primary py-3 px-5">
               </div>
             </form>
-          
           </div>
 
           <div class="col-md-6 d-flex">
-          	<div class="img" style="background-image: url(images/about.jpg);"></div>
+            <div class="img" style="background-image: url(images/about.jpg);"></div>
           </div>
         </div>
       </div>
     </section>
-		
 
     <footer class="ftco-footer ftco-section">
       <div class="container">
@@ -752,7 +754,7 @@
           <div class="col-md">
             <div class="ftco-footer-widget mb-4">
               <h2 class="ftco-heading-2">Sobre Mi</h2>
-              <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+              <p><span>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</span></p>
               <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
                 <li class="ftco-animate"><a href="https://www.linkedin.com/in/rovaldel/"><span class="icon-linkedin"></span></a></li>
                 <!-- <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
@@ -773,7 +775,7 @@
             </div>
           </div>
           <div class="col-md">
-             <div class="ftco-footer-widget mb-4">
+            <div class="ftco-footer-widget mb-4">
               <h2 class="ftco-heading-2">Servicios</h2>
               <ul class="list-unstyled">
                 <li><a href="#"><span class="icon-long-arrow-right mr-2"></span>AI Engineer</a></li>
@@ -786,187 +788,83 @@
           </div>
           <div class="col-md">
             <div class="ftco-footer-widget mb-4">
-            	<h2 class="ftco-heading-2">¿Tienes Preguntas?</h2>
-            	<div class="block-23 mb-3">
-	              <ul>
-	                <li><span class="icon icon-map-marker"></span><span class="text">Logroño - La Rioja - España</span></li>
-	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+34 653 850 674</span></a></li>
-	                <li><a href="#"><span class="icon icon-envelope"></span><span class="text"> rodrigo.valdelvira@gmail.com</span></a></li>
-	              </ul>
-	            </div>
+              <h2 class="ftco-heading-2">¿Tienes Preguntas?</h2>
+              <div class="block-23 mb-3">
+                <ul>
+                  <li><span class="icon icon-map-marker"></span><span class="text">Logroño - La Rioja - España</span></li>
+                  <li><a href="#"><span class="icon icon-phone"></span><span class="text">+34 653 850 674</span></a></li>
+                  <li><a href="#"><span class="icon icon-envelope"></span><span class="text"> rodrigo.valdelvira@gmail.com</span></a></li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
         <div class="row">
           <div class="col-md-12 text-center">
-
             <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-  <p>
-  &copy;<script>document.write(new Date().getFullYear());</script> Todos los derechos reservados.
-</p>
-
-  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+              <p>
+                &copy;<span id="footer-year">2025</span> Todos los derechos reservados.
+              </p>
+            </p>
           </div>
         </div>
       </div>
     </footer>
+
+    <!-- loader -->
+    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-migrate-3.0.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.easing.1.3.js"></script>
+    <script src="js/jquery.waypoints.min.js"></script>
+    <script src="js/jquery.stellar.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/aos.js"></script>
+    <script src="js/jquery.animateNumber.min.js"></script>
+    <script src="js/scrollax.min.js"></script>
     
-  
+    <script src="js/main.js"></script>
+    <script src="js/contact-form.js"></script>
+    <script src="js/chatbot-config.js"></script>
+    <script src="js/cookie-manager.js"></script>
+    <script src="js/footer-year.js"></script>
+    <!-- Bibliotecas necesarias para renderizar Markdown de forma segura -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@2.4.0/dist/purify.min.js"></script>
+    <script src="js/chatbot.js"></script>
 
-  <!-- loader -->
-  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+    <!-- Chatbot Button and Container -->
+    <button type="button" class="chat-button" aria-label="Abrir chat">
+      <i class="bi bi-robot"></i>
+    </button>
 
-
-  <script src="js/jquery.min.js"></script>
-  <script src="js/jquery-migrate-3.0.1.min.js"></script>
-  <script src="js/popper.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/jquery.easing.1.3.js"></script>
-  <script src="js/jquery.waypoints.min.js"></script>
-  <script src="js/jquery.stellar.min.js"></script>
-  <script src="js/owl.carousel.min.js"></script>
-  <script src="js/jquery.magnific-popup.min.js"></script>
-  <script src="js/aos.js"></script>
-  <script src="js/jquery.animateNumber.min.js"></script>
-  <script src="js/scrollax.min.js"></script>
-  
-  <script src="js/main.js"></script>
-
-  <script>
-    // Envío del formulario de contacto a webhook n8n
-    (function(){
-      var form = document.getElementById('contact-form-n8n');
-      if(!form) return;
-
-      function showBanner(message, isSuccess) {
-        var banner = document.createElement('div');
-        banner.className = 'contact-banner';
-        banner.textContent = message;
-        banner.style.cssText = `
-          position: fixed;
-          top: 20px;
-          right: 20px;
-          padding: 16px 24px;
-          background-color: #3e64ff;
-          color: white;
-          border-radius: 8px;
-          font-size: 16px;
-          font-weight: 500;
-          box-shadow: 0 4px 12px rgba(62, 100, 255, 0.3);
-          z-index: 9999;
-          animation: slideInBanner 0.4s ease-out, slideOutBanner 0.4s ease-out 3s forwards;
-        `;
-
-        document.body.appendChild(banner);
-
-        setTimeout(function(){
-          banner.remove();
-        }, 3400);
-      }
-
-      // Agregar animaciones CSS
-      var style = document.createElement('style');
-      style.textContent = `
-        @keyframes slideInBanner {
-          from {
-            transform: translateX(400px);
-            opacity: 0;
-          }
-          to {
-            transform: translateX(0);
-            opacity: 1;
-          }
-        }
-        @keyframes slideOutBanner {
-          from {
-            transform: translateX(0);
-            opacity: 1;
-          }
-          to {
-            transform: translateX(400px);
-            opacity: 0;
-          }
-        }
-      `;
-      document.head.appendChild(style);
-
-      form.addEventListener('submit', async function(e){
-        e.preventDefault();
-
-        var nombre = form.querySelector('input[name="nombre"]').value.trim();
-        var email = form.querySelector('input[name="email"]').value.trim();
-        var asunto = form.querySelector('input[name="asunto"]').value.trim() || 'Contacto desde la web';
-        var mensaje = form.querySelector('textarea[name="mensaje"]').value.trim();
-
-        if(!nombre || !email || !mensaje){
-          showBanner('Por favor rellena nombre, email y mensaje.', false);
-          return;
-        }
-
-        var submitBtn = form.querySelector('input[type="submit"]');
-        if(submitBtn) submitBtn.disabled = true;
-
-        try {
-          var resp = await fetch('https://n8n.rodrigovaldelvira.com/webhook/portfolio-sendemail', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ nombre: nombre, email: email, asunto: asunto, mensaje: mensaje })
-          });
-
-          if(resp.ok){
-            showBanner('Mensaje enviado correctamente. Gracias.', true);
-            form.reset();
-          } else {
-            showBanner('Error al enviar. Intenta de nuevo.', false);
-            console.error('Error:', resp.status);
-          }
-        } catch(err) {
-          showBanner('Error de conexión. Intenta más tarde.', false);
-          console.error('Fetch error:', err);
-        } finally {
-          if(submitBtn) submitBtn.disabled = false;
-        }
-      });
-    })();
-  </script>
-
-  <script>
-    // Configuración del webhook (reemplazar con tu sistema de variables de entorno preferido)
-    window.PORTFOLIO_CHATBOT_WEBHOOK = 'https://n8n.rodrigovaldelvira.com/webhook/portfolio-chatbot-q&A';
-  </script>
-	<!-- Bibliotecas necesarias para renderizar Markdown de forma segura -->
-	<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/dompurify@2.4.0/dist/purify.min.js"></script>
-	<script src="js/chatbot.js"></script>
-
-  <!-- Chatbot Button and Container -->
-  <button type="button" class="chat-button" aria-label="Abrir chat">
-    <i class="bi bi-robot"></i>
-  </button>
-
-  <div class="chat-container">
-		<div class="chat-header">
-			<h3>Asistente Virtual</h3>
-			<div class="chat-controls">
-				<button class="maximize-chat" title="Maximizar/Restaurar" aria-label="Maximizar chat"><i class="bi bi-arrows-fullscreen"></i></button>
-				<button class="close-chat" title="Cerrar" aria-label="Cerrar chat">–</button>
-			</div>
-		</div>
-    <div class="chat-messages">
-      <!-- Los mensajes se agregarán aquí dinámicamente -->
+    <div class="chat-container">
+      <div class="chat-header">
+        <h3>Asistente Virtual</h3>
+        <div class="chat-controls">
+          <button class="maximize-chat" title="Maximizar/Restaurar" aria-label="Maximizar chat"><i class="bi bi-arrows-fullscreen"></i></button>
+          <button class="close-chat" title="Cerrar" aria-label="Cerrar chat">–</button>
+        </div>
+      </div>
+      <div class="chat-messages">
+        <!-- Los mensajes se agregarán aquí dinámicamente -->
+      </div>
+      <div class="chat-input">
+        <input type="text" placeholder="Escribe tu mensaje..." autocomplete="off">
+        <button>
+          <i class="bi bi-send"></i>
+        </button>
+      </div>
+      <div class="chat-typing" style="display: none">
+        <span class="typing-indicator">
+          <i class="bi bi-three-dots"></i>
+        </span>
+      </div>
     </div>
-    <div class="chat-input">
-      <input type="text" placeholder="Escribe tu mensaje..." autocomplete="off">
-      <button>
-        <i class="bi bi-send"></i>
-      </button>
-    </div>
-    <div class="chat-typing" style="display: none">
-      <span class="typing-indicator">
-        <i class="bi bi-three-dots"></i>
-      </span>
-    </div>
-  </div>
     
   </body>
 </html>

@@ -1,0 +1,149 @@
+/**
+ * Estilos del Banner de Cookies
+ * Diseño responsivo con animaciones suaves
+ */
+
+/* Animación de entrada del banner */
+@keyframes slideUpBanner {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Animación de salida del banner */
+@keyframes slideDownBanner {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+/* Contenedor principal del banner */
+.cookie-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(135deg, #3e64ff 0%, #2a4cbf 100%);
+  color: white;
+  padding: 24px;
+  box-shadow: 0 -4px 12px rgba(62, 100, 255, 0.2);
+  z-index: 9998;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  font-family: 'Poppins', sans-serif;
+  animation: slideUpBanner 0.4s ease-out;
+  transition: opacity 0.3s ease;
+}
+
+/* Estado oculto */
+.cookie-banner.hidden {
+  display: none;
+}
+
+/* Texto informativo */
+.cookie-text {
+  flex: 1;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Enlaces dentro del texto */
+.cookie-text a {
+  color: #fff;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.cookie-text a:hover {
+  opacity: 0.8;
+}
+
+/* Contenedor de botones */
+.cookie-buttons {
+  display: flex;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+/* Estilos generales de botones */
+.cookie-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+/* Botón: Aceptar Todo (blanco) */
+.cookie-btn-accept {
+  background-color: white;
+  color: #3e64ff;
+}
+
+.cookie-btn-accept:hover {
+  background-color: #f0f0f0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Botón: Rechazar (transparente con borde) */
+.cookie-btn-reject {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 2px solid white;
+}
+
+.cookie-btn-reject:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Botón: Solo Necesarias (semi-transparente) */
+.cookie-btn-necessary {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.cookie-btn-necessary:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+/* Responsive: Mobile (pantallas menores a 768px) */
+@media (max-width: 768px) {
+  .cookie-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .cookie-buttons {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .cookie-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .cookie-text {
+    font-size: 13px;
+  }
+}
