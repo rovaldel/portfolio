@@ -9,6 +9,13 @@ RUN corepack pnpm run assets:prepare && corepack pnpm run build
 
 FROM node:24.19.0-bookworm-slim@sha256:e5a8dee7bc1e6a215d224a7ef8206f7e77271bc3cabd5febf2beafac0674f174 AS runtime
 WORKDIR /app
+# Patch Debian security packages and omit package managers from the runtime image.
+RUN apt-get update \
+    && apt-get upgrade -y --no-install-recommends \
+    && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /usr/local/lib/node_modules/npm /usr/local/lib/node_modules/corepack /opt/yarn-v1.22.22 \
+    && rm -f /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/corepack /usr/local/bin/yarn /usr/local/bin/yarnpkg \
+    && test -x /usr/local/bin/node
 ENV NODE_ENV=production HOST=0.0.0.0 PORT=80 ASTRO_NODE_LOGGING=disabled
 RUN groupadd --system --gid 10001 portfolio && useradd --system --uid 10001 --gid portfolio --home-dir /app portfolio
 COPY --from=build --chown=portfolio:portfolio /app/dist ./dist
