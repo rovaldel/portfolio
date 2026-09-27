@@ -27,11 +27,20 @@ jobs:
         run: node scripts/deploy/check-predeployment.mjs
       - run: pnpm install --frozen-lockfile
       - run: pnpm exec playwright install --with-deps chromium firefox
+      - name: Verificar spec 000
+        id: spec000
+        continue-on-error: true
+        run: pnpm run verify:spec:000
+      - name: Validar la excepción visual D-08 de spec 000
+        if: steps.spec000.outcome == 'failure'
+        run: node scripts/deploy/approved-visual-exception.mjs
+        env:
+          VERIFY_SUMMARY: artifacts/spec-000/verification-summary.json
       - name: Verificar spec 010
         id: spec010
         continue-on-error: true
         run: pnpm run verify:spec:010
-      - name: Validar la excepción visual D-08
+      - name: Validar la excepción visual D-08 de spec 010
         if: steps.spec010.outcome == 'failure'
         run: node scripts/deploy/approved-visual-exception.mjs
         env:
