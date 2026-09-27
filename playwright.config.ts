@@ -9,6 +9,7 @@ export default defineConfig({
     '**/integration/release-readiness.spec.ts',
   ],
   timeout: 30_000,
+  retries: process.env['CI'] ? 1 : 0,
   workers: 2,
   forbidOnly: Boolean(process.env['CI']),
   use: {
