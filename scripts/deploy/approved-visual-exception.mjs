@@ -26,8 +26,13 @@ export function verifyApprovedVisualException({
   const errors = [];
   const results = Array.isArray(summary?.results) ? summary.results : [];
   if (summary?.status !== 'fail') errors.push('La ejecución no terminó con un fallo documentado.');
-  if (results.length !== expectedBeforeVisual.length + 1)
-    errors.push('La ejecución no llegó hasta una única comprobación visual final.');
+  if (results.length !== expectedBeforeVisual.length + 1) {
+    const failedResults = results.filter((result) => result?.status !== 'pass' || result?.exitCode !== 0);
+    const detail = failedResults.length
+      ? ` Puertas no superadas: ${failedResults.map((result) => `${result.name} (${result.status}, exit ${result.exitCode})`).join('; ')}.`
+      : ` Se registraron ${results.length} resultados.`;
+    errors.push(`La ejecución no llegó hasta una única comprobación visual final.${detail}`);
+  }
   for (let index = 0; index < expectedBeforeVisual.length; index += 1) {
     if (
       results[index]?.name !== expectedBeforeVisual[index] ||
@@ -83,7 +88,13 @@ export function verifyApprovedVisualException({
 async function main() {
   const summaryPath = process.env.VERIFY_SUMMARY ?? 'artifacts/spec-000/verification-summary.json';
   const summary = JSON.parse(await readFile(summaryPath, 'utf8'));
-  const visualReport = JSON.parse(await readFile('artifacts/spec-000/visual-report.json', 'utf8'));
+  let visualReport;
+  let visualReportReadError;
+  try {
+    visualReport = JSON.parse(await readFile('artifacts/spec-000/visual-report.json', 'utf8'));
+  } catch (error) {
+    visualReportReadError = error?.code ?? error?.name ?? 'Error';
+  }
   const closureEvidence = JSON.parse(
     await readFile('specs/002-contacto-operacion-cierre/closure-evidence.json', 'utf8'),
   );
@@ -97,6 +108,11 @@ async function main() {
     closureEvidence,
     accessibilityReview,
   });
+  if (visualReportReadError) {
+    report.errors.unshift(
+      `No se pudo cargar artifacts/spec-000/visual-report.json (${visualReportReadError}).`,
+    );
+  }
   if (!report.allowed) {
     for (const error of report.errors) console.error(`::error title=D-08::${error}`);
     console.error(JSON.stringify(report, null, 2));
