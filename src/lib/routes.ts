@@ -105,7 +105,8 @@ const routeDefinitions: Omit<
   {
     path: '/bitacora',
     title: 'Bitácora · Rodrigo Valdelvira',
-    description: 'Próximamente: decisiones de arquitectura y notas de trabajo sobre IA aplicada.',
+    description:
+      'Artículos de Rodrigo Valdelvira sobre arquitectura, agentes y desarrollo de IA en producción.',
     h1: 'Bitácora',
     indexable: false,
     navigationLabel: 'Bitácora',

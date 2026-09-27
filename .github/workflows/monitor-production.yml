@@ -1,0 +1,42 @@
+name: Monitor de producción
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+
+concurrency:
+  group: portfolio-production-monitor
+  cancel-in-progress: false
+
+jobs:
+  monitor:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 24.19.0
+          cache: pnpm
+      - run: corepack enable
+      - run: pnpm install --frozen-lockfile
+      - name: Probe production health
+        id: health
+        run: node scripts/monitor/health-check.mjs
+        env:
+          ALERT_HEALTH_URL: https://rodrigovaldelvira.com/api/salud
+      - name: Send operational notification
+        id: notify
+        if: steps.health.outcome == 'success'
+        run: node scripts/monitor/send-alert.mjs
+        env:
+          HEALTHY: ${{ steps.health.outputs.healthy }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GMAIL_SMTP_APP_PASSWORD: ${{ secrets.GMAIL_SMTP_APP_PASSWORD }}
+      - name: Mark service as unhealthy
+        if: steps.health.outputs.healthy == 'false' && steps.notify.outcome == 'success'
+        run: exit 1

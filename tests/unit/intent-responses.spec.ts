@@ -38,8 +38,8 @@ describe('respuestas aprobadas de las intenciones', () => {
         .map((record) => record.title + ' (' + record.institution + ', ' + record.years + ')')
         .join('; '),
     );
-    expect(byId('agent-frameworks').response).toContain('en preparación');
-    expect(byId('agent-frameworks').destination).toBe('/proyectos');
+    expect(byId('agent-frameworks').response).toContain('CrewAI, AutoGen y LangGraph');
+    expect(byId('agent-frameworks').destination).toBe('/bitacora/langgraph-para-agentes-en-produccion');
     expect(byId('services').contentRefs).toContain('services');
     expect(services).toHaveLength(6);
   });

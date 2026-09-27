@@ -1,14 +1,27 @@
 ---
+import JournalIndex from '../../components/journal/JournalIndex.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { selectCompletePublishedArticles } from '../../lib/content';
+
+const articles = selectCompletePublishedArticles(await getCollection('bitacora')).map(({ data }) => ({
+  slug: data.slug,
+  title: data.title,
+  description: data.description,
+  excerpt: data.excerpt,
+  category: data.category,
+  publishedAt: data.publishedAt,
+  readingMinutes: data.readingMinutes,
+}));
 ---
 
 <BaseLayout journalIndexMode>
   <section class="journal-page" aria-labelledby="journal-title">
-    <p class="eyebrow">En preparación</p>
+    <p class="eyebrow">Artículos</p>
     <h1 id="journal-title">Bitácora</h1>
     <p class="journal-page__lead">
-      Próximamente: decisiones de arquitectura, aprendizajes y notas sobre la IA que llevo a producción.
+      Decisiones de arquitectura, aprendizajes y notas sobre IA aplicada a producción.
     </p>
-    <a class="button" href="/proyectos">Explorar proyectos</a>
+    <JournalIndex articles={articles} />
   </section>
 </BaseLayout>

@@ -9,10 +9,10 @@ RUN corepack pnpm run assets:prepare && corepack pnpm run build
 
 FROM node:24.19.0-bookworm-slim@sha256:e5a8dee7bc1e6a215d224a7ef8206f7e77271bc3cabd5febf2beafac0674f174 AS runtime
 WORKDIR /app
-ENV NODE_ENV=production HOST=0.0.0.0 PORT=3000 ASTRO_NODE_LOGGING=disabled
+ENV NODE_ENV=production HOST=0.0.0.0 PORT=80 ASTRO_NODE_LOGGING=disabled
 RUN groupadd --system --gid 10001 portfolio && useradd --system --uid 10001 --gid portfolio --home-dir /app portfolio
 COPY --from=build --chown=portfolio:portfolio /app/dist ./dist
 USER portfolio
-EXPOSE 3000
-HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 CMD node -e "fetch('http://127.0.0.1:3000/api/salud').then((r) => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"
+EXPOSE 80
+HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 CMD node -e "fetch('http://127.0.0.1:' + (process.env.PORT || '80') + '/api/salud').then((r) => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"
 CMD ["node", "dist/server/entry.mjs"]

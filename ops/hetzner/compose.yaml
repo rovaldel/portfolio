@@ -1,0 +1,37 @@
+services:
+  app:
+    image: ${PORTFOLIO_IMAGE:?Set PORTFOLIO_IMAGE to a verified GHCR digest}
+    container_name: rodrigo_portfolio
+    env_file:
+      - runtime.env
+    environment:
+      HOST: 0.0.0.0
+      NODE_ENV: production
+      PORT: '80'
+    networks:
+      borde:
+        aliases:
+          - rodrigo_portfolio
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=64m
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    # The namespaced network sysctl lets the non-root Node process bind port 80
+    # without adding CAP_NET_BIND_SERVICE; the port is reachable only on borde.
+    sysctls:
+      net.ipv4.ip_unprivileged_port_start: 0
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    deploy:
+      replicas: 1
+
+networks:
+  borde:
+    external: true

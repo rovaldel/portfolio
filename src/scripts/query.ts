@@ -167,6 +167,7 @@ const templateForIntent = (intentId: string) => {
     'talenttools-inclunia': 'experience',
     education: 'education',
     contact: 'contact',
+    'agent-frameworks': 'article',
   };
   return map[intentId];
 };

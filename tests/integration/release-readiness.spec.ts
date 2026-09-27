@@ -12,7 +12,11 @@ it('reports machine checks, human approvals, exceptions and open risks separatel
   expect(report.allowed).toBe(false);
   expect(report.technical).toHaveLength(34);
   expect(report.human.length).toBeGreaterThanOrEqual(11);
-  expect(report.exceptions).toEqual([]);
+  expect(report.exceptions.map(({ id }) => id)).toEqual(['CA-18', 'CA-31']);
+  expect(report.exceptions[0]).toMatchObject({
+    approver: 'titular del portfolio',
+    recheckAt: '2026-10-27',
+  });
   expect(report.risks.length).toBeGreaterThan(0);
   expect(report.blockers.length).toBeGreaterThan(0);
 });

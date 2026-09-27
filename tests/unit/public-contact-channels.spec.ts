@@ -18,7 +18,11 @@ it('omits an approved channel with an empty value or href', () => {
   };
   expect(getPublicContactChannels(channels).map(({ kind }) => kind)).not.toContain('email');
 });
-it('keeps unapproved real channels and location out of the public contact set', () => {
-  expect(getPublicContactChannels(siteProfile.channels)).toEqual([]);
+it('exposes the channels the owner approved and keeps unapproved location gated', () => {
+  expect(getPublicContactChannels(siteProfile.channels).map(({ kind }) => kind)).toEqual([
+    'email',
+    'phone',
+    'linkedin',
+  ]);
   expect(siteProfile.locationApproval).toBe('pending');
 });

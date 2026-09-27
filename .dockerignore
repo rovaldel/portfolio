@@ -13,6 +13,7 @@
 **/.venv
 **/target
 design/screenshots
+ops/hetzner/runtime.env
 docs
 specs
 kit

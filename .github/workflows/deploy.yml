@@ -1,0 +1,176 @@
+name: Deploy portfolio production
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: portfolio-production
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 24.19.0
+          cache: pnpm
+      - run: corepack enable
+      - name: Comprobar aprobaciones y condiciones legales
+        run: node scripts/deploy/check-predeployment.mjs
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium firefox
+      - name: Verificar spec 010
+        id: spec010
+        continue-on-error: true
+        run: pnpm run verify:spec:010
+      - name: Validar la excepción visual D-08
+        if: steps.spec010.outcome == 'failure'
+        run: node scripts/deploy/approved-visual-exception.mjs
+        env:
+          VERIFY_SUMMARY: artifacts/spec-010/verification-summary.json
+      - name: Probar entrega y fallos de contacto con SMTP falso
+        run: pnpm run test:integration:contact
+      - run: pnpm run verify:spec:020
+
+  image:
+    needs: verify
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      image_ref: ${{ steps.digest.outputs.image_ref }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Nombre de imagen
+        id: image
+        run: printf 'image_name=ghcr.io/%s\n' "${GITHUB_REPOSITORY,,}" >> "$GITHUB_OUTPUT"
+      - name: Autenticar en GHCR
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: printf '%s' "$GITHUB_TOKEN" | docker login ghcr.io --username "$GITHUB_ACTOR" --password-stdin
+      - name: Construir y publicar una imagen para el commit
+        env:
+          IMAGE_NAME: ${{ steps.image.outputs.image_name }}
+        run: >-
+          docker buildx build --platform linux/amd64 --provenance=false --sbom=false
+          --tag "$IMAGE_NAME:sha-$GITHUB_SHA" --push
+          --metadata-file "$RUNNER_TEMP/image-metadata.json" .
+      - name: Obtener digest inmutable
+        id: digest
+        env:
+          IMAGE_NAME: ${{ steps.image.outputs.image_name }}
+        run: node scripts/deploy/write-image-output.mjs "$RUNNER_TEMP/image-metadata.json" "$IMAGE_NAME" "$GITHUB_OUTPUT"
+      - name: Escanear la imagen publicada
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          scan-type: image
+          image-ref: ${{ steps.digest.outputs.image_ref }}
+          severity: HIGH,CRITICAL
+          exit-code: '1'
+          ignore-unfixed: true
+
+  deploy:
+    needs: image
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Validar el secreto del monitor operativo
+        env:
+          GMAIL_SMTP_APP_PASSWORD: ${{ secrets.GMAIL_SMTP_APP_PASSWORD }}
+        run: test -n "$GMAIL_SMTP_APP_PASSWORD" || { echo 'Falta GMAIL_SMTP_APP_PASSWORD.' >&2; exit 1; }
+      - name: Validar host, fingerprint y clave
+        env:
+          DEPLOY_HOST: ${{ vars.DEPLOY_HOST }}
+          SSH_FINGERPRINT: ${{ vars.SSH_FINGERPRINT }}
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+        run: |
+          set -euo pipefail
+          [[ -n "$DEPLOY_HOST" && -n "$SSH_FINGERPRINT" && -n "$DEPLOY_SSH_KEY" ]] || { echo 'Faltan DEPLOY_HOST, SSH_FINGERPRINT o DEPLOY_SSH_KEY.' >&2; exit 1; }
+          printf '%s\n' "$DEPLOY_SSH_KEY" > "$RUNNER_TEMP/deploy_key"
+          chmod 600 "$RUNNER_TEMP/deploy_key"
+          ssh-keyscan -T 8 -t ed25519 "$DEPLOY_HOST" 2>/dev/null > "$RUNNER_TEMP/known_hosts"
+          test -s "$RUNNER_TEMP/known_hosts"
+          ssh-keygen -lf "$RUNNER_TEMP/known_hosts" -E sha256 | awk -v expected="$SSH_FINGERPRINT" '$2 == expected { found = 1 } END { exit !found }'
+      - name: Escribir la configuración SMTP en el servidor
+        env:
+          DEPLOY_HOST: ${{ vars.DEPLOY_HOST }}
+          GMAIL_SMTP_APP_PASSWORD: ${{ secrets.GMAIL_SMTP_APP_PASSWORD }}
+        run: |
+          set -euo pipefail
+          SMTP_PASSWORD="${GMAIL_SMTP_APP_PASSWORD//[[:space:]]/}"
+          [[ -n "$SMTP_PASSWORD" ]]
+          umask 077
+          {
+            printf 'GMAIL_SMTP_USER=%s\n' 'rodr.valdelvira@gmail.com'
+            printf 'GMAIL_SMTP_APP_PASSWORD=%s\n' "$SMTP_PASSWORD"
+            printf 'CONTACT_FROM=%s\n' 'rodr.valdelvira@gmail.com'
+            printf 'CONTACT_TO=%s\n' 'rodr.valdelvira@gmail.com'
+          } > "$RUNNER_TEMP/runtime.env"
+          SSH_ARGS=(-i "$RUNNER_TEMP/deploy_key" -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile="$RUNNER_TEMP/known_hosts" -o ConnectTimeout=10)
+          TARGET="deploy@$DEPLOY_HOST"
+          scp "${SSH_ARGS[@]}" "$RUNNER_TEMP/runtime.env" "$TARGET:/srv/projects/portfolio/deploy/runtime.env.next"
+          ssh "${SSH_ARGS[@]}" "$TARGET" 'chmod 0600 /srv/projects/portfolio/deploy/runtime.env.next && mv /srv/projects/portfolio/deploy/runtime.env.next /srv/projects/portfolio/deploy/runtime.env'
+          rm -f "$RUNNER_TEMP/runtime.env"
+          unset SMTP_PASSWORD GMAIL_SMTP_APP_PASSWORD
+      - name: Promover el digest verificado a Hetzner
+        env:
+          DEPLOY_HOST: ${{ vars.DEPLOY_HOST }}
+          IMAGE_REF: ${{ needs.image.outputs.image_ref }}
+          COMMIT_SHA: ${{ github.sha }}
+          RUN_ID: ${{ github.run_id }}-${{ github.run_attempt }}
+        run: |
+          set -euo pipefail
+          [[ "$IMAGE_REF" =~ ^ghcr\.io/[a-z0-9._/-]+@sha256:[a-f0-9]{64}$ ]]
+          [[ "$COMMIT_SHA" =~ ^[a-f0-9]{40}$ ]]
+          SSH_ARGS=(-i "$RUNNER_TEMP/deploy_key" -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile="$RUNNER_TEMP/known_hosts" -o ConnectTimeout=10)
+          TARGET="deploy@$DEPLOY_HOST"
+          scp "${SSH_ARGS[@]}" ops/hetzner/compose.yaml "$TARGET:/srv/projects/portfolio/deploy/compose.next"
+          scp "${SSH_ARGS[@]}" scripts/deploy/deploy.sh "$TARGET:/srv/projects/portfolio/deploy/deploy.sh"
+          ssh "${SSH_ARGS[@]}" "$TARGET" "bash /srv/projects/portfolio/deploy/deploy.sh deploy '$IMAGE_REF' '$COMMIT_SHA' '$RUN_ID'"
+      - name: Verificar HTTPS, dominio, health y cabeceras desde fuera
+        id: public_health
+        continue-on-error: true
+        run: node scripts/deploy/verify-production.mjs rodrigovaldelvira.com
+      - name: Restaurar la versión anterior si falla la comprobación pública
+        if: steps.public_health.outcome == 'failure'
+        env:
+          DEPLOY_HOST: ${{ vars.DEPLOY_HOST }}
+          RUN_ID: ${{ github.run_id }}-${{ github.run_attempt }}
+        run: |
+          set -euo pipefail
+          SSH_ARGS=(-i "$RUNNER_TEMP/deploy_key" -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile="$RUNNER_TEMP/known_hosts" -o ConnectTimeout=10)
+          ssh "${SSH_ARGS[@]}" "deploy@$DEPLOY_HOST" "bash /srv/projects/portfolio/deploy/deploy.sh rollback '$RUN_ID'"
+      - name: Comprobar la web restaurada
+        if: steps.public_health.outcome == 'failure'
+        run: node scripts/deploy/verify-rollback.mjs rodrigovaldelvira.com
+      - name: Marcar fallido el despliegue tras rollback
+        if: steps.public_health.outcome == 'failure'
+        run: exit 1
+      - name: Resumen del despliegue
+        if: success()
+        env:
+          IMAGE_REF: ${{ needs.image.outputs.image_ref }}
+          COMMIT_SHA: ${{ github.sha }}
+        run: |
+          {
+            echo '## Despliegue de producción'
+            echo "- Commit: $COMMIT_SHA"
+            echo "- Imagen verificada: $IMAGE_REF"
+            echo '- URL: https://rodrigovaldelvira.com'
+            echo "- Verificado en UTC: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            echo '- Resultado: salud, HTTPS, canonical, www y cabeceras verificados.'
+          } >> "$GITHUB_STEP_SUMMARY"

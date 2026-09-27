@@ -1,6 +1,7 @@
 import { defineMiddleware } from 'astro:middleware';
 import { isAllowedContactSubject } from './lib/contact';
 import { canonicalPaths, legacyRedirects } from './lib/routes';
+import { canonicalOrigin } from './lib/site-urls';
 
 const headers = {
   'X-Content-Type-Options': 'nosniff',
@@ -25,6 +26,8 @@ const getCanonicalPath = (pathname: string) => {
 
 export const onRequest = defineMiddleware(async (context, next) => {
   const { pathname, searchParams } = context.url;
+  if (context.url.hostname.toLowerCase() === 'www.rodrigovaldelvira.com')
+    return Response.redirect(new URL(pathname + context.url.search, canonicalOrigin), 308);
   const legacy = legacyRedirects[pathname];
   const canonical = getCanonicalPath(pathname);
   if (legacy || (canonical && canonical !== pathname)) {

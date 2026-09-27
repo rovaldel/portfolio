@@ -176,6 +176,13 @@
   flex-wrap: wrap;
   gap: 0.4rem;
 }
+a.upcoming-resources__item {
+  color: var(--text);
+  text-decoration: none;
+}
+a.upcoming-resources__item:hover {
+  text-decoration: underline;
+}
 .upcoming-resources__item svg {
   width: 1rem;
   height: 1rem;

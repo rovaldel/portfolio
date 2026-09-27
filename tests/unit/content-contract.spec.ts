@@ -27,7 +27,10 @@ describe('contrato de contenido público', () => {
     expect(experiences.find((item) => item.id === 'talenttools')?.end).toBe('2025-12');
     expect(siteProfile.channels.email.value).toBe('rodrigo.valdelvira@gmail.com');
     expect(
-      legalDocuments.every((document) => document.status === 'working-draft' && document.sections.length > 0),
+      legalDocuments.every(
+        (document) =>
+          document.status === 'approved' && Boolean(document.reviewedAt) && document.sections.length > 0,
+      ),
     ).toBe(true);
     expect(
       surfaces.every((surface) => surface.canonicalPath === surface.path && surface.contentRefs.length > 0),

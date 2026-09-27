@@ -171,7 +171,7 @@ const contentClass =
       ) : (
         <>
           <div class="site-shell" inert={overlayMode || modalMode}>
-            <Header />
+            <Header currentPath={currentPath} />
             <main id="contenido" tabindex="0">
               {overlayMode ? (
                 <div class="container">

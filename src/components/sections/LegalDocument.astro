@@ -6,7 +6,10 @@ interface Props {
 const { document } = Astro.props;
 ---
 
-<article class="legal-document" aria-label={`${document.title}, borrador de trabajo`}>
+<article
+  class="legal-document"
+  aria-label={`${document.title}, ${document.status === 'approved' ? 'texto legal aprobado' : 'borrador de trabajo'}`}
+>
   <h1 id="legal-title" tabindex="-1">{document.title}</h1>
   <p class="legal-document__kicker">{document.kicker}</p>
   <div class="legal-document__sections">
@@ -20,7 +23,10 @@ const { document } = Astro.props;
     }
   </div>
   <p class="legal-document__status">
-    Borrador actualizado · Pendiente de verificar las condiciones de los proveedores y la conservación
-    efectiva antes de publicar.
+    {
+      document.status === 'approved'
+        ? `Revisión final aprobada por el titular · ${document.reviewedAt ?? '2026-09-27'}`
+        : 'Borrador de trabajo · Pendiente de revisión final antes de publicar.'
+    }
   </p>
 </article>

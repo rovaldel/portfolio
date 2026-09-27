@@ -12,4 +12,12 @@ test('salud, cabeceras y canonicalización cumplen el contrato', async ({ reques
   const canonical = await request.get('/SOBRE-MI/', { maxRedirects: 0 });
   expect(canonical.status()).toBe(308);
   expect(canonical.headers()['location']).toContain('/sobre-mi');
+  const www = await request.get('/contacto?asunto=agentes-y-chatbots-ia', {
+    headers: { host: 'www.rodrigovaldelvira.com' },
+    maxRedirects: 0,
+  });
+  expect(www.status()).toBe(308);
+  expect(www.headers()['location']).toBe(
+    'https://rodrigovaldelvira.com/contacto?asunto=agentes-y-chatbots-ia',
+  );
 });

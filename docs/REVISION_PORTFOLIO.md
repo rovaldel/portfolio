@@ -1,4 +1,4 @@
-# Revisión del portfolio — 25 de septiembre de 2026
+# Revisión del portfolio — 27 de septiembre de 2026
 
 ## Cambios
 
@@ -8,7 +8,7 @@
 - Habilidades: niveles del mockup, presentados como autoevaluación orientativa, estrellas SVG accesibles y distribución adaptativa.
 - Proyectos: una tarjeta completa por enlace, sin «Ver detalles», compatible con teclado y navegación sin JavaScript.
 - Navegación: siete secciones en una fila en escritorio, adaptación en pantallas pequeñas. Recursos futuros separados y sin botones inactivos que parezcan acciones.
-- Bitácora: portada «Próximamente». El artículo existente se conserva en su URL como material previo, con noindex y fuera de sitemap/llms. Las consultas sobre bitácora explican que está en preparación.
+- Bitácora: índice publicado con el artículo de LangGraph; el artículo conserva `noindex` y queda fuera de sitemap/llms.
 - SEO: entidad Person enlazada a WebSite, páginas y servicios; canonical, Open Graph, imagen social, favicon, breadcrumbs y resumen llms.txt. PerplexityBot y OAI-SearchBot permitidos; se mantiene el bloqueo independiente de GPTBot para entrenamiento.
 
 ## Gmail: paso pendiente de configuración
@@ -21,18 +21,15 @@ La aceptación SMTP no acredita por sí sola la llegada a la bandeja de entrada.
 
 ## Revisión jurídica y operativa
 
-Confirmado por el titular: dominio `rodrigovaldelvira.com`, VPS de Hetzner y portfolio para empleo, sin actividad como autónomo. No se inventan NIF, domicilio profesional ni una actividad comercial.
+Confirmado por el titular: dominio `rodrigovaldelvira.com`, VPS de Hetzner y portfolio personal orientado a empleo, sin actividad como autónomo. No se inventan NIF, domicilio profesional ni actividad comercial.
 
-Los textos se han ampliado conforme a esas condiciones. Se mantienen identificados como borradores porque la conformidad requiere verificar aspectos que no están en este repositorio:
+El titular aprobó las tres páginas legales el 2026-09-27. La investigación de transferencias internacionales D-06 queda cerrada con las fuentes públicas de Google sobre su marco de transferencia y región de cuenta, y con esta asunción de riesgo menor aceptada por el titular: "se asume la validez del marco general de Google Ireland y DPF/SCCs para el tratamiento en el EEE, condicionado a que la cuenta de destino mantenga su operativa bajo los términos estándar del EEE". La evidencia y la decisión están en [human-decisions.md](../specs/002-contacto-operacion-cierre/human-decisions.md) y [research.md](../specs/002-contacto-operacion-cierre/research.md).
 
-1. País efectivo de la VPS, contrato aplicable de Hetzner, acceso al servidor y retención del proxy, logs y copias.
-2. Condiciones de la cuenta personal de Gmail para este tratamiento; destinatarios, posibles transferencias internacionales y garantías aplicables. No se presume un contrato de Google Workspace.
-3. Aplicación de la política propuesta de 12 meses desde la última comunicación a los correos; ajustar el texto si se adopta otro plazo justificado. El código no elimina correos del buzón.
-4. Revisar si la finalidad real o una actividad económica posterior exige información adicional del artículo 10 LSSI. El mero nombre «portfolio» no decide por sí solo su ámbito de aplicación.
-5. Verificar en el despliegue que no se añaden analítica, cookies, widgets o registros no descritos. El código inspeccionado solo escribe `rv_theme` después de que se elija un tema.
+El titular retiró el plazo fijo de 12 meses porque no puede garantizarlo. La política declara que la aplicación no configura borrado automático en Gmail ni fija un plazo máximo concreto; se podrán borrar manualmente los mensajes cuando dejen de ser necesarios. Se mantiene el principio general de limitación del plazo de conservación.
 
-No se ha realizado un despliegue ni se ha accedido a la VPS o a Gmail. No hay certificación de cumplimiento universal ni aprobación jurídica ficticia. Las puertas históricas de publicación se conservan; los cambios visuales pedidos reemplazan criterios anteriores incompatibles (por ejemplo, la ausencia de estrellas), sin alterar el mockup ni los golden para ocultar diferencias.
+La inspección de solo lectura de la VPS confirmó que el proxy registra IP de origen, URI, agente de usuario y referente; rota semanalmente y conserva cuatro ficheros de acceso y diez de errores. El driver Docker `json-file` del contenedor NPM no tiene límites explícitos de tamaño/cantidad; queda como seguimiento de endurecimiento operativo y se informa en la política de privacidad. No se presume un contrato de Google Workspace.
 
+No se ha realizado un despliegue ni se ha accedido a Gmail. La ruta pública `/api/salud` de la versión existente aún devuelve 404. El cierre legal D-06 está aprobado. El usuario remoto `deploy` está aprovisionado y la clave dedicada está generada localmente; aún faltan su alta como secreto de Actions, las variables/secreto SMTP, el token de solo lectura GHCR en el servidor, la prueba real de entrega y la verificación de recuperación. La aplicación no afirma una garantía absoluta sobre las ubicaciones de tratamiento.
 ## Fuentes consultadas
 
 - [RGPD, artículos 6, 12–22 y 44 y siguientes](https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:32016R0679).

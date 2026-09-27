@@ -29,8 +29,8 @@ test('cada destino público abre y conserva su canonical al recargar', async ({ 
 
 test('los enlaces canónicos funcionan con atrás y adelante', async ({ page }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  const presentation = page.getByRole('region', { name: 'Presentación de Rodrigo' });
-  await presentation.getByRole('link', { name: 'Sobre mí' }).click();
+  const navigation = page.getByRole('navigation', { name: 'Navegación principal' });
+  await navigation.getByRole('link', { name: 'Sobre mí' }).click();
   await expect(page).toHaveURL(/\/sobre-mi$/);
   await page.goBack();
   await expect(page).toHaveURL(/\/$/);

@@ -33,8 +33,24 @@ jobs:
           exit-code: '1'
           ignore-unfixed: true
       - run: RUN_CONTAINER_TESTS=1 pnpm exec playwright test tests/integration/container.spec.ts --project=chromium
-      - run: pnpm run verify:spec:000
-      - run: pnpm run verify:spec:010
+      - name: Verificar spec 000
+        id: spec000
+        continue-on-error: true
+        run: pnpm run verify:spec:000
+      - name: Validar la excepción visual D-08 de spec 000
+        if: steps.spec000.outcome == 'failure'
+        run: node scripts/deploy/approved-visual-exception.mjs
+        env:
+          VERIFY_SUMMARY: artifacts/spec-000/verification-summary.json
+      - name: Verificar spec 010
+        id: spec010
+        continue-on-error: true
+        run: pnpm run verify:spec:010
+      - name: Validar la misma excepción visual en spec 010
+        if: steps.spec010.outcome == 'failure'
+        run: node scripts/deploy/approved-visual-exception.mjs
+        env:
+          VERIFY_SUMMARY: artifacts/spec-010/verification-summary.json
       - run: pnpm run verify:spec:020
       - run: pnpm run test:unit
       - run: pnpm run test:integration:contact

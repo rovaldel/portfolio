@@ -4,12 +4,13 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - '${PORT:-3000}:3000'
+      - '${PORT:-3000}:80'
     environment:
-      GMAIL_SMTP_USER: ${GMAIL_SMTP_USER:-rodrigo.valdelvira@gmail.com}
+      GMAIL_SMTP_USER: ${GMAIL_SMTP_USER:-rodr.valdelvira@gmail.com}
       GMAIL_SMTP_APP_PASSWORD: ${GMAIL_SMTP_APP_PASSWORD:-}
-      CONTACT_FROM: ${CONTACT_FROM:-rodrigo.valdelvira@gmail.com}
-      CONTACT_TO: ${CONTACT_TO:-rodrigo.valdelvira@gmail.com}
+      CONTACT_FROM: ${CONTACT_FROM:-rodr.valdelvira@gmail.com}
+      CONTACT_TO: ${CONTACT_TO:-rodr.valdelvira@gmail.com}
+      PORT: '80'
     read_only: true
     tmpfs:
       - /tmp:rw,noexec,nosuid,size=64m
@@ -17,6 +18,8 @@ services:
       - ALL
     security_opt:
       - no-new-privileges:true
+    sysctls:
+      net.ipv4.ip_unprivileged_port_start: 0
     deploy:
       replicas: 1
     restart: 'no'

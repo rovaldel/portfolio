@@ -40,7 +40,7 @@ const actionResponse = (id: string) => {
 };
 
 const canonicalPath = (path: string) => {
-  const surface = surfaces.find((item) => item.path === path && item.indexable);
+  const surface = surfaces.find((item) => item.path === path && item.publicationState === 'approved');
   if (!surface) throw new Error('El destino no es una ruta pública canónica: ' + path);
   return surface.canonicalPath;
 };
@@ -214,8 +214,9 @@ export const intents: PortfolioIntent[] = [
       'bitacora',
       'artículo de agentes',
     ],
-    response: 'La Bitácora está en preparación. Mientras tanto, puedes explorar mis proyectos de IA.',
-    destination: canonicalPath('/proyectos'),
+    response:
+      'Evalué CrewAI, AutoGen y LangGraph durante tres semanas para construir agentes en producción. Elegí LangGraph por su estado explícito y el control que ofrece para depurar fallos.',
+    destination: canonicalPath('/bitacora/langgraph-para-agentes-en-produccion'),
     contentRefs: ['article.langgraph'],
     provenance: ['src/content/bitacora/langgraph-para-agentes-en-produccion.md'],
   },

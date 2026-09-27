@@ -7,7 +7,10 @@ const actions = [
   { label: 'Proyectos', content: 'Leadia' },
   { label: 'Experiencia', content: 'Cidatum' },
   { label: 'Formación', content: 'AENOR' },
-  { label: 'Contacto', content: 'Si buscas un AI Engineer para tu equipo, hablemos.' },
+  {
+    label: 'Contacto',
+    content: '¿Buscas un AI Engineer para tu equipo? Escríbeme por el canal que prefieras.',
+  },
 ];
 
 test('cada chip añade su respuesta completa al historial de chat visible', async ({ page }) => {

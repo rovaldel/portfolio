@@ -87,9 +87,13 @@ test('axe cubre catálogo de servicios y diálogos de servicio y proyecto', asyn
 });
 
 for (const route of ['/privacidad', '/cookies', '/terminos'])
-  test(`legal ${route} abre como borrador y no presenta banner de consentimiento`, async ({ page }) => {
+  test(`legal ${route} muestra la aprobación final y no presenta banner de consentimiento`, async ({
+    page,
+  }) => {
     await page.goto(route, { waitUntil: 'domcontentloaded' });
-    await expect(page.locator('.legal-document__status')).toBeVisible();
+    await expect(page.locator('.legal-document__status')).toContainText(
+      'Revisión final aprobada por el titular',
+    );
     await expect(page.locator('[data-cookie-consent], [role="alert"][aria-label*="cookie" i]')).toHaveCount(
       0,
     );

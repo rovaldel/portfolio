@@ -29,4 +29,7 @@ test('los filtros de Bitácora funcionan con teclado y anuncian el estado vacío
   await expect(page).toHaveURL(/\/#consulta-langgraph$/);
   await expect(page.locator('[data-query-turn]')).toContainText('LangGraph');
   await expect(page.locator('[data-query-turn]')).toContainText('CrewAI');
+  await expect(
+    page.locator('[data-query-turn] a[href="/bitacora/langgraph-para-agentes-en-produccion"]'),
+  ).toHaveText('Leer la evaluación completa');
 });

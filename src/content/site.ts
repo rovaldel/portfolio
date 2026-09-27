@@ -130,9 +130,9 @@ export const siteProfile = {
     ],
   ],
   channels: {
-    email: { kind: 'email', approval: 'pending', approvalEvidence: null, label: 'Email', value: 'rodrigo.valdelvira@gmail.com', displayValue: 'rodrigo.valdelvira@gmail.com', href: 'mailto:rodrigo.valdelvira@gmail.com' },
-    phone: { kind: 'phone', approval: 'pending', approvalEvidence: null, label: 'Teléfono', value: '+34 653 850 674', displayValue: '+34 653 850 674', href: 'tel:+34653850674' },
-    linkedin: { kind: 'linkedin', approval: 'pending', approvalEvidence: null, label: 'LinkedIn', value: 'in/rovaldel', displayValue: 'in/rovaldel', href: 'https://www.linkedin.com/in/rovaldel' },
+    email: { kind: 'email', approval: 'approved', approvalEvidence: { actor: 'Titular del portfolio', date: '2026-09-27', reference: 'specs/002-contacto-operacion-cierre/human-decisions.md#D-05' }, label: 'Email', value: 'rodrigo.valdelvira@gmail.com', displayValue: 'rodrigo.valdelvira@gmail.com', href: 'mailto:rodrigo.valdelvira@gmail.com' },
+    phone: { kind: 'phone', approval: 'approved', approvalEvidence: { actor: 'Titular del portfolio', date: '2026-09-27', reference: 'specs/002-contacto-operacion-cierre/human-decisions.md#D-05' }, label: 'Teléfono', value: '+34 653 850 674', displayValue: '+34 653 850 674', href: 'tel:+34653850674' },
+    linkedin: { kind: 'linkedin', approval: 'approved', approvalEvidence: { actor: 'Titular del portfolio', date: '2026-09-27', reference: 'specs/002-contacto-operacion-cierre/human-decisions.md#D-05' }, label: 'LinkedIn', value: 'in/rovaldel', displayValue: 'in/rovaldel', href: 'https://www.linkedin.com/in/rovaldel' },
   },
   portrait: {
     src: '/images/rodrigo-valdelvira.png',
@@ -206,7 +206,9 @@ export const legalDocuments: LegalDocument[] = [
     "kind": "privacy",
     "title": "Privacidad",
     "kicker": "Tus datos, con una finalidad concreta",
-    "status": "working-draft",
+    "status": "approved",
+    "reviewedAt": "2026-09-27",
+    "reviewedBy": "titular del portfolio",
     "sections": [
       {
         "title": "Responsable y contacto",
@@ -222,15 +224,15 @@ export const legalDocuments: LegalDocument[] = [
       },
       {
         "title": "Alojamiento, correo y destinatarios",
-        "body": "El sitio está alojado en una VPS de Hetzner. Los mensajes se envían mediante una conexión cifrada al servicio SMTP de Gmail y se reciben en el buzón de Rodrigo Valdelvira. Hetzner y Google intervienen en la prestación de estos servicios; no se venden datos ni se comunican para publicidad. Las autoridades podrán recibir información cuando exista una obligación legal. El uso de los servicios de Google puede implicar tratamiento fuera del Espacio Económico Europeo: las condiciones, ubicaciones y garantías aplicables a la cuenta utilizada deben verificarse antes de publicar esta política."
+        "body": "El sitio está alojado en una VPS de Hetzner. Los mensajes se envían mediante una conexión cifrada al servicio SMTP de Gmail y se reciben en el buzón de Rodrigo Valdelvira. Google indica que sus servicios de consumo suelen prestarse desde Google Ireland Limited a usuarios del EEE, aunque la información puede tratarse en servidores de otros países. Para las transferencias, Google describe decisiones de adecuación, el EU-U.S. Data Privacy Framework para Google LLC y filiales estadounidenses cubiertas, y cláusulas contractuales tipo cuando corresponden. Para la cuenta de destino de este sitio se asume que se mantiene la operativa bajo los términos estándar del EEE. Hetzner y Google intervienen en la prestación de estos servicios; no se venden datos ni se comunican para publicidad. Las autoridades podrán recibir información cuando exista una obligación legal."
       },
       {
         "title": "Conservación de los datos",
-        "body": "El servidor de la aplicación no almacena el contenido del formulario en una base de datos. Los mensajes entregados permanecen en el buzón. Se propone su eliminación a los 12 meses desde la última comunicación, salvo que continúe un proceso de selección o sea necesario conservarlos para atender obligaciones o reclamaciones. Este plazo requiere aplicación efectiva por el titular y revisión de la retención del buzón y sus copias antes de publicar la política."
+        "body": "El servidor de la aplicación no almacena el contenido del formulario en una base de datos. Los mensajes entregados permanecen en el buzón de Gmail; la aplicación no configura su borrado automático y no se fija un plazo máximo concreto de conservación. El titular puede eliminar los mensajes manualmente cuando dejan de ser necesarios para atender la consulta, gestionar una oportunidad o responder a obligaciones o reclamaciones. Las copias y el tratamiento dentro de Gmail se rigen por las condiciones aplicables a la cuenta. Puedes solicitar la supresión escribiendo a rodrigo.valdelvira@gmail.com."
       },
       {
         "title": "Seguridad y registros técnicos",
-        "body": "La aplicación mantiene temporalmente en memoria un identificador derivado de la IP para limitar envíos durante 15 minutos y un identificador de envío durante 2 minutos para evitar duplicados; se purgan al procesar nuevas solicitudes o al reiniciar el proceso. Los mensajes no se incluyen en los registros de aplicación. El proxy, el servidor y el proveedor de alojamiento pueden generar registros técnicos adicionales; su configuración, accesos y plazos deben revisarse antes de publicar."
+        "body": "La aplicación mantiene temporalmente en memoria un identificador derivado de la IP para limitar envíos durante 15 minutos y un identificador de envío durante 2 minutos para evitar duplicados; se purgan al procesar nuevas solicitudes o al reiniciar el proceso. Los mensajes no se incluyen en los registros de aplicación. El proxy registra la dirección IP de origen, URI, agente de usuario y referente; sus ficheros rotan semanalmente, conservando cuatro de acceso y diez de errores. El contenedor de Nginx Proxy Manager usa el driver Docker json-file sin límites explícitos de tamaño o cantidad. El servidor y el proveedor de alojamiento también pueden generar registros técnicos."
       },
       {
         "title": "Tus derechos",
@@ -246,7 +248,9 @@ export const legalDocuments: LegalDocument[] = [
     "kind": "cookies",
     "title": "Cookies y almacenamiento local",
     "kicker": "Sin analítica ni publicidad",
-    "status": "working-draft",
+    "status": "approved",
+    "reviewedAt": "2026-09-27",
+    "reviewedBy": "titular del portfolio",
     "sections": [
       {
         "title": "Qué utiliza esta aplicación",
@@ -274,7 +278,9 @@ export const legalDocuments: LegalDocument[] = [
     "kind": "terms",
     "title": "Aviso legal y condiciones de uso",
     "kicker": "Información del portfolio",
-    "status": "working-draft",
+    "status": "approved",
+    "reviewedAt": "2026-09-27",
+    "reviewedBy": "titular del portfolio",
     "sections": [
       {
         "title": "Titular y finalidad",
@@ -290,7 +296,7 @@ export const legalDocuments: LegalDocument[] = [
       },
       {
         "title": "Información y enlaces externos",
-        "body": "La información describe la trayectoria y los proyectos en el estado indicado. Nami se encuentra en fase de diseño; Toolkit IA y Bitácora están en preparación. Los enlaces a terceros se facilitan como referencia. El titular procurará corregir errores y mantener la información actualizada, sin excluir las responsabilidades que legalmente le correspondan."
+        "body": "La información describe la trayectoria y los proyectos en el estado indicado. Nami se encuentra en fase de diseño; Toolkit IA está en preparación y Bitácora incluye un artículo público sobre LangGraph. Los enlaces a terceros se facilitan como referencia. El titular procurará corregir errores y mantener la información actualizada, sin excluir las responsabilidades que legalmente le correspondan."
       },
       {
         "title": "Normativa y cambios",

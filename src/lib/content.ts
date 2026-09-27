@@ -165,7 +165,10 @@ export const validatePublicContent = () => {
   assert(
     legalDocuments.length === 3 &&
       unique(legalDocuments.map((document) => document.kind)) &&
-      legalDocuments.every((document) => document.status === 'working-draft' && document.sections.length > 0),
+      legalDocuments.every(
+        (document) =>
+          document.status === 'approved' && Boolean(document.reviewedAt) && document.sections.length > 0,
+      ),
     'Estado o estructura legal inesperada',
   );
   assert(

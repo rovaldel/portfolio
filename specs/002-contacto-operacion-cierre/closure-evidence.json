@@ -105,8 +105,11 @@
     {
       "id": "CA-18",
       "summary": "Las capturas de regresión se corresponden con el mockup en estructura y jerarquía, salvo cambios registrados por accesibilidad, veracidad o responsive.",
-      "result": "pending",
-      "evidence": null
+      "result": "approved-exception",
+      "evidence": "artifacts/spec-000/visual-report.json#overallStatus; human-decisions.md#D-08",
+      "approver": "titular del portfolio",
+      "rationale": "Excepción expresa de despliegue: la suite visual registra 19/19 escenas fallidas y sigue pendiente la revisión humana de accesibilidad; no se presentan esos resultados como aprobados. Revisar el 2026-10-27.",
+      "recheckAt": "2026-10-27"
     },
     {
       "id": "CA-19",
@@ -183,8 +186,11 @@
     {
       "id": "CA-31",
       "summary": "Cada escena declarada para la spec `000` supera la comparación de §6.5 y su informe conserva golden, candidata, diff y métricas. Una sola escena fallida impide cerrar la spec.",
-      "result": "pending",
-      "evidence": null
+      "result": "approved-exception",
+      "evidence": "artifacts/spec-000/visual-report.json#overallStatus; human-decisions.md#D-08",
+      "approver": "titular del portfolio",
+      "rationale": "Excepción expresa de despliegue: la suite visual registra 19/19 escenas fallidas y sigue pendiente la revisión humana de accesibilidad; no se presentan esos resultados como aprobados. Revisar el 2026-10-27.",
+      "recheckAt": "2026-10-27"
     },
     {
       "id": "CA-32",
@@ -208,11 +214,13 @@
   "reviews": [
     {
       "id": "public-content-and-channels",
-      "result": "pending"
+      "result": "pass",
+      "evidence": "human-decisions.md#D-05"
     },
     {
       "id": "privacy-and-legal",
-      "result": "pending"
+      "result": "pass",
+      "evidence": "human-decisions.md#D-06; research.md#evidencia-publica-de-google-y-conservacion"
     },
     {
       "id": "operations-and-recovery",
@@ -222,41 +230,56 @@
   "decisions": [
     {
       "id": "D-01",
-      "result": "pending"
+      "result": "pass",
+      "evidence": "human-decisions.md#D-01"
     },
     {
       "id": "D-02",
-      "result": "pending"
+      "result": "pass",
+      "evidence": "human-decisions.md#D-02"
     },
     {
       "id": "D-03",
-      "result": "pending"
+      "result": "pass",
+      "evidence": "human-decisions.md#D-03"
     },
     {
       "id": "D-04",
-      "result": "pending"
+      "result": "pass",
+      "evidence": "human-decisions.md#D-04"
     },
     {
       "id": "D-05",
-      "result": "pending"
+      "result": "pass",
+      "evidence": "human-decisions.md#D-05"
     },
     {
       "id": "D-06",
-      "result": "pending"
+      "result": "pass",
+      "evidence": "human-decisions.md#D-06"
     },
     {
       "id": "D-07",
-      "result": "pending"
+      "result": "pass",
+      "evidence": "human-decisions.md#D-07"
     },
     {
       "id": "D-08",
-      "result": "pending"
+      "result": "approved-exception",
+      "evidence": "human-decisions.md#D-08",
+      "approver": "titular del portfolio",
+      "rationale": "Autorización expresa para continuar con 19 de 19 escenas visuales fallidas y la revisión humana de accesibilidad pendiente; no declara aprobado el contrato visual.",
+      "recheckAt": "2026-10-27"
     }
   ],
   "dependencies": [
     {
       "id": "spec-000",
-      "result": "pending"
+      "result": "approved-exception",
+      "evidence": "specs/000-esqueleto-visual-funcional/closure-decision.md; specs/000-esqueleto-visual-funcional/accessibility-review.md; human-decisions.md#D-08",
+      "approver": "titular del portfolio",
+      "rationale": "Excepción expresa de despliegue: la suite visual registra 19/19 escenas fallidas y sigue pendiente la revisión humana de accesibilidad; no se presentan esos resultados como aprobados. Revisar el 2026-10-27.",
+      "recheckAt": "2026-10-27"
     },
     {
       "id": "spec-010",
@@ -266,20 +289,26 @@
   "legal": [
     {
       "id": "privacy",
-      "result": "pending"
+      "result": "pass",
+      "evidence": "human-decisions.md#D-06; research.md#evidencia-publica-de-google-y-conservacion"
     },
     {
       "id": "cookies",
-      "result": "pending"
+      "result": "pass",
+      "evidence": "human-decisions.md#D-06; research.md#evidencia-publica-de-google-y-conservacion"
     },
     {
       "id": "terms",
-      "result": "pending"
+      "result": "pass",
+      "evidence": "human-decisions.md#D-06; research.md#evidencia-publica-de-google-y-conservacion"
     }
   ],
   "openRisks": [
-    "SMTP provider and approved addresses are not configured",
-    "Production host, DNS, SSH identity, registry and alerting decisions are pending",
-    "Specs 000 and 010 do not have verified closure evidence"
+    "D-06 — asunción de riesgo menor aceptada por el titular: se asume la validez del marco general de Google Ireland y DPF/SCCs para el tratamiento en el EEE, condicionado a que la cuenta de destino mantenga su operativa bajo los términos estándar del EEE.",
+    "SMTP app password and production configuration are not provisioned",
+    "Private GHCR pull token, dedicated deploy account/key and deployment workflow are not provisioned",
+    "External service-health email alerts are coded; SMTP secret, delivery verification, and contact-delivery failure alerts remain pending.",
+    "Proxy review found that the NPM Docker json-file log driver has no explicit size/count limits; operational hardening follow-up is recorded.",
+    "Specs 000 and 010 do not have verified technical closure; the 000 visual/accessibility exception is approved for deployment and scheduled for review on 2026-10-27."
   ]
 }

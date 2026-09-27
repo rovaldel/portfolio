@@ -55,17 +55,20 @@ La arquitectura se hereda de 000/001 y del repositorio. Las decisiones humanas d
 
 **Alternatives considered**: Checklist manual sin vínculos, equiparar cierre administrativo con aprobación técnica o copiar aprobaciones de specs previas. No dan trazabilidad ni reflejan estado real.
 
-## 7. Decisiones humanas pendientes
+## 7. Decisiones humanas y condiciones pendientes
 
-Estas decisiones requieren a la persona responsable; ninguna recomendación se convierte en aprobación:
+Las decisiones recibidas del titular están registradas en [human-decisions.md](human-decisions.md), sin almacenar credenciales:
 
-1. Destino y visibilidad del paquete GHCR.
-2. Host/IP/puerto, huella SSH, DNS y aprovisionamiento de deploy en Hetzner.
-3. Proveedor SMTP, remitente, CONTACT_TO y aprovisionamiento de secretos.
-4. Canal de alertas de caída/fallo del contacto.
-5. Confirmación individual de email, teléfono, LinkedIn, menciones de clientes/proyectos y cifra del 65 %.
-6. Responsable y aprobación de documentos legales, base legal, conservación en buzón y derechos.
-7. Política GPTBot/OAI-SearchBot.
-8. Cierre verificable de 000 y 010 o autorización explícita para continuar con riesgos abiertos.
+- D-01 a D-05 y D-07 están decididas conforme a ese registro.
+- D-06: investigación de transferencias cerrada el 2026-09-27 con evidencia pública de Google aceptada por el titular; se registró la asunción de riesgo menor indicada en `human-decisions.md`. Los textos legales están aprobados. Se retiró el plazo fijo de 12 meses, sin afirmar un plazo máximo ni borrado automático. La revisión de logs del proxy se completó.
+- D-08: excepción limitada para desplegar con el contrato visual de spec 000 fallido (19/19 escenas) y la revisión humana de accesibilidad pendiente; revisar el 2026-10-27. No constituye pase técnico.
 
-Los datos ya codificados en la app no satisfacen por sí solos la confirmación específica de publicación. Resolver una decisión tampoco marca automáticamente como superadas sus verificaciones dependientes.
+Siguen siendo puertas de publicación la provisión segura de SMTP y GHCR, la cuenta y clave de despliegue, el workflow inmutable con rollback, la activación y prueba de alertas, las revisiones humanas de privacidad/operación y la evidencia técnica restante. La autorización de una decisión humana no convierte por sí sola en aprobada una verificación dependiente.
+
+### Evidencia pública de Google y conservación (consulta 2026-09-27)
+
+Google indica que la información puede tratarse en servidores fuera del país de residencia y que, para transferencias internacionales, se apoya en decisiones de adecuación, el EU-U.S. Data Privacy Framework para Google LLC y sus filiales estadounidenses cubiertas, y cláusulas contractuales tipo cuando corresponden. También explica que sus servicios de consumo suelen prestarse desde Google Ireland Limited a usuarios del EEE. Referencias: [marcos de transferencia de Google](https://policies.google.com/privacy/frameworks?hl=en), [región de la cuenta de Google](https://policies.google.com/faq).
+
+El titular acepta estas fuentes como evidencia válida para cerrar la investigación de transferencias internacionales D-06. Asunción de riesgo menor: "se asume la validez del marco general de Google Ireland y DPF/SCCs para el tratamiento en el EEE, condicionado a que la cuenta de destino mantenga su operativa bajo los términos estándar del EEE". Si cambian la región o los términos aplicables a la cuenta, se reabre la revisión.
+
+La AEPD describe la limitación del plazo de conservación como conservar los datos solo durante el tiempo necesario para la finalidad. Por eso se retiró la promesa operativa de borrado a los 12 meses, manteniendo en la política la eliminación manual cuando los mensajes dejan de ser necesarios, sin afirmar que no exista el principio general de limitación. Referencia: [principios de protección de datos de la AEPD](https://www.aepd.es/derechos-y-deberes/cumple-tus-deberes/principios).
