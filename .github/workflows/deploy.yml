@@ -27,6 +27,7 @@ jobs:
         run: node scripts/deploy/check-predeployment.mjs
       - run: pnpm install --frozen-lockfile
       - run: pnpm exec playwright install --with-deps chromium firefox
+      # Spec 010 repite las mismas 12 comprobaciones; aquí se ejecutan una sola vez en spec 000.
       - name: Verificar spec 000
         id: spec000
         continue-on-error: true
@@ -36,15 +37,6 @@ jobs:
         run: node scripts/deploy/approved-visual-exception.mjs
         env:
           VERIFY_SUMMARY: artifacts/spec-000/verification-summary.json
-      - name: Verificar spec 010
-        id: spec010
-        continue-on-error: true
-        run: pnpm run verify:spec:010
-      - name: Validar la excepción visual D-08 de spec 010
-        if: steps.spec010.outcome == 'failure'
-        run: node scripts/deploy/approved-visual-exception.mjs
-        env:
-          VERIFY_SUMMARY: artifacts/spec-010/verification-summary.json
       - name: Probar entrega y fallos de contacto con SMTP falso
         run: pnpm run test:integration:contact
       - run: pnpm run verify:spec:020
