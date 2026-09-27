@@ -1,0 +1,852 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rodrigovaldelvira.com/contracts/spec-000/visual-evidence.schema.json",
+  "title": "Spec 000 visual evidence run",
+  "description": "Manifest for one all-or-nothing comparison of the 19 normative scenes. The verifier additionally enforces unique sceneId values.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "generatedAt",
+    "commit",
+    "sources",
+    "environment",
+    "configuration",
+    "scenes",
+    "overallStatus"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "generatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "commit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "sources": {
+      "$ref": "#/$defs/sourceHashes"
+    },
+    "environment": {
+      "$ref": "#/$defs/environment"
+    },
+    "configuration": {
+      "$ref": "#/$defs/configuration"
+    },
+    "scenes": {
+      "type": "array",
+      "minItems": 19,
+      "maxItems": 19,
+      "items": {
+        "$ref": "#/$defs/sceneResult"
+      }
+    },
+    "overallStatus": {
+      "enum": [
+        "pass",
+        "fail"
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "overallStatus": {
+            "const": "pass"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "scenes": {
+            "items": {
+              "properties": {
+                "status": {
+                  "const": "pass"
+                }
+              }
+            }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "scenes": {
+            "contains": {
+              "properties": {
+                "status": {
+                  "const": "fail"
+                }
+              },
+              "required": [
+                "status"
+              ]
+            },
+            "minContains": 1
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "sourceHashes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "Portfolio Conversacional.html",
+        "support.js",
+        "Rodrigo_Valdelvira_CV_AI_Engineer.pdf",
+        "portafolio.png",
+        "leadia.webp",
+        "nami-cover.png"
+      ],
+      "properties": {
+        "Portfolio Conversacional.html": {
+          "$ref": "#/$defs/sha256"
+        },
+        "support.js": {
+          "$ref": "#/$defs/sha256"
+        },
+        "Rodrigo_Valdelvira_CV_AI_Engineer.pdf": {
+          "$ref": "#/$defs/sha256"
+        },
+        "portafolio.png": {
+          "$ref": "#/$defs/sha256"
+        },
+        "leadia.webp": {
+          "$ref": "#/$defs/sha256"
+        },
+        "nami-cover.png": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "environment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "node",
+        "playwright",
+        "browser",
+        "browserVersion",
+        "operatingSystem",
+        "deviceScaleFactor",
+        "fontHashes"
+      ],
+      "properties": {
+        "node": {
+          "type": "string",
+          "minLength": 1
+        },
+        "playwright": {
+          "type": "string",
+          "minLength": 1
+        },
+        "browser": {
+          "const": "chromium"
+        },
+        "browserVersion": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operatingSystem": {
+          "type": "string",
+          "minLength": 1
+        },
+        "containerImage": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fontHashes": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/sha256"
+          },
+          "minProperties": 1
+        },
+        "deviceScaleFactor": {
+          "const": 1
+        }
+      }
+    },
+    "configuration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "configPath",
+        "configSha256",
+        "pixelThreshold",
+        "maximumChangedPixelRatio",
+        "maximumAnchorDeltaCssPx",
+        "animationsFrozen",
+        "clockFrozen",
+        "fontsReady",
+        "externalNetworkBlocked"
+      ],
+      "properties": {
+        "configPath": {
+          "const": "design/golden.config.json"
+        },
+        "configSha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "pixelThreshold": {
+          "const": 0.1
+        },
+        "maximumChangedPixelRatio": {
+          "const": 0.005
+        },
+        "maximumAnchorDeltaCssPx": {
+          "const": 2
+        },
+        "animationsFrozen": {
+          "const": true
+        },
+        "clockFrozen": {
+          "const": true
+        },
+        "fontsReady": {
+          "const": true
+        },
+        "externalNetworkBlocked": {
+          "const": true
+        }
+      }
+    },
+    "viewport": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "width",
+        "height"
+      ],
+      "properties": {
+        "width": {
+          "type": "integer",
+          "minimum": 320
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "golden",
+        "candidate",
+        "diff",
+        "metrics"
+      ],
+      "properties": {
+        "golden": {
+          "type": "string",
+          "pattern": "^artifacts/spec-000/scenes/.+/golden\\.png$"
+        },
+        "candidate": {
+          "type": "string",
+          "pattern": "^artifacts/spec-000/scenes/.+/candidate\\.png$"
+        },
+        "diff": {
+          "type": "string",
+          "pattern": "^artifacts/spec-000/scenes/.+/diff\\.png$"
+        },
+        "metrics": {
+          "type": "string",
+          "pattern": "^artifacts/spec-000/scenes/.+/metrics\\.json$"
+        }
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "totalPixels",
+        "comparedPixels",
+        "excludedPixels",
+        "changedPixels",
+        "changedPixelRatio",
+        "pixelThreshold"
+      ],
+      "properties": {
+        "totalPixels": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "changedPixels": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "changedPixelRatio": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "pixelThreshold": {
+          "const": 0.1
+        },
+        "comparedPixels": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "excludedPixels": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "box": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "x",
+        "y",
+        "width",
+        "height"
+      ],
+      "properties": {
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        },
+        "width": {
+          "type": "number",
+          "minimum": 0
+        },
+        "height": {
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    },
+    "anchor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "selector",
+        "golden",
+        "candidate",
+        "fields",
+        "maximumDeltaCssPx",
+        "deltas",
+        "status"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "selector": {
+          "type": "string",
+          "minLength": 1
+        },
+        "golden": {
+          "$ref": "#/$defs/position"
+        },
+        "candidate": {
+          "$ref": "#/$defs/box"
+        },
+        "fields": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "x",
+              "y",
+              "width",
+              "height"
+            ]
+          }
+        },
+        "maximumDeltaCssPx": {
+          "type": "number",
+          "minimum": 0
+        },
+        "deltas": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "status": {
+          "enum": [
+            "pass",
+            "fail"
+          ]
+        }
+      }
+    },
+    "contractChecks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tokens",
+        "fonts",
+        "fontWeights",
+        "radii",
+        "borders",
+        "shadows",
+        "assets"
+      ],
+      "properties": {
+        "tokens": {
+          "enum": [
+            "pass",
+            "fail"
+          ]
+        },
+        "fonts": {
+          "enum": [
+            "pass",
+            "fail"
+          ]
+        },
+        "fontWeights": {
+          "enum": [
+            "pass",
+            "fail"
+          ]
+        },
+        "radii": {
+          "enum": [
+            "pass",
+            "fail"
+          ]
+        },
+        "borders": {
+          "enum": [
+            "pass",
+            "fail"
+          ]
+        },
+        "shadows": {
+          "enum": [
+            "pass",
+            "fail"
+          ]
+        },
+        "assets": {
+          "enum": [
+            "pass",
+            "fail"
+          ]
+        }
+      }
+    },
+    "sceneResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sceneId",
+        "candidatePath",
+        "theme",
+        "viewport",
+        "mode",
+        "artifacts",
+        "metrics",
+        "status",
+        "precondition"
+      ],
+      "properties": {
+        "sceneId": {
+          "enum": [
+            "portfolio/portada-rioja-desktop",
+            "portfolio/portada-rioja-mobile",
+            "portfolio/portada-claro-desktop",
+            "portfolio/portada-oscuro-desktop",
+            "portfolio/portada-cobalto-desktop",
+            "portfolio/portada-bosque-desktop",
+            "portfolio/selector-tema",
+            "portfolio/sobre-mi",
+            "portfolio/habilidades",
+            "portfolio/servicios",
+            "portfolio/servicio-detalle",
+            "portfolio/proyectos",
+            "portfolio/proyecto-leadia",
+            "portfolio/experiencia",
+            "portfolio/formacion",
+            "portfolio/contacto",
+            "portfolio/bitacora",
+            "portfolio/articulo-langgraph",
+            "portfolio/legal-privacidad"
+          ]
+        },
+        "candidatePath": {
+          "type": "string",
+          "pattern": "^/"
+        },
+        "theme": {
+          "enum": [
+            "light",
+            "dark",
+            "cobalto",
+            "rioja",
+            "bosque"
+          ]
+        },
+        "viewport": {
+          "$ref": "#/$defs/viewport"
+        },
+        "mode": {
+          "enum": [
+            "pixel",
+            "contract"
+          ]
+        },
+        "exceptionRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "artifacts": {
+          "$ref": "#/$defs/artifacts"
+        },
+        "metrics": {
+          "$ref": "#/$defs/metrics"
+        },
+        "anchors": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/anchor"
+          }
+        },
+        "contractChecks": {
+          "$ref": "#/$defs/contractChecks"
+        },
+        "status": {
+          "enum": [
+            "pass",
+            "fail"
+          ]
+        },
+        "precondition": {
+          "type": "string",
+          "minLength": 1
+        },
+        "exceptionApproval": {
+          "enum": [
+            "pending-human-review",
+            "approved",
+            "missing"
+          ]
+        },
+        "exceptionEvidence": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "beforeExists",
+            "afterExists"
+          ],
+          "properties": {
+            "beforeExists": {
+              "type": "boolean"
+            },
+            "afterExists": {
+              "type": "boolean"
+            }
+          }
+        },
+        "excludedRegions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/excludedRegion"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "allOf": [
+              {
+                "properties": {
+                  "mode": {
+                    "const": "pixel"
+                  }
+                },
+                "required": [
+                  "mode"
+                ]
+              },
+              {
+                "properties": {
+                  "status": {
+                    "const": "pass"
+                  }
+                },
+                "required": [
+                  "status"
+                ]
+              }
+            ]
+          },
+          "then": {
+            "properties": {
+              "metrics": {
+                "properties": {
+                  "changedPixelRatio": {
+                    "maximum": 0.005
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "contract"
+              }
+            },
+            "required": [
+              "mode"
+            ]
+          },
+          "then": {
+            "required": [
+              "exceptionRef",
+              "anchors",
+              "contractChecks",
+              "exceptionApproval",
+              "exceptionEvidence",
+              "excludedRegions"
+            ]
+          }
+        },
+        {
+          "if": {
+            "allOf": [
+              {
+                "properties": {
+                  "mode": {
+                    "const": "contract"
+                  }
+                },
+                "required": [
+                  "mode"
+                ]
+              },
+              {
+                "properties": {
+                  "status": {
+                    "const": "pass"
+                  }
+                },
+                "required": [
+                  "status"
+                ]
+              }
+            ]
+          },
+          "then": {
+            "properties": {
+              "anchors": {
+                "items": {
+                  "properties": {
+                    "status": {
+                      "const": "pass"
+                    }
+                  }
+                }
+              },
+              "contractChecks": {
+                "properties": {
+                  "tokens": {
+                    "const": "pass"
+                  },
+                  "fonts": {
+                    "const": "pass"
+                  },
+                  "fontWeights": {
+                    "const": "pass"
+                  },
+                  "radii": {
+                    "const": "pass"
+                  },
+                  "borders": {
+                    "const": "pass"
+                  },
+                  "shadows": {
+                    "const": "pass"
+                  },
+                  "assets": {
+                    "const": "pass"
+                  }
+                }
+              },
+              "exceptionApproval": {
+                "const": "approved"
+              },
+              "exceptionEvidence": {
+                "properties": {
+                  "beforeExists": {
+                    "const": true
+                  },
+                  "afterExists": {
+                    "const": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "allOf": [
+              {
+                "properties": {
+                  "mode": {
+                    "const": "contract"
+                  }
+                },
+                "required": [
+                  "mode"
+                ]
+              },
+              {
+                "properties": {
+                  "status": {
+                    "const": "pass"
+                  }
+                },
+                "required": [
+                  "status"
+                ]
+              }
+            ]
+          },
+          "then": {
+            "properties": {
+              "metrics": {
+                "properties": {
+                  "changedPixelRatio": {
+                    "maximum": 0.005
+                  }
+                }
+              },
+              "anchors": {
+                "items": {
+                  "properties": {
+                    "status": {
+                      "const": "pass"
+                    }
+                  }
+                }
+              },
+              "contractChecks": {
+                "properties": {
+                  "tokens": {
+                    "const": "pass"
+                  },
+                  "fonts": {
+                    "const": "pass"
+                  },
+                  "fontWeights": {
+                    "const": "pass"
+                  },
+                  "radii": {
+                    "const": "pass"
+                  },
+                  "borders": {
+                    "const": "pass"
+                  },
+                  "shadows": {
+                    "const": "pass"
+                  },
+                  "assets": {
+                    "const": "pass"
+                  }
+                }
+              },
+              "exceptionApproval": {
+                "const": "approved"
+              },
+              "exceptionEvidence": {
+                "properties": {
+                  "beforeExists": {
+                    "const": true
+                  },
+                  "afterExists": {
+                    "const": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "position": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "x",
+        "y"
+      ],
+      "properties": {
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        },
+        "width": {
+          "type": "number",
+          "minimum": 0
+        },
+        "height": {
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    },
+    "excludedRegion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "description",
+        "boxes",
+        "ignoredPixels"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "boxes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/box"
+          }
+        },
+        "ignoredPixels": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,52 @@
+---
+import { skillGroups } from '../../content/site';
+
+const icons: Record<string, string> = {
+  ia: 'M8 4h8v4h4v8h-4v4H8v-4H4V8h4ZM9 9h6v6H9z',
+  datos: 'M4 6c0-4 16-4 16 0s-16 4-16 0Zm0 0v12c0 4 16 4 16 0V6M4 12c0 4 16 4 16 0',
+  cloud: 'M3 12a5 5 0 0 1 5-5 6 6 0 0 1 11.7 1.5A4.5 4.5 0 0 1 19 17H8',
+  desarrollo: 'm8 8-4 4 4 4m8-8 4 4-4 4m-3-6-2 4',
+};
+---
+
+<section class="skills-catalog" data-visual-anchor="skills" aria-label="Habilidades agrupadas">
+  {
+    skillGroups.map((group) => (
+      <article class="skills-catalog__group" data-skill-group={group.id}>
+        <h2>
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.7"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d={icons[group.id] ?? icons.ia} />
+          </svg>
+          {group.name}
+        </h2>
+        <ul class="skills">
+          {group.skills.map((skill) => (
+            <li>
+              <span>{skill.name}</span>
+              <span class="skill-rating" role="img" aria-label={`Nivel orientativo: ${skill.level} de 5`}>
+                {Array.from({ length: 5 }, (_, index) => (
+                  <svg
+                    class:list={['skill-rating__star', index < skill.level && 'is-filled']}
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9Z" />
+                  </svg>
+                ))}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </article>
+    ))
+  }
+  <p class="skills-catalog__note">Autoevaluación orientativa · escala de 1 a 5.</p>
+</section>

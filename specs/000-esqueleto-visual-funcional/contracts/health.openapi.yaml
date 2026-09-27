@@ -1,0 +1,67 @@
+openapi: 3.1.0
+info:
+  title: Portfolio health contract
+  version: 0.0.0-spec-000
+  description: >-
+    Único endpoint dinámico expuesto por la spec 000. No revela versión,
+    dependencias, configuración, uptime ni estado de servicios futuros.
+servers:
+  - url: http://localhost:3000
+    description: Contenedor local
+paths:
+  /api/salud:
+    get:
+      operationId: getHealth
+      summary: Comprueba que el proceso puede servir solicitudes
+      responses:
+        "200":
+          description: Proceso disponible
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+            X-Content-Type-Options:
+              schema:
+                type: string
+                const: nosniff
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Health"
+              examples:
+                ok:
+                  value:
+                    status: ok
+        "500":
+          description: >-
+            Fallo inesperado con cuerpo genérico; no expone trazas ni detalles
+            internos.
+    head:
+      operationId: headHealth
+      summary: Comprueba disponibilidad sin cuerpo
+      responses:
+        "200":
+          description: Mismas cabeceras que GET y cuerpo vacío
+    post:
+      operationId: rejectHealthPost
+      summary: Método no permitido
+      responses:
+        "405":
+          description: Método no permitido
+          headers:
+            Allow:
+              schema:
+                type: string
+                const: GET, HEAD
+components:
+  schemas:
+    Health:
+      type: object
+      additionalProperties: false
+      required:
+        - status
+      properties:
+        status:
+          type: string
+          const: ok

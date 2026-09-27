@@ -1,0 +1,285 @@
+{
+  "criteria": [
+    {
+      "id": "CA-01",
+      "summary": "Con JavaScript desactivado puedo abrir desde la portada Sobre mí, Servicios, Proyectos, Experiencia, Formación, Bitácora y Contacto y leer contenido útil.",
+      "result": "pending",
+      "evidence": null
+    },
+    {
+      "id": "CA-02",
+      "summary": "Con JavaScript activo, escribir “¿Qué experiencia tienes con LangGraph?” devuelve la respuesta aprobada y un enlace al artículo canónico; la consulta no aparece en la pestaña Network.",
+      "result": "pending",
+      "evidence": null
+    },
+    {
+      "id": "CA-03",
+      "summary": "Una consulta desconocida no inventa respuesta y ofrece enlaces reales.",
+      "result": "pending",
+      "evidence": null
+    },
+    {
+      "id": "CA-04",
+      "summary": "Back, forward y recarga conservan una ruta navegable, no un overlay huérfano.",
+      "result": "pending",
+      "evidence": null
+    },
+    {
+      "id": "CA-05",
+      "summary": "Solo aparecen Leadia y Nami; Leadia abre su URL y Nami no muestra un CTA vacío.",
+      "result": "pending",
+      "evidence": null
+    },
+    {
+      "id": "CA-06",
+      "summary": "Solo aparece en Bitácora el artículo con cuerpo completo y su título coincide con el contenido.",
+      "result": "pending",
+      "evidence": null
+    },
+    {
+      "id": "CA-07",
+      "summary": "Todos los botones visibles realizan su acción; no se muestran micrófono, Toolkit ni etiquetas de demo.",
+      "result": "pending",
+      "evidence": null
+    },
+    {
+      "id": "CA-08",
+      "summary": "TalentTools termina en diciembre de 2025 en todas las superficies.",
+      "result": "pending",
+      "evidence": null
+    },
+    {
+      "id": "CA-09",
+      "summary": "Un mensaje válido llega una sola vez a `CONTACT_TO` y se confirma solo tras aceptación SMTP.",
+      "result": "pending",
+      "evidence": null
+    },
+    {
+      "id": "CA-10",
+      "summary": "Si SMTP falla, el sitio conserva el texto, no confirma envío y ofrece email alternativo.",
+      "result": "pending",
+      "evidence": null
+    },
+    {
+      "id": "CA-11",
+      "summary": "Payloads inválidos, origen ajeno, CRLF, más de 8 KiB y ráfaga se rechazan según §8.6.",
+      "result": "pending",
+      "evidence": null
+    },
+    {
+      "id": "CA-12",
+      "summary": "Buscar el nombre, email y mensaje de la prueba en logs no devuelve resultados.",
+      "result": "pending",
+      "evidence": null
+    },
+    {
+      "id": "CA-13",
+      "summary": "No hay cookies; rechazar todo el almacenamiento del navegador no impide usar el sitio, solo evita recordar el tema.",
+      "result": "pending",
+      "evidence": null
+    },
+    {
+      "id": "CA-14",
+      "summary": "Todos los recorridos se completan con teclado y el foco siempre es visible y no queda oculto por cabecera/footer.",
+      "result": "pending",
+      "evidence": null
+    },
+    {
+      "id": "CA-15",
+      "summary": "Los cinco temas superan contraste AA para texto y controles.",
+      "result": "pending",
+      "evidence": null
+    },
+    {
+      "id": "CA-16",
+      "summary": "A 320 px, zoom 200 % y teclado móvil abierto no aparece scroll horizontal ni acciones inaccesibles.",
+      "result": "pending",
+      "evidence": null
+    },
+    {
+      "id": "CA-17",
+      "summary": "Con movimiento reducido no hay streaming, flotación, pulsos ni scroll suave.",
+      "result": "pending",
+      "evidence": null
+    },
+    {
+      "id": "CA-18",
+      "summary": "Las capturas de regresión se corresponden con el mockup en estructura y jerarquía, salvo cambios registrados por accesibilidad, veracidad o responsive.",
+      "result": "pending",
+      "evidence": null
+    },
+    {
+      "id": "CA-19",
+      "summary": "`curl` a cada ruta indexable contiene H1, contenido principal, title, description, canonical y JSON-LD sin ejecutar JavaScript.",
+      "result": "pending",
+      "evidence": null
+    },
+    {
+      "id": "CA-20",
+      "summary": "Sitemap, robots y `llms.txt` solo enlazan URLs canónicas 200 y no incluyen drafts/API.",
+      "result": "pending",
+      "evidence": null
+    },
+    {
+      "id": "CA-21",
+      "summary": "Rich Results/validador Schema no encuentra errores y los valores coinciden con texto visible.",
+      "result": "pending",
+      "evidence": null
+    },
+    {
+      "id": "CA-22",
+      "summary": "`OAI-SearchBot` puede leer contenido público y `GPTBot` recibe la política de exclusión definida.",
+      "result": "pending",
+      "evidence": null
+    },
+    {
+      "id": "CA-23",
+      "summary": "El PDF descarga correctamente desde `/Rodrigo-Valdelvira-CV.pdf` y responde con `X-Robots-Tag`.",
+      "result": "pending",
+      "evidence": null
+    },
+    {
+      "id": "CA-24",
+      "summary": "En checkout limpio, `docker compose up --build` deja la web sana en localhost sin instalar Node en el host.",
+      "result": "pending",
+      "evidence": null
+    },
+    {
+      "id": "CA-25",
+      "summary": "El contenedor ejecuta como no root, con filesystem read-only, capacidades eliminadas y healthcheck sano.",
+      "result": "pending",
+      "evidence": null
+    },
+    {
+      "id": "CA-26",
+      "summary": "Un push autorizado a `main` verifica, construye una única imagen, la escanea y despliega exactamente el SHA esperado.",
+      "result": "pending",
+      "evidence": null
+    },
+    {
+      "id": "CA-27",
+      "summary": "Producción responde en HTTPS, `www` redirige al dominio raíz y las cabeceras de §11.3 están presentes.",
+      "result": "pending",
+      "evidence": null
+    },
+    {
+      "id": "CA-28",
+      "summary": "Forzar un healthcheck fallido durante un despliegue restaura la imagen anterior y marca el workflow como fallido.",
+      "result": "pending",
+      "evidence": null
+    },
+    {
+      "id": "CA-29",
+      "summary": "El resumen del workflow permite identificar commit, digest, hora, URL y resultado.",
+      "result": "pending",
+      "evidence": null
+    },
+    {
+      "id": "CA-30",
+      "summary": "Al cerrar la spec `000`, todas las superficies visuales públicas de la v1 existen dentro de una única aplicación, usan los activos y tokens normativos y se alcanzan mediante navegación real; no quedan pantallas vacías, controles muertos ni componentes visuales genéricos pendientes de sustituir.",
+      "result": "pending",
+      "evidence": null
+    },
+    {
+      "id": "CA-31",
+      "summary": "Cada escena declarada para la spec `000` supera la comparación de §6.5 y su informe conserva golden, candidata, diff y métricas. Una sola escena fallida impide cerrar la spec.",
+      "result": "pending",
+      "evidence": null
+    },
+    {
+      "id": "CA-32",
+      "summary": "Las specs `010` y `020` vuelven a ejecutar la suite visual completa y no modifican el golden ni el registro de excepciones sin decisión aprobada.",
+      "result": "pending",
+      "evidence": null
+    },
+    {
+      "id": "CA-33",
+      "summary": "El `README.md` raíz describe el estado real del repositorio, arquitectura funcional, requisitos, configuración, arranque local, parada, verificación por spec, solución de problemas, despliegue, verificación post-despliegue y rollback. Todos los comandos que declara como disponibles se ejecutan desde un checkout limpio o se marcan inequívocamente como contrato pendiente.",
+      "result": "pending",
+      "evidence": null
+    },
+    {
+      "id": "CA-34",
+      "summary": "Existe un único comando de verificación por spec y un comando global documentados en el README; cada uno termina con código distinto de cero cuando falla cualquiera de sus criterios y enlaza o produce la evidencia indicada en §19.3.",
+      "result": "pending",
+      "evidence": null
+    }
+  ],
+  "reviews": [
+    {
+      "id": "public-content-and-channels",
+      "result": "pending"
+    },
+    {
+      "id": "privacy-and-legal",
+      "result": "pending"
+    },
+    {
+      "id": "operations-and-recovery",
+      "result": "pending"
+    }
+  ],
+  "decisions": [
+    {
+      "id": "D-01",
+      "result": "pending"
+    },
+    {
+      "id": "D-02",
+      "result": "pending"
+    },
+    {
+      "id": "D-03",
+      "result": "pending"
+    },
+    {
+      "id": "D-04",
+      "result": "pending"
+    },
+    {
+      "id": "D-05",
+      "result": "pending"
+    },
+    {
+      "id": "D-06",
+      "result": "pending"
+    },
+    {
+      "id": "D-07",
+      "result": "pending"
+    },
+    {
+      "id": "D-08",
+      "result": "pending"
+    }
+  ],
+  "dependencies": [
+    {
+      "id": "spec-000",
+      "result": "pending"
+    },
+    {
+      "id": "spec-010",
+      "result": "pending"
+    }
+  ],
+  "legal": [
+    {
+      "id": "privacy",
+      "result": "pending"
+    },
+    {
+      "id": "cookies",
+      "result": "pending"
+    },
+    {
+      "id": "terms",
+      "result": "pending"
+    }
+  ],
+  "openRisks": [
+    "SMTP provider and approved addresses are not configured",
+    "Production host, DNS, SSH identity, registry and alerting decisions are pending",
+    "Specs 000 and 010 do not have verified closure evidence"
+  ]
+}

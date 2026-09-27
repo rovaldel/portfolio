@@ -1,0 +1,59 @@
+openapi: 3.1.0
+info:
+  title: Portfolio contact submission
+  version: 1.0.0
+  description: Stateless contact submission. Personal fields are never persisted by the portfolio.
+servers:
+  - url: https://rodrigovaldelvira.com
+paths:
+  /api/contacto:
+    post:
+      operationId: submitContact
+      summary: Submit one contact message
+      description: Accepts same-origin form submission. Success is returned only after the configured mail destination accepts the message. No automatic reply is sent.
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [name, email, message, idempotencyKey, website]
+              properties:
+                name: { type: string, minLength: 2, maxLength: 80 }
+                email: { type: string, format: email, maxLength: 254 }
+                message: { type: string, minLength: 20, maxLength: 3000 }
+                idempotencyKey: { type: string, minLength: 16, maxLength: 128 }
+                website: { type: string, maxLength: 200, description: Honeypot; must be empty }
+          multipart/form-data:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [name, email, message, idempotencyKey, website]
+              properties:
+                name: { type: string, minLength: 2, maxLength: 80 }
+                email: { type: string, format: email, maxLength: 254 }
+                message: { type: string, minLength: 20, maxLength: 3000 }
+                idempotencyKey: { type: string, minLength: 16, maxLength: 128 }
+                website: { type: string, maxLength: 200 }
+      responses:
+        '303':
+          description: Provider accepted one message; redirect to contact page with non-sensitive success state.
+        '400':
+          description: Invalid fields, unexpected fields, bad content type, origin or honeypot. Do not echo unsafe values.
+        '413':
+          description: Request body exceeds 8192 bytes.
+        '415':
+          description: Unsupported media type.
+        '429':
+          description: Per-connection or global limit reached; include a bounded Retry-After when known.
+        '503':
+          description: Delivery not configured, rejected, timed out or uncertain. Never claim sent; preserve submitted values in the rendered response and offer approved email fallback.
+      security: []
+      x-security-contract:
+        sameOrigin: Required. Validate Origin/Host against configured canonical origin; do not trust arbitrary forwarded headers.
+        bodyLimitBytes: 8192
+        rateLimit: 5 attempts per connection key per 900 seconds plus a global defensive limit.
+        idempotency: Repeated immediate key must not cause a second accepted delivery.
+        privacy: No request fields, full headers, connection address or secrets in application logs or durable application storage.
+        mail: Fixed approved From and recipient; visitor address only as Reply-To; plain text; CRLF rejected in header-bound values; TLS; finite timeout; no retry or auto-reply.

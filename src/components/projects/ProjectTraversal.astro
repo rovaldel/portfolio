@@ -1,0 +1,43 @@
+---
+import { projects } from '../../content/site';
+import type { Project } from '../../content/site';
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+const currentIndex = project.position - 1;
+const previous = project.position > 1 ? projects[currentIndex - 1] : null;
+const next = project.position < projects.length ? projects[currentIndex + 1] : null;
+---
+
+<nav class="project-index__traversal" aria-label="Navegación entre proyectos">
+  {
+    previous && (
+      <a
+        class="button button--quiet"
+        href={'/proyectos/' + previous.slug}
+        data-project-previous={previous.slug}
+        aria-label={'Proyecto anterior: ' + previous.title}
+      >
+        <span aria-hidden="true">←</span> Anterior
+      </a>
+    )
+  }
+  {
+    next && (
+      <a
+        class="button button--fill"
+        href={'/proyectos/' + next.slug}
+        data-project-next={next.slug}
+        aria-label={'Siguiente proyecto: ' + next.title}
+      >
+        Siguiente <span aria-hidden="true">→</span>
+      </a>
+    )
+  }
+  <a class="button button--quiet" href="/experiencia" data-conversation-followup="experience"
+    >Ver trayectoria</a
+  >
+</nav>

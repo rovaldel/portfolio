@@ -1,0 +1,31 @@
+---
+import ConversationPage from '../../components/layout/ConversationPage.astro';
+import ProjectDialog from '../../components/projects/ProjectDialog.astro';
+import ProjectIndex from '../../components/projects/ProjectIndex.astro';
+import { projects } from '../../content/site';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const project = projects.find((item) => item.slug === Astro.params.slug);
+---
+
+{
+  project ? (
+    <BaseLayout title={project.title + ' · Rodrigo Valdelvira'} description={project.description} modalMode>
+      <ConversationPage action="Proyectos" label={project.title}>
+        <p class="conversation-lead">Te muestro mis proyectos, uno a uno.</p>
+        <ProjectIndex activeSlug={project.slug} />
+      </ConversationPage>
+      <Fragment slot="modal">
+        <div class="modal-backdrop" data-modal-backdrop>
+          <ProjectDialog project={project} />
+        </div>
+      </Fragment>
+      <script src="../../scripts/project-dialog.ts" />
+    </BaseLayout>
+  ) : (
+    <BaseLayout title="Proyecto no encontrado" noindex>
+      <h1>Proyecto no encontrado</h1>
+      <a href="/proyectos">Volver a proyectos</a>
+    </BaseLayout>
+  )
+}

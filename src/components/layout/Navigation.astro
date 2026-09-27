@@ -1,0 +1,31 @@
+---
+import { surfaces } from '../../lib/routes';
+const { currentPath } = Astro.props;
+const navItems = surfaces.filter((surface) =>
+  [
+    '/',
+    '/sobre-mi',
+    '/habilidades',
+    '/servicios',
+    '/experiencia',
+    '/formacion',
+    '/proyectos',
+    '/bitacora',
+    '/contacto',
+  ].includes(surface.path),
+);
+---
+
+<nav aria-label="Navegación principal">
+  <ul class="nav-list">
+    {
+      navItems.map((item) => (
+        <li>
+          <a href={item.path} aria-current={currentPath === item.path ? 'page' : undefined}>
+            {item.navigationLabel}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>

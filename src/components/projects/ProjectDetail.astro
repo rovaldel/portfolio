@@ -1,0 +1,41 @@
+---
+import StableImage from '../ui/StableImage.astro';
+import type { Project } from '../../content/site';
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+---
+
+<article class="project-detail">
+  <div class="project-detail__media">
+    <StableImage {...project.image} class="project-detail__image" />
+    <p class="tag project-detail__status">{project.statusLabel}</p>
+  </div>
+  <div class="project-detail__heading">
+    <h2>{project.title}</h2>
+    <p class="muted">{project.client} · {project.role}</p>
+  </div>
+  <dl class="project-detail__metadata">
+    <div><dt>Cliente</dt><dd>{project.client}</dd></div>
+    <div><dt>Rol</dt><dd>{project.role}</dd></div>
+  </dl>
+  <p class="project-detail__description">{project.description}</p>
+  <h3>Tecnologías</h3>
+  <ul class="project-detail__technologies">
+    {project.technologies.map((technology) => <li>{technology}</li>)}
+  </ul>
+  {
+    project.externalUrl ? (
+      <a class="button button--fill" href={project.externalUrl} target="_blank" rel="noopener noreferrer">
+        Visitar proyecto <span aria-hidden="true">↗</span>
+      </a>
+    ) : (
+      <p class="project-detail__availability">
+        <strong>En fase de diseño.</strong> Nami todavía no tiene un destino externo publicado.
+      </p>
+    )
+  }
+</article>

@@ -1,0 +1,73 @@
+---
+interface ArticleData {
+  slug: string;
+  title: string;
+  description: string;
+  excerpt: string;
+  category: string;
+  publishedAt: string | Date;
+  readingMinutes: number;
+}
+
+interface Props {
+  articles: ArticleData[];
+}
+
+const { articles } = Astro.props;
+const categories = [...new Set(articles.map((article) => article.category))];
+const formatDate = (value: string | Date) =>
+  new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'short', year: 'numeric' })
+    .format(new Date(value))
+    .replaceAll('.', '');
+---
+
+<section class="journal-browser" aria-label="Artículos de Bitácora">
+  <div class="journal-filters" role="group" aria-label="Filtrar artículos por categoría">
+    <button class="conversation-dock__chip" type="button" data-journal-filter="all" aria-pressed="true"
+      >Todos</button
+    >
+    {
+      categories.map((category) => (
+        <button
+          class="conversation-dock__chip"
+          type="button"
+          data-journal-filter={category}
+          aria-pressed="false"
+        >
+          {category}
+        </button>
+      ))
+    }
+    <label class="journal-search">
+      Filtrar artículos
+      <input type="search" data-journal-search />
+    </label>
+  </div>
+  <p data-journal-empty role="status" hidden>No hay artículos que coincidan con los filtros.</p>
+  <div class="journal-list" data-journal-list>
+    {
+      articles.map((article) => (
+        <article class="journal-card" data-journal-entry data-category={article.category}>
+          <div class="journal-card__body">
+            <p class="journal-card__meta">
+              <span class="tag">{article.category}</span>
+              <time datetime={new Date(article.publishedAt).toISOString()}>
+                {formatDate(article.publishedAt)}
+              </time>
+              <span>{article.readingMinutes} min de lectura</span>
+              <span class="article-meta__status">Artículo publicado</span>
+            </p>
+            <h2>
+              <a href={'/bitacora/' + article.slug}>{article.title}</a>
+            </h2>
+            <p>{article.excerpt}</p>
+            <a class="journal-card__link" href={'/bitacora/' + article.slug}>
+              Leer el artículo <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</section>
+<script src="../../scripts/journal-filters.ts"></script>

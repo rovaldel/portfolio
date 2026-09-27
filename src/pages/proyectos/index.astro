@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ConversationPage from '../../components/layout/ConversationPage.astro';
+import ProjectIndex from '../../components/projects/ProjectIndex.astro';
+---
+
+<BaseLayout>
+  <ConversationPage action="Proyectos" label="Proyectos">
+    <p class="conversation-lead">
+      Te muestro mi trabajo, proyecto a proyecto. Pulsa una tarjeta para ver la información completa.
+    </p>
+    <ProjectIndex />
+  </ConversationPage>
+</BaseLayout>

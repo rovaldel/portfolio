@@ -1,0 +1,40 @@
+---
+import type { Service } from '../../content/site';
+
+interface Props {
+  service: Service;
+}
+
+const { service } = Astro.props;
+---
+
+<section
+  class="service-modal"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="service-modal-title"
+  id="modal-content"
+  tabindex="-1"
+  data-service-dialog
+>
+  <a class="modal-close" href="/servicios" aria-label="Cerrar detalle del servicio">×</a>
+  <span class="service-card__icon" aria-hidden="true">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.7"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d={service.icon}></path>
+    </svg>
+  </span>
+  <h2 id="service-modal-title">{service.title}</h2>
+  <p class="muted">{service.summary}</p>
+  <hr />
+  <p data-service-description>{service.description}</p>
+  <a class="button button--fill" href={'/contacto?asunto=' + service.slug} data-service-ask={service.slug}
+    >Hablar de esto</a
+  >
+</section>

@@ -1,0 +1,90 @@
+---
+import { navigationActions, siteProfile } from '../../content/site';
+interface Props {
+  backdrop?: boolean;
+}
+const { backdrop = false } = Astro.props;
+const homePortrait = {
+  // This is the original portrait used by the approved mockup. The alternate
+  // "home" crop changes the silhouette of the suit and no longer aligns with
+  // the colour and shape of the background blob.
+  src: '/images/rodrigo-valdelvira.png',
+  avif: '/images/rodrigo-valdelvira.avif',
+  webp: '/images/rodrigo-valdelvira.webp',
+  width: 896,
+  height: 1152,
+};
+const aboutAction = navigationActions.find((action) => action.id === 'about');
+const projectsAction = navigationActions.find((action) => action.id === 'projects');
+
+if (!aboutAction || !projectsAction) {
+  throw new Error('Faltan las acciones conversacionales de portada.');
+}
+---
+
+<section class="mockup-hero" aria-label={backdrop ? undefined : 'Presentación de Rodrigo'}>
+  <div class="mockup-hero__title">
+    <p class="eyebrow">¡Hola!</p>
+    {
+      backdrop ? (
+        <p class="mockup-hero__heading">
+          Soy Rodrigo,
+          <br />
+          AI Engineer
+        </p>
+      ) : (
+        <h1>
+          Soy Rodrigo,
+          <br />
+          AI Engineer
+        </h1>
+      )
+    }
+  </div>
+  <div class="mockup-hero__stage">
+    <aside class="mockup-hero__quote">
+      <p>{siteProfile.professionalSummary}</p>
+      <strong>{siteProfile.totalExperienceLabel.replace(' de experiencia profesional total', '')}</strong>
+    </aside>
+    <div class="mockup-hero__portrait">
+      <div class="portrait" data-image-frame>
+        <picture>
+          <source srcset={homePortrait.avif} type="image/avif" />
+          <source srcset={homePortrait.webp} type="image/webp" />
+          <img
+            class="portrait__image"
+            data-stable-image
+            src={homePortrait.src}
+            alt={backdrop ? '' : siteProfile.portrait.alt}
+            width={homePortrait.width}
+            height={homePortrait.height}
+          />
+        </picture>
+        <span
+          data-image-fallback
+          class="image-fallback"
+          role={backdrop ? undefined : 'img'}
+          aria-label={backdrop ? undefined : siteProfile.portrait.fallbackLabel}
+          hidden>{siteProfile.portrait.fallbackLabel}</span
+        >
+      </div>
+    </div>
+    <div class="mockup-hero__actions">
+      <a
+        class="button button--fill"
+        href={aboutAction.destination}
+        data-portfolio-action
+        data-response={aboutAction.response}
+        data-response-kind={aboutAction.responseKind}>Sobre mí</a
+      >
+      <a
+        class="button button--quiet"
+        href={projectsAction.destination}
+        data-portfolio-action
+        data-response={projectsAction.response}
+        data-response-kind={projectsAction.responseKind}>Ver proyectos</a
+      >
+    </div>
+  </div>
+</section>
+<script src="../../scripts/image-fallback.ts"></script>

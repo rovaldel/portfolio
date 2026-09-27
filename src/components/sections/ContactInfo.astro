@@ -1,0 +1,150 @@
+---
+import { randomUUID } from 'node:crypto';
+import { siteProfile } from '../../content/site';
+
+interface Props {
+  subject?: string | null;
+  sent?: boolean;
+}
+
+const { subject = null, sent = false } = Astro.props;
+const channels = [siteProfile.channels.linkedin, siteProfile.channels.phone];
+const idempotencyKey = randomUUID();
+---
+
+<section class="contact-layout" aria-label="Información de contacto">
+  <div
+    class="contact-form__success"
+    data-contact-status
+    data-state={sent ? 'success' : undefined}
+    role={sent ? 'status' : undefined}
+    aria-live={sent ? 'polite' : undefined}
+    aria-atomic="true"
+    tabindex="-1"
+    hidden={!sent}
+  >
+    <span class="contact-form__status-icon" data-contact-icon-success aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" focusable="false">
+        <path d="m5 12.5 4.2 4.2L19 7"></path>
+      </svg>
+    </span>
+    <span
+      class="contact-form__status-icon contact-form__status-icon--error"
+      data-contact-icon-error
+      aria-hidden="true"
+      hidden>!</span
+    >
+    <span class="contact-form__success-copy">
+      <strong data-contact-status-title>{sent ? 'Mensaje enviado correctamente' : ''}</strong>
+      <span data-contact-status-message>
+        {sent ? 'Gracias por escribirme. Te responderé con la mayor brevedad posible.' : ''}
+      </span>
+    </span>
+  </div>
+  <p class="contact-introduction">
+    ¿Buscas un AI Engineer para tu equipo? Escríbeme por el canal que prefieras.
+  </p>
+  <div class="contact-channel-list" role="group" aria-label="Canales de contacto">
+    {
+      channels.map((channel) => (
+        <a
+          class="contact-channel"
+          href={channel.href}
+          target={channel.kind === 'linkedin' ? '_blank' : undefined}
+          rel={channel.kind === 'linkedin' ? 'noopener noreferrer' : undefined}
+          data-channel-kind={channel.kind}
+        >
+          <span class="contact-channel__icon" aria-hidden="true">
+            {channel.kind === 'linkedin' ? (
+              <svg viewBox="0 0 24 24" fill="currentColor" focusable="false">
+                <path d="M5.37 3.3a2.07 2.07 0 1 1 0 4.14 2.07 2.07 0 0 1 0-4.14ZM3.6 8.94h3.54V20.4H3.6V8.94Zm5.77 0h3.39v1.56h.05c.47-.9 1.63-1.86 3.35-1.86 3.59 0 4.25 2.36 4.25 5.43v6.33h-3.53v-5.61c0-1.34-.03-3.06-1.86-3.06-1.87 0-2.16 1.46-2.16 2.96v5.71H9.37V8.94Z" />
+              </svg>
+            ) : (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" focusable="false">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.78 19.78 0 0 1-8.63-3.07 19.48 19.48 0 0 1-6-6A19.78 19.78 0 0 1 2.12 4.2 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.78.62 2.64a2 2 0 0 1-.45 2.11L8.01 9.74a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.86.29 1.74.5 2.64.62A2 2 0 0 1 22 16.92Z" />
+              </svg>
+            )}
+          </span>
+          <span>
+            <strong>{channel.label}</strong>
+            <span>{channel.displayValue}</span>
+          </span>
+        </a>
+      ))
+    }
+    <div class="contact-channel">
+      <span class="contact-channel__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" focusable="false">
+          <path d="M20 10c0 5.25-8 11-8 11S4 15.25 4 10a8 8 0 1 1 16 0Z"></path>
+          <circle cx="12" cy="10" r="2.6"></circle>
+        </svg>
+      </span>
+      <span>
+        <strong>Ubicación</strong>
+        <span>{siteProfile.location}</span>
+      </span>
+    </div>
+  </div>
+  <form
+    class="contact-form-preview contact-form-preview--full"
+    action="/api/contacto"
+    method="post"
+    aria-label="Formulario de contacto"
+    data-contact-form
+  >
+    {subject && <p class="tag">{subject}</p>}
+    <label class="sr-only" for="contact-name">Tu nombre</label>
+    <input
+      id="contact-name"
+      name="name"
+      type="text"
+      placeholder="Tu nombre"
+      autocomplete="name"
+      required
+      minlength="2"
+      maxlength="80"
+    />
+    <label class="sr-only" for="contact-email">Tu email</label>
+    <input
+      id="contact-email"
+      name="email"
+      type="email"
+      placeholder="Tu email"
+      autocomplete="email"
+      required
+      maxlength="254"
+    />
+    <label class="sr-only" for="contact-message">Cuéntame brevemente tu proyecto</label>
+    <textarea
+      id="contact-message"
+      name="message"
+      placeholder="Cuéntame brevemente tu proyecto…"
+      rows="3"
+      required
+      minlength="20"
+      maxlength="3000"></textarea>
+    <input type="hidden" name="idempotencyKey" value={idempotencyKey} />
+    <label class="contact-form__honeypot" aria-hidden="true">
+      No rellenes este campo
+      <input
+        name="contact_check_field"
+        type="text"
+        tabindex="-1"
+        autocomplete="off"
+        autocapitalize="off"
+        spellcheck="false"
+      />
+    </label>
+    <button type="submit">Enviar mensaje</button>
+    <p class="contact-card__privacy">
+      Rodrigo Valdelvira Ortigosa tratará tu nombre, email y mensaje para responder a tu consulta. Puedes
+      ejercer tus derechos en rodrigo.valdelvira@gmail.com. Más información en <a href="/privacidad"
+        >Privacidad</a
+      >.
+    </p>
+  </form>
+</section>
+
+<script>
+  import '../../scripts/contact-form';
+</script>

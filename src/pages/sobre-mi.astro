@@ -1,0 +1,15 @@
+---
+import ConversationPage from '../components/layout/ConversationPage.astro';
+import Profile from '../components/sections/Profile.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout>
+  <ConversationPage action="Sobre mí" label="Sobre mí" modifier="conversation-page--profile">
+    <Profile />
+    <div class="conversation-actions">
+      <a class="button button--fill" href="/habilidades">Ver habilidades</a>
+      <a class="button button--quiet" href="/experiencia">Ver trayectoria</a>
+    </div>
+  </ConversationPage>
+</BaseLayout>

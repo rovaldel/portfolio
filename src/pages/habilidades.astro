@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ConversationPage from '../components/layout/ConversationPage.astro';
+import Skills from '../components/sections/Skills.astro';
+---
+
+<BaseLayout>
+  <ConversationPage action="Habilidades" label="Habilidades">
+    <p class="conversation-lead">
+      Estas son las herramientas y tecnologías que uso a diario, con foco en fiabilidad y puesta en
+      producción.
+    </p>
+    <Skills />
+    <div class="conversation-actions">
+      <a class="button button--fill" href="/proyectos">Ver proyectos</a>
+      <a class="button button--quiet" href="/Rodrigo-Valdelvira-CV.pdf" download="Rodrigo-Valdelvira-CV.pdf"
+        >Descargar CV</a
+      >
+    </div>
+  </ConversationPage>
+</BaseLayout>

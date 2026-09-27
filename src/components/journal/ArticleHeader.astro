@@ -1,0 +1,42 @@
+---
+interface Props {
+  indexMode?: boolean;
+}
+
+const { indexMode = false } = Astro.props;
+const backHref = indexMode ? '/' : '/bitacora';
+const backLabel = indexMode ? 'Volver a portada' : 'Volver a Bitácora';
+---
+
+<header class="article-header">
+  <div class="article-header__inner">
+    <a class="article-header__back" href={backHref}>
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.7"
+        stroke-linecap="round"
+        stroke-linejoin="round"><path d="M19 12H5 M12 19l-7-7 7-7"></path></svg
+      >
+      {backLabel}
+    </a>
+    <a class="article-header__brand" href="/bitacora">
+      <span aria-hidden="true" class="article-header__icon"
+        ><svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.6"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          ><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 0 4 22V5.5Z"></path><path
+            d="M4 18a2.5 2.5 0 0 1 2.5-2.5H20"></path><path d="M8 7h8M8 10h8"></path></svg
+        ></span
+      >
+      Bitácora
+    </a>
+    <span class="article-header__descriptor">Artículos · IA y producción</span>
+  </div>
+</header>

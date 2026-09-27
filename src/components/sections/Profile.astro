@@ -1,0 +1,60 @@
+---
+import { experiences, siteProfile } from '../../content/site';
+
+const currentRole = experiences.find((item) => item.current);
+const profileFacts = [
+  {
+    kind: 'experience',
+    text: siteProfile.totalExperienceLabel.replace(' total · Ingeniería + IA', ''),
+    icon: 'M12 2l2.6 6.3L21 9l-5 4.3L17.5 20 12 16.5 6.5 20 8 13.3 3 9l6.4-.7z',
+  },
+  { kind: 'code', text: 'Agentes, RAG y chatbots con LLMs', icon: 'M16 18l6-6-6-6M8 6l-6 6 6 6' },
+  { kind: 'code', text: 'Desarrollo con agentes de IA: Claude Code, Codex', icon: 'M4 17l6-6-6-6M12 19h8' },
+  { kind: 'check', text: siteProfile.availability.replace('nuevos ', ''), icon: 'M20 6L9 17l-5-5' },
+  ...(currentRole
+    ? [
+        {
+          kind: 'place',
+          text: `${siteProfile.primaryRole} · ${currentRole.organization} · desde dic. 2025`,
+          icon: 'M3 7h18v13H3zM7 7V4h10v3M3 12h18',
+        },
+      ]
+    : []),
+];
+---
+
+<section class="profile-response" aria-labelledby="profile-response-title">
+  <h2 id="profile-response-title" class="sr-only">Perfil profesional</h2>
+  <div class="profile-response__copy">
+    {
+      siteProfile.about.map((paragraph) => (
+        <p>
+          {paragraph.map((segment) => (segment.emphasis ? <strong>{segment.text}</strong> : segment.text))}
+        </p>
+      ))
+    }
+  </div>
+  <ul class="profile-response__facts">
+    {
+      profileFacts.map(({ kind, text, icon }) => (
+        <li data-kind={kind}>
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.7"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d={icon} />
+          </svg>
+          <span>{text}</span>
+        </li>
+      ))
+    }
+  </ul>
+  <p class="sr-only">
+    Idiomas: {siteProfile.languages.join(', ')}. Intereses: {siteProfile.interests.join(', ')}.
+  </p>
+</section>

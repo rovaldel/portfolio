@@ -1,0 +1,41 @@
+---
+import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
+
+interface ArticleData {
+  title: string;
+  slug: string;
+  excerpt: string;
+  status: 'published';
+  authorId: string;
+  description: string;
+  updatedAt?: Date;
+  category: string;
+  publishedAt: string | Date;
+  author: string;
+  readingMinutes: number;
+}
+
+interface Props {
+  Content: AstroComponentFactory;
+  data: ArticleData;
+}
+
+const { Content, data } = Astro.props;
+const date = new Intl.DateTimeFormat('es-ES', { day: '2-digit', month: 'short', year: 'numeric' })
+  .format(new Date(data.publishedAt))
+  .replaceAll('.', '');
+---
+
+<article class="article-content" data-visual-anchor="article">
+  <div class="article-meta">
+    <span class="article-meta__category">{data.category}</span>
+    <time datetime={new Date(data.publishedAt).toISOString()}>{date}</time>
+    <span aria-hidden="true">·</span>
+    <span>{data.readingMinutes} min</span>
+    <span>Por {data.author}</span>
+    <span class="article-meta__status">Artículo publicado</span>
+  </div>
+  <h1>{data.title}</h1>
+  <Content />
+  <p class="article-query-action"><a href="/#consulta-langgraph">Pregúntame sobre esto</a></p>
+</article>

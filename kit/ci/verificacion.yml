@@ -1,0 +1,46 @@
+name: Verificación base
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  fuentes:
+    name: Fuentes y trazabilidad
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
+      - name: Sintaxis de herramientas
+        run: |
+          for file in design/scripts/*.mjs; do node --check "$file"; done
+      - name: Artefactos generados al día
+        run: |
+          node design/scripts/extract-tokens.mjs --check
+          node design/scripts/extract-content.mjs --check
+          node design/scripts/build-inventory.mjs --check
+          node design/scripts/build-sources.mjs --check
+      - name: Referencias al golden
+        run: node design/scripts/check-refs.mjs
+
+  secretos:
+    name: Secretos en el historial
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7 # v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # El plan del proyecto añade aquí sus puertas bloqueantes: pruebas, tipos,
+  # lint, dependencias, SAST, accesibilidad, build, imagen y despliegue según
+  # el stack real. La base no presupone lenguaje, framework ni contenedor.

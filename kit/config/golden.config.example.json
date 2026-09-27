@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "$comment": "Plantilla neutral. El generador sustituye el nombre y el primer fichero; el resto se activa solo si el proyecto lo necesita.",
+  "project": {
+    "name": "{{PROJECT_NAME}}",
+    "locale": "es"
+  },
+  "golden": {
+    "dir": "design/golden",
+    "sources": [
+      {
+        "id": "principal",
+        "file": "{{GOLDEN_ENTRY}}",
+        "surface": "web",
+        "inventory": true
+      }
+    ]
+  },
+  "inventory": { "output": "design/behavior-inventory.md", "ignore": [] },
+  "tokens": {
+    "$comment": "Activa solo si el mockup declara custom properties CSS. No presupone temas ni nombres de token.",
+    "enabled": false,
+    "source": "principal",
+    "globalSelector": ":root",
+    "themes": [],
+    "ignore": [],
+    "minimum": { "global": 0, "perTheme": 0 },
+    "required": [],
+    "output": { "json": "design/tokens.json", "css": "design/tokens.gen.css" }
+  },
+  "content": {
+    "$comment": "Cada estructura apunta a un literal lista/objeto: const items = [...] o this.items = [...].",
+    "enabled": false,
+    "source": "principal",
+    "output": "content/es.json",
+    "structures": []
+  },
+  "captures": {
+    "enabled": true,
+    "output": "design/screenshots",
+    "freezeAnimations": true,
+    "delayMs": 500,
+    "virtualTimeMs": 5000,
+    "timeoutMs": 60000,
+    "preparation": { "principal": "" },
+    "scenes": [
+      { "name": "principal/inicio", "source": "principal", "script": "", "width": 1440, "height": 1000 }
+    ]
+  },
+  "specs": {
+    "master": "docs/ESPECIFICACION_MAESTRA.md",
+    "sourcesOutput": "docs/servilletas/FUENTES.md",
+    "map": {}
+  }
+}

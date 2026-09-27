@@ -1,0 +1,33 @@
+---
+import { siteProfile } from '../../content/site';
+
+interface Props {
+  action?: string;
+  label?: string;
+  heading?: string;
+  hideHeading?: boolean;
+  modifier?: string;
+}
+
+const {
+  action,
+  label = 'Respuesta del portfolio',
+  heading = action,
+  hideHeading = false,
+  modifier = '',
+} = Astro.props;
+---
+
+<section class:list={[['conversation-page', modifier]]} aria-label={label}>
+  {
+    heading && (
+      <h1 class:list={['conversation-user', hideHeading && 'conversation-page__heading--visually-hidden']}>
+        {heading}
+      </h1>
+    )
+  }
+  <article class="conversation-message">
+    <img class="conversation-message__avatar" src={siteProfile.portrait.src} alt="" width="34" height="34" />
+    <div class="conversation-message__body"><slot /></div>
+  </article>
+</section>

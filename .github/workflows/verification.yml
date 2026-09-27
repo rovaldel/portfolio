@@ -1,0 +1,53 @@
+name: Verificación de portfolio y spec 020
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 24.19.0
+          cache: pnpm
+      - run: corepack enable
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium firefox
+      - uses: gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7 # v2.3.9
+      - uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          scan-type: fs
+          scan-ref: .
+          severity: HIGH,CRITICAL
+          exit-code: '1'
+          ignore-unfixed: true
+      - run: RUN_CONTAINER_TESTS=1 pnpm exec playwright test tests/integration/container.spec.ts --project=chromium
+      - run: pnpm run verify:spec:000
+      - run: pnpm run verify:spec:010
+      - run: pnpm run verify:spec:020
+      - run: pnpm run test:unit
+      - run: pnpm run test:integration:contact
+      - run: pnpm run lint
+      - run: pnpm run check
+      - if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: portfolio-verification-evidence
+          path: artifacts
+          if-no-files-found: warn
+
+  codeql:
+    uses: github/codeql-action/.github/workflows/codeql.yml@c20e34f438d671fc35777cc9820dd7adf8252874 # v3
+    with:
+      languages: javascript-typescript

@@ -1,0 +1,219 @@
+---
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import PersistentQuery from '../components/layout/PersistentQuery.astro';
+import ConversationTemplates from '../components/layout/ConversationTemplates.astro';
+import HomeHero from '../components/sections/HomeHero.astro';
+import ArticleHeader from '../components/journal/ArticleHeader.astro';
+import { byPath, canonicalUrl } from '../lib/routes';
+import { siteProfile } from '../content/site';
+import '../styles/themes.css';
+import '../styles/motion.css';
+import '../styles/global.css';
+import '../styles/refinements.css';
+import { services, skillGroups } from '../content/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  noindex?: boolean;
+  overlayMode?: boolean;
+  articleMode?: boolean;
+  journalIndexMode?: boolean;
+  modalMode?: boolean;
+}
+const currentPath = Astro.url.pathname;
+const surface = byPath(currentPath);
+const {
+  title = surface?.title ?? 'Página no encontrada · Rodrigo Valdelvira',
+  description = surface?.description ?? 'Página de recuperación del portfolio.',
+  noindex = surface ? !surface.indexable : true,
+  overlayMode = false,
+  articleMode = false,
+  journalIndexMode = false,
+  modalMode = false,
+} = Astro.props;
+const canonical = canonicalUrl(surface?.canonicalPath ?? currentPath);
+const personId = canonicalUrl('/#rodrigo');
+const websiteId = canonicalUrl('/#website');
+const structuredData = surface?.indexable
+  ? JSON.stringify({
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'Person',
+          '@id': personId,
+          name: siteProfile.fullName,
+          alternateName: siteProfile.displayName,
+          url: canonicalUrl('/'),
+          jobTitle: siteProfile.primaryRole,
+          description: siteProfile.professionalSummary,
+          image: canonicalUrl(siteProfile.portrait.src),
+          sameAs: [siteProfile.channels.linkedin.href],
+          knowsAbout: skillGroups.flatMap((group) => group.skills.map((skill) => skill.name)),
+          homeLocation: { '@type': 'Place', name: 'Logroño, La Rioja, España' },
+        },
+        {
+          '@type': 'WebSite',
+          '@id': websiteId,
+          name: 'Rodrigo Valdelvira · AI Engineer',
+          url: canonicalUrl('/'),
+          inLanguage: 'es',
+          publisher: { '@id': personId },
+        },
+        {
+          '@type':
+            currentPath === '/sobre-mi' ? 'ProfilePage' : surface.kind === 'article' ? 'Article' : 'WebPage',
+          '@id': canonical + '#page',
+          name: title,
+          headline: title,
+          description,
+          url: canonical,
+          inLanguage: 'es',
+          isPartOf: { '@id': websiteId },
+          about: { '@id': personId },
+          author: { '@id': personId },
+          ...(currentPath === '/sobre-mi' ? { mainEntity: { '@id': personId } } : {}),
+        },
+        ...(currentPath === '/servicios'
+          ? services.map((service) => ({
+              '@type': 'Service',
+              '@id': canonical + '#' + service.slug,
+              name: service.title,
+              description: service.description,
+              provider: { '@id': personId },
+              availableChannel: {
+                '@type': 'ServiceChannel',
+                serviceUrl: canonicalUrl('/contacto'),
+              },
+            }))
+          : []),
+        ...(currentPath === '/'
+          ? []
+          : [
+              {
+                '@type': 'BreadcrumbList',
+                itemListElement: [
+                  { '@type': 'ListItem', position: 1, name: 'Inicio', item: canonicalUrl('/') },
+                  { '@type': 'ListItem', position: 2, name: surface.navigationLabel, item: canonical },
+                ],
+              },
+            ]),
+      ],
+    }).replace(/</g, '\\u003c')
+  : '';
+const bodyClass =
+  articleMode || journalIndexMode
+    ? 'is-article'
+    : overlayMode
+      ? 'is-home legal-overlay-mode'
+      : currentPath === '/'
+        ? 'is-home'
+        : modalMode
+          ? 'is-modal-page'
+          : currentPath === '/contacto'
+            ? 'is-contact'
+            : undefined;
+const contentClass =
+  currentPath === '/'
+    ? 'container'
+    : `conversation-container${currentPath === '/servicios' ? ' conversation-container--services' : ''}`;
+---
+
+<!doctype html>
+<html lang="es" data-theme="rioja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="author" content={siteProfile.fullName} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    {
+      surface?.indexable && (
+        <>
+          <meta property="og:title" content={title} />
+          <meta property="og:description" content={description} />
+          <meta property="og:url" content={canonical} />
+          <meta property="og:type" content={surface.kind === 'article' ? 'article' : 'website'} />
+          <meta property="og:site_name" content={siteProfile.displayName} />
+          <meta property="og:locale" content="es_ES" />
+          <meta property="og:image" content={canonicalUrl('/images/rodrigo-valdelvira.png')} />
+          <meta property="og:image:alt" content={siteProfile.portrait.alt} />
+          <meta name="twitter:card" content="summary" />
+          <meta name="twitter:image" content={canonicalUrl('/images/rodrigo-valdelvira.png')} />
+          <script type="application/ld+json" set:html={structuredData} />
+        </>
+      )
+    }
+    <script is:inline src="/scripts/theme-init.js"></script>
+  </head>
+  <body class={bodyClass}>
+    <a class="skip-link" href={modalMode ? '#modal-content' : overlayMode ? '#legal-title' : '#contenido'}
+      >Saltar al contenido</a
+    >
+    {
+      articleMode || journalIndexMode ? (
+        <div class="article-shell">
+          <ArticleHeader indexMode={journalIndexMode || currentPath === '/bitacora'} />
+          <main
+            id="contenido"
+            class:list={['article-main', journalIndexMode && 'article-main--index']}
+            tabindex="0"
+          >
+            <div class:list={['article-container', journalIndexMode && 'article-container--wide']}>
+              <slot />
+            </div>
+          </main>
+        </div>
+      ) : (
+        <>
+          <div class="site-shell" inert={overlayMode || modalMode}>
+            <Header />
+            <main id="contenido" tabindex="0">
+              {overlayMode ? (
+                <div class="container">
+                  <HomeHero backdrop />
+                </div>
+              ) : (
+                <div class={contentClass} data-route-content>
+                  <slot />
+                </div>
+              )}
+              {!overlayMode && !modalMode && (
+                <section
+                  class="conversation-container conversation-thread"
+                  data-conversation-thread
+                  role="log"
+                  aria-label="Conversación del portfolio"
+                  aria-live="polite"
+                  aria-relevant="additions"
+                  hidden
+                />
+              )}
+            </main>
+            <PersistentQuery />
+            <Footer />
+            {!overlayMode && !modalMode && <ConversationTemplates />}
+          </div>
+          {!overlayMode && !modalMode && <div data-conversation-modal-root />}
+        </>
+      )
+    }
+    {modalMode && <slot name="modal" />}
+    {
+      overlayMode && (
+        <div class="legal-modal-backdrop">
+          <dialog class="legal-modal" open aria-modal="true" aria-labelledby="legal-title" data-legal-dialog>
+            <a class="modal-close" href="/" aria-label="Cerrar documento legal">
+              ×
+            </a>
+            <slot />
+          </dialog>
+        </div>
+      )
+    }
+  </body>
+</html>

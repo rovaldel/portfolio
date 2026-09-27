@@ -1,0 +1,534 @@
+{
+  "schemaVersion": 1,
+  "project": {
+    "name": "Portfolio de Rodrigo Valdelvira",
+    "locale": "es"
+  },
+  "golden": {
+    "dir": "mockup",
+    "sources": [
+      {
+        "id": "portfolio",
+        "file": "Portfolio Conversacional.html",
+        "surface": "web",
+        "inventory": true
+      }
+    ]
+  },
+  "inventory": {
+    "$comment": "Se excluyen las demos de Toolkit que la especificación maestra declara fuera de alcance.",
+    "output": "design/behavior-inventory.md",
+    "ignore": [
+      "constructor",
+      "stars",
+      "calcQuizScore",
+      "getMaturityLevel",
+      "quizNextFn",
+      "quizToChatFn",
+      "analyzePII",
+      "aiaNextFn",
+      "calcAiaTier",
+      "aiaToChatFn",
+      "runResearch",
+      "runGeo",
+      "buildPolicyClauses",
+      "dataBasis",
+      "policyToChatFn",
+      "geoDash",
+      "selSty",
+      "mkRadio",
+      "policyClauses",
+      "policySizeLabel",
+      "policyDataLabel",
+      "d"
+    ]
+  },
+  "tokens": {
+    "enabled": true,
+    "source": "portfolio",
+    "globalSelector": null,
+    "themes": [
+      {
+        "key": "light",
+        "label": "Claro",
+        "selector": "[data-theme=\"light\"]",
+        "default": false
+      },
+      {
+        "key": "dark",
+        "label": "Oscuro",
+        "selector": "[data-theme=\"dark\"]",
+        "default": false
+      },
+      {
+        "key": "cobalto",
+        "label": "Cobalto",
+        "selector": "[data-theme=\"cobalto\"]",
+        "default": false
+      },
+      {
+        "key": "rioja",
+        "label": "Rioja",
+        "selector": "[data-theme=\"rioja\"]",
+        "default": true
+      },
+      {
+        "key": "bosque",
+        "label": "Bosque",
+        "selector": "[data-theme=\"bosque\"]",
+        "default": false
+      }
+    ],
+    "ignore": [],
+    "minimum": {
+      "global": 0,
+      "perTheme": 11
+    },
+    "required": [
+      "bg",
+      "surface",
+      "text",
+      "muted",
+      "fill"
+    ],
+    "output": {
+      "json": "design/tokens.json",
+      "css": "design/tokens.gen.css"
+    }
+  },
+  "content": {
+    "enabled": true,
+    "source": "portfolio",
+    "output": "content/es.json",
+    "structures": [
+      {
+        "expression": "this.projects",
+        "output": "projects",
+        "expected": 2
+      },
+      {
+        "expression": "this.skillGroups",
+        "output": "skillGroups",
+        "minimum": 1
+      },
+      {
+        "expression": "this.expData",
+        "output": "experience",
+        "minimum": 1
+      },
+      {
+        "expression": "this.services",
+        "output": "services",
+        "minimum": 1
+      },
+      {
+        "expression": "this.eduItems",
+        "output": "education",
+        "minimum": 1
+      },
+      {
+        "expression": "this.interests",
+        "output": "interests",
+        "minimum": 1
+      },
+      {
+        "expression": "this.blogPosts",
+        "output": "posts",
+        "minimum": 1
+      }
+    ]
+  },
+  "captures": {
+    "enabled": true,
+    "output": "design/screenshots",
+    "freezeAnimations": true,
+    "delayMs": 800,
+    "virtualTimeMs": 6000,
+    "timeoutMs": 60000,
+    "comparison": {
+      "defaultMode": "pixel",
+      "pixelThreshold": 0.1,
+      "maximumChangedPixelRatio": 0.005,
+      "maximumAnchorDeltaCssPx": 2,
+      "contractScenes": {
+        "portfolio/habilidades": {
+          "rationale": "FR-012 exige habilidades agrupadas sin puntuaciones; la excepción cubre solo la columna localizada de estrellas.",
+          "anchors": [
+            {
+              "name": "conversation-viewport",
+              "selector": "main",
+              "golden": {
+                "x": 0,
+                "y": 64,
+                "width": 1440
+              },
+              "fields": [
+                "x",
+                "y",
+                "width"
+              ]
+            },
+            {
+              "name": "backend-skill-group",
+              "selector": ".skills-catalog__group:nth-child(3) h2",
+              "golden": {
+                "x": 383,
+                "y": 194
+              },
+              "fields": [
+                "x",
+                "y"
+              ]
+            },
+            {
+              "name": "persistent-query",
+              "selector": "[data-visual-anchor=\"query\"]",
+              "golden": {
+                "x": 300,
+                "y": 641
+              },
+              "fields": [
+                "x",
+                "y"
+              ]
+            }
+          ],
+          "excludedRegions": [
+            {
+              "id": "skill-rating-column",
+              "description": "Solo la columna de estrellas de puntuación, a la derecha de los nombres de habilidad.",
+              "boxes": [
+                {
+                  "x": 662,
+                  "y": 60,
+                  "width": 88,
+                  "height": 470
+                }
+              ]
+            }
+          ]
+        },
+        "portfolio/articulo-langgraph": {
+          "rationale": "FR-022 y FR-026 conservan la composición editorial con el artículo completo y retiran únicamente la afirmación de indexación automatizada.",
+          "anchors": [
+            {
+              "name": "article-navigation",
+              "selector": ".article-header",
+              "golden": {
+                "x": 0,
+                "y": 0,
+                "width": 1440
+              },
+              "fields": [
+                "x",
+                "y",
+                "width"
+              ]
+            },
+            {
+              "name": "article-body",
+              "selector": "[data-visual-anchor=\"article\"]",
+              "golden": {
+                "x": 360,
+                "y": 108,
+                "width": 720
+              },
+              "fields": [
+                "x",
+                "y",
+                "width"
+              ]
+            },
+            {
+              "name": "article-title",
+              "selector": ".article-content h1",
+              "golden": {
+                "x": 360,
+                "y": 154
+              },
+              "fields": [
+                "x",
+                "y"
+              ]
+            }
+          ],
+          "excludedRegions": [
+            {
+              "id": "automated-index-claim",
+              "description": "La etiqueta del golden que afirma indexación automatizada; la candidata comunica únicamente el estado publicado.",
+              "boxes": [
+                {
+                  "x": 580,
+                  "y": 108,
+                  "width": 190,
+                  "height": 25
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "preparation": {
+      "portfolio": "try{localStorage.setItem('rv_cookies','essential')}catch(error){};document.addEventListener('DOMContentLoaded',()=>{const normalize=()=>{for(const button of document.querySelectorAll('button')){const label=button.getAttribute('aria-label')||'';const copy=button.textContent||'';if(label==='Grabar voz'||label==='Detener'||copy.includes('Toolkit IA'))button.style.display='none'}};normalize();new MutationObserver(normalize).observe(document.body,{childList:true,subtree:true})})"
+    },
+    "scenes": [
+      {
+        "name": "portfolio/portada-rioja-desktop",
+        "source": "portfolio",
+        "script": "",
+        "width": 1440,
+        "height": 900,
+        "precondition": "Ruta /; tema rioja; cargar la ruta canónica."
+      },
+      {
+        "name": "portfolio/portada-rioja-mobile",
+        "source": "portfolio",
+        "script": "",
+        "width": 390,
+        "height": 844,
+        "precondition": "Ruta /; tema rioja; cargar la ruta canónica."
+      },
+      {
+        "name": "portfolio/portada-claro-desktop",
+        "source": "portfolio",
+        "script": "document.querySelector('[aria-label=\"Cambiar tema visual\"]')?.click();setTimeout(()=>[...document.querySelectorAll('button')].find((button)=>button.textContent.trim()==='Claro')?.click(),50)",
+        "width": 1440,
+        "height": 900,
+        "precondition": "Ruta /; tema light; cargar la ruta canónica."
+      },
+      {
+        "name": "portfolio/portada-oscuro-desktop",
+        "source": "portfolio",
+        "script": "document.querySelector('[aria-label=\"Cambiar tema visual\"]')?.click();setTimeout(()=>[...document.querySelectorAll('button')].find((button)=>button.textContent.trim()==='Oscuro')?.click(),50)",
+        "width": 1440,
+        "height": 900,
+        "precondition": "Ruta /; tema dark; cargar la ruta canónica."
+      },
+      {
+        "name": "portfolio/portada-cobalto-desktop",
+        "source": "portfolio",
+        "script": "document.querySelector('[aria-label=\"Cambiar tema visual\"]')?.click();setTimeout(()=>[...document.querySelectorAll('button')].find((button)=>button.textContent.trim()==='Cobalto')?.click(),50)",
+        "width": 1440,
+        "height": 900,
+        "precondition": "Ruta /; tema cobalto; cargar la ruta canónica."
+      },
+      {
+        "name": "portfolio/portada-bosque-desktop",
+        "source": "portfolio",
+        "script": "document.querySelector('[aria-label=\"Cambiar tema visual\"]')?.click();setTimeout(()=>[...document.querySelectorAll('button')].find((button)=>button.textContent.trim()==='Bosque')?.click(),50)",
+        "width": 1440,
+        "height": 900,
+        "precondition": "Ruta /; tema bosque; cargar la ruta canónica."
+      },
+      {
+        "name": "portfolio/selector-tema",
+        "source": "portfolio",
+        "script": "document.querySelector('[aria-label=\"Cambiar tema visual\"]')?.click()",
+        "width": 1440,
+        "height": 900,
+        "precondition": "Ruta /; tema rioja; abrir el selector de tema."
+      },
+      {
+        "name": "portfolio/sobre-mi",
+        "source": "portfolio",
+        "script": "[...document.querySelectorAll('button')].find((button)=>button.textContent.trim()==='Sobre mí')?.click()",
+        "width": 1440,
+        "height": 900,
+        "precondition": "Ruta /sobre-mi; tema rioja; cargar la ruta canónica. Desplazar el panel de conversación hasta el final; mantener el encabezado, consulta y pie fijos."
+      },
+      {
+        "name": "portfolio/habilidades",
+        "source": "portfolio",
+        "script": "[...document.querySelectorAll('button')].find((button)=>button.textContent.trim()==='Habilidades')?.click()",
+        "width": 1440,
+        "height": 900,
+        "precondition": "Ruta /habilidades; tema rioja; cargar la ruta canónica. Desplazar el panel de conversación hasta el final; mantener el encabezado, consulta y pie fijos."
+      },
+      {
+        "name": "portfolio/servicios",
+        "source": "portfolio",
+        "script": "[...document.querySelectorAll('button')].find((button)=>button.textContent.trim()==='Servicios')?.click()",
+        "width": 1440,
+        "height": 900,
+        "precondition": "Ruta /servicios; tema rioja; cargar la ruta canónica. Desplazar el panel de conversación hasta el final; mantener el encabezado, consulta y pie fijos."
+      },
+      {
+        "name": "portfolio/servicio-detalle",
+        "source": "portfolio",
+        "script": "[...document.querySelectorAll('button')].find((button)=>button.textContent.trim()==='Servicios')?.click();setTimeout(()=>[...document.querySelectorAll('button')].find((button)=>button.textContent.includes('Agentes y chatbots IA'))?.click(),1300)",
+        "width": 1440,
+        "height": 900,
+        "precondition": "Ruta /servicios?servicio=agentes-y-chatbots-ia; tema rioja; cargar el servicio predeterminado expandido. Desplazar el panel de conversación hasta el final; mantener el encabezado, consulta y pie fijos."
+      },
+      {
+        "name": "portfolio/proyectos",
+        "source": "portfolio",
+        "script": "[...document.querySelectorAll('button')].find((button)=>button.textContent.trim()==='Proyectos')?.click()",
+        "width": 1440,
+        "height": 900,
+        "precondition": "Ruta /proyectos; tema rioja; cargar la ruta canónica. Desplazar el panel de conversación hasta el final; mantener el encabezado, consulta y pie fijos."
+      },
+      {
+        "name": "portfolio/proyecto-leadia",
+        "source": "portfolio",
+        "script": "[...document.querySelectorAll('button')].find((button)=>button.textContent.trim()==='Proyectos')?.click();setTimeout(()=>[...document.querySelectorAll('button')].find((button)=>button.textContent.includes('Ver detalles'))?.click(),1300)",
+        "width": 1440,
+        "height": 900,
+        "precondition": "Ruta /proyectos/leadia; tema rioja; cargar la ruta canónica. Desplazar el panel de conversación hasta el final; mantener el encabezado, consulta y pie fijos."
+      },
+      {
+        "name": "portfolio/experiencia",
+        "source": "portfolio",
+        "script": "[...document.querySelectorAll('button')].find((button)=>button.textContent.trim()==='Experiencia')?.click()",
+        "width": 1440,
+        "height": 900,
+        "precondition": "Ruta /experiencia; tema rioja; cargar la ruta canónica. Desplazar el panel de conversación hasta el final; mantener el encabezado, consulta y pie fijos."
+      },
+      {
+        "name": "portfolio/formacion",
+        "source": "portfolio",
+        "script": "[...document.querySelectorAll('button')].find((button)=>button.textContent.trim()==='Formación')?.click()",
+        "width": 1440,
+        "height": 900,
+        "precondition": "Ruta /formacion; tema rioja; cargar la ruta canónica. Desplazar el panel de conversación hasta el final; mantener el encabezado, consulta y pie fijos."
+      },
+      {
+        "name": "portfolio/contacto",
+        "source": "portfolio",
+        "script": "[...document.querySelectorAll('button')].find((button)=>button.textContent.trim()==='Contacto')?.click()",
+        "width": 1440,
+        "height": 900,
+        "precondition": "Ruta /contacto; tema rioja; cargar la ruta canónica. Desplazar el panel de conversación hasta el final; mantener el encabezado, consulta y pie fijos."
+      },
+      {
+        "name": "portfolio/bitacora",
+        "source": "portfolio",
+        "script": "[...document.querySelectorAll('button')].find((button)=>button.textContent.trim()==='Bitácora')?.click()",
+        "width": 1440,
+        "height": 900,
+        "precondition": "Ruta /bitacora; tema rioja; cargar la ruta canónica. Desplazar el panel de conversación hasta el final; mantener el encabezado, consulta y pie fijos."
+      },
+      {
+        "name": "portfolio/articulo-langgraph",
+        "source": "portfolio",
+        "script": "[...document.querySelectorAll('button')].find((button)=>button.textContent.trim()==='Bitácora')?.click();setTimeout(()=>[...document.querySelectorAll('button')].find((button)=>button.textContent.includes('Cómo evalué tres frameworks'))?.click(),250)",
+        "width": 1440,
+        "height": 900,
+        "precondition": "Ruta canónica del artículo; tema Rioja; capturar la parte superior editorial sin desplazamiento."
+      },
+      {
+        "name": "portfolio/legal-privacidad",
+        "source": "portfolio",
+        "script": "[...document.querySelectorAll('button')].find((button)=>button.textContent.trim()==='Privacidad')?.click()",
+        "width": 1440,
+        "height": 900,
+        "precondition": "Ruta /privacidad; tema rioja; abrir el documento sobre la portada en su posición inicial."
+      }
+    ]
+  },
+  "specs": {
+    "master": "docs/ESPECIFICACION_MAESTRA.md",
+    "sourcesOutput": "docs/servilletas/FUENTES.md",
+    "map": {
+      "000": {
+        "title": "Esqueleto visual funcional",
+        "master": [
+          "§§0, 4–6, 8.1–8.5, 8.6–8.7 sólo presentación, 9, 11.3, 12–13, 17.3–17.4, 18.1, 18.3, 18.5–18.6 y 21"
+        ],
+        "captures": [
+          "portfolio/portada-rioja-desktop",
+          "portfolio/portada-rioja-mobile",
+          "portfolio/portada-claro-desktop",
+          "portfolio/portada-oscuro-desktop",
+          "portfolio/portada-cobalto-desktop",
+          "portfolio/portada-bosque-desktop",
+          "portfolio/selector-tema",
+          "portfolio/sobre-mi",
+          "portfolio/habilidades",
+          "portfolio/servicios",
+          "portfolio/servicio-detalle",
+          "portfolio/proyectos",
+          "portfolio/proyecto-leadia",
+          "portfolio/experiencia",
+          "portfolio/formacion",
+          "portfolio/contacto",
+          "portfolio/bitacora",
+          "portfolio/articulo-langgraph",
+          "portfolio/legal-privacidad"
+        ],
+        "functions": [
+          "componentDidMount",
+          "componentWillUnmount",
+          "componentDidUpdate",
+          "pushUser",
+          "respondCard",
+          "handleAction",
+          "renderVals"
+        ]
+      },
+      "010": {
+        "title": "Lógica del portfolio",
+        "master": [
+          "§§2–10, 17, 18.1, 18.3–18.4 y 18.6"
+        ],
+        "captures": [
+          "portfolio/portada-rioja-desktop",
+          "portfolio/portada-rioja-mobile",
+          "portfolio/portada-claro-desktop",
+          "portfolio/portada-oscuro-desktop",
+          "portfolio/portada-cobalto-desktop",
+          "portfolio/portada-bosque-desktop",
+          "portfolio/selector-tema",
+          "portfolio/sobre-mi",
+          "portfolio/habilidades",
+          "portfolio/servicios",
+          "portfolio/servicio-detalle",
+          "portfolio/proyectos",
+          "portfolio/proyecto-leadia",
+          "portfolio/experiencia",
+          "portfolio/formacion",
+          "portfolio/contacto",
+          "portfolio/bitacora",
+          "portfolio/articulo-langgraph",
+          "portfolio/legal-privacidad"
+        ],
+        "functions": [
+          "answerFor",
+          "submit",
+          "text",
+          "stream",
+          "openPostInChatFn"
+        ]
+      },
+      "020": {
+        "title": "Contacto, operación y cierre",
+        "master": [
+          "§§8.6–8.7, 11, 14–18, 20 y 23"
+        ],
+        "captures": [
+          "portfolio/portada-rioja-desktop",
+          "portfolio/portada-rioja-mobile",
+          "portfolio/portada-claro-desktop",
+          "portfolio/portada-oscuro-desktop",
+          "portfolio/portada-cobalto-desktop",
+          "portfolio/portada-bosque-desktop",
+          "portfolio/selector-tema",
+          "portfolio/sobre-mi",
+          "portfolio/habilidades",
+          "portfolio/servicios",
+          "portfolio/servicio-detalle",
+          "portfolio/proyectos",
+          "portfolio/proyecto-leadia",
+          "portfolio/experiencia",
+          "portfolio/formacion",
+          "portfolio/contacto",
+          "portfolio/bitacora",
+          "portfolio/articulo-langgraph",
+          "portfolio/legal-privacidad"
+        ],
+        "functions": []
+      }
+    }
+  }
+}

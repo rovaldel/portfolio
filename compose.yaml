@@ -1,0 +1,22 @@
+services:
+  portfolio:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '${PORT:-3000}:3000'
+    environment:
+      GMAIL_SMTP_USER: ${GMAIL_SMTP_USER:-rodrigo.valdelvira@gmail.com}
+      GMAIL_SMTP_APP_PASSWORD: ${GMAIL_SMTP_APP_PASSWORD:-}
+      CONTACT_FROM: ${CONTACT_FROM:-rodrigo.valdelvira@gmail.com}
+      CONTACT_TO: ${CONTACT_TO:-rodrigo.valdelvira@gmail.com}
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=64m
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    deploy:
+      replicas: 1
+    restart: 'no'

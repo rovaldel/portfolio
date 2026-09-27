@@ -1,0 +1,26 @@
+---
+import type { LegalDocument } from '../../content/site';
+interface Props {
+  document: LegalDocument;
+}
+const { document } = Astro.props;
+---
+
+<article class="legal-document" aria-label={`${document.title}, borrador de trabajo`}>
+  <h1 id="legal-title" tabindex="-1">{document.title}</h1>
+  <p class="legal-document__kicker">{document.kicker}</p>
+  <div class="legal-document__sections">
+    {
+      document.sections.map((section) => (
+        <section>
+          <h2>{section.title}</h2>
+          <p>{section.body}</p>
+        </section>
+      ))
+    }
+  </div>
+  <p class="legal-document__status">
+    Borrador actualizado · Pendiente de verificar las condiciones de los proveedores y la conservación
+    efectiva antes de publicar.
+  </p>
+</article>

@@ -1,0 +1,26 @@
+---
+import { siteProfile } from '../../content/site';
+import ThemeSelector from '../ui/ThemeSelector.astro';
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="/" aria-label="Rodrigo Valdelvira, volver a portada"
+      ><span class="brand__portrait"
+        ><img class="avatar" src={siteProfile.portrait.src} alt="" width="32" height="32" /></span
+      ><span>{siteProfile.displayName}</span></a
+    >
+    <div class="header-controls">
+      <a
+        class="button header-cv"
+        href="/Rodrigo-Valdelvira-CV.pdf"
+        download="Rodrigo-Valdelvira-CV.pdf"
+        aria-label="Descargar CV en PDF"
+      >
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M12 3v12"></path><path d="m7.5 10.5 4.5 4.5 4.5-4.5"></path><path d="M4 19h16"></path>
+        </svg><span>CV</span></a
+      ><ThemeSelector />
+    </div>
+  </div>
+</header>

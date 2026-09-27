@@ -1,0 +1,40 @@
+---
+import { navigationActions } from '../../content/site';
+const icons: Record<string, string> = {
+  about: 'M14 3v4a1 1 0 0 0 1 1h4 M5 3h9l5 5v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z',
+  skills:
+    'M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0-6 0 M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-2.7 1.1V21a2 2 0 1 1-4 0v-.1A1.6 1.6 0 0 0 6.6 19l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.6 1.6 0 0 0 3 13.4H3a2 2 0 1 1 0-4h.1A1.6 1.6 0 0 0 4.6 6.6l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1A1.6 1.6 0 0 0 10 4.6V3a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 2.7 1.1l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0 1.1 2.7H21a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1z',
+  services: 'M12 2l2.4 4.8 5.3.8-3.8 3.7.9 5.3L12 14.9 7.2 16.4l.9-5.3L4.3 7.6l5.3-.8z',
+  projects: 'm12 3 9 5-9 5-9-5 9-5Z M3 12l9 5 9-5 M3 16l9 5 9-5',
+  experience: 'M3 8h18v12H3z M8 8V5h8v3 M3 13h18',
+  education: 'm2 9 10-5 10 5-10 5L2 9Z M6 11v5c3 3 9 3 12 0v-5',
+  contact: 'M3 5h18v14H3z M3 6l9 7 9-7',
+};
+---
+
+<nav class="conversation-dock__actions" data-actions aria-label="Secciones del portfolio">
+  {
+    navigationActions.map((action) => (
+      <a
+        class="conversation-dock__chip portfolio-action"
+        href={action.destination}
+        data-portfolio-action
+        data-response={action.response}
+        data-response-kind={action.responseKind}
+      >
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d={icons[action.id]} />
+        </svg>
+        {action.label}
+      </a>
+    ))
+  }
+</nav>

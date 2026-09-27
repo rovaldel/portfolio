@@ -1,0 +1,36 @@
+---
+import { services } from '../../content/site';
+---
+
+<section class="grid service-grid" aria-label="Catálogo de servicios">
+  {
+    services.map((service) => (
+      <a
+        class="card service-card"
+        href={'/servicios?servicio=' + service.slug}
+        data-service={service.slug}
+        data-service-open={service.slug}
+        aria-haspopup="dialog"
+        aria-labelledby={'service-card-title-' + service.slug}
+        aria-describedby={'service-card-summary-' + service.slug}
+      >
+        <span class="service-card__icon" aria-hidden="true">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.7"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d={service.icon} />
+          </svg>
+        </span>
+        <h2 id={'service-card-title-' + service.slug}>{service.title}</h2>
+        <p class="muted" id={'service-card-summary-' + service.slug}>
+          {service.summary}
+        </p>
+      </a>
+    ))
+  }
+</section>

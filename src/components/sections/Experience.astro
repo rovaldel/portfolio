@@ -1,0 +1,40 @@
+---
+import { experiences } from '../../content/site';
+
+const dateLabel = (value: string | null) =>
+  value
+    ? new Intl.DateTimeFormat('es-ES', { month: 'short', year: 'numeric' })
+        .format(new Date(value + '-01T00:00:00'))
+        .replace('.', '')
+    : 'actualidad';
+---
+
+<section class="experience-list" aria-labelledby="experiencia-title">
+  <h2 id="experiencia-title" class="sr-only">Experiencia profesional</h2>
+  {
+    experiences.map((item) => (
+      <details class="experience-item">
+        <summary class="experience-item__summary">
+          <span class="experience-item__date meta">
+            {dateLabel(item.start)} — {dateLabel(item.end)}
+          </span>
+          <span class="experience-item__identity">
+            <strong>{item.role}</strong>
+            <span>
+              {item.organization} · {item.location}
+              {item.current ? ' · ' + item.workMode : ''}
+            </span>
+          </span>
+          <span class="experience-item__toggle" aria-hidden="true" />
+        </summary>
+        <div class="experience-item__body">
+          <ul class="detail-list">
+            {item.highlights.map((highlight) => (
+              <li>{highlight}</li>
+            ))}
+          </ul>
+        </div>
+      </details>
+    ))
+  }
+</section>

@@ -1,0 +1,71 @@
+name: Deploy portfolio to VPS
+
+# Referencia funcional procedente del mockup. La spec 000/020 debe convertirla
+# en .github/workflows/deploy.yml conforme al contrato de la especificación
+# maestra; no se copia literalmente a producción.
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '.github/workflows/**'
+      - 'README.md'
+      - '.gitignore'
+  workflow_dispatch:
+
+# Evita que dos despliegues modifiquen simultáneamente el mismo directorio de la VPS.
+concurrency:
+  group: deploy-portfolio-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy to VPS
+    runs-on: ubuntu-latest
+    steps:
+      - name: Execute remote deployment
+        uses: appleboy/ssh-action@v1.2.5
+        env:
+          REPOSITORY_URL: ${{ secrets.DEPLOY_REPOSITORY_URL }}
+          BACKEND_ENV: ${{ secrets.BACKEND_ENV }}
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          fingerprint: ${{ secrets.SSH_FINGERPRINT }}
+          command_timeout: 20m
+          envs: REPOSITORY_URL,BACKEND_ENV
+          script: |
+            set -eu
+
+            projects_dir="$HOME/projects"
+            app_dir="$projects_dir/portfolio"
+            repository_url="${REPOSITORY_URL:?Falta el secreto DEPLOY_REPOSITORY_URL}"
+
+            mkdir -p "$projects_dir"
+
+            # El primer despliegue crea el proyecto; los posteriores actualizan main.
+            if [ -e "$app_dir" ] && [ ! -d "$app_dir/.git" ]; then
+              echo "El directorio $app_dir existe, pero no es un repositorio Git." >&2
+              exit 1
+            fi
+
+            if [ ! -d "$app_dir/.git" ]; then
+              git clone --branch main --single-branch "$repository_url" "$app_dir"
+            fi
+
+            cd "$app_dir"
+            git remote set-url origin "$repository_url"
+            git fetch --prune origin main
+            git checkout --force -B main origin/main
+            git reset --hard origin/main
+            git clean -fd
+
+            # .env permanece fuera de Git y se crea de forma restringida en cada despliegue.
+            umask 077
+            printf '%s\n' "$BACKEND_ENV" > .env
+
+            docker compose config -q
+            docker compose up -d --build --remove-orphans
+            docker image prune -f

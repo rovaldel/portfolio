@@ -1,0 +1,16 @@
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+coverage/
+dist/
+node_modules/
+__pycache__/
+.pytest_cache/
+.venv/
+target/
+.next/
+.astro/
+.cache/
+.turbo/

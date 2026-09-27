@@ -1,0 +1,349 @@
+{
+  "$meta": {
+    "generatedBy": "design/scripts/extract-content.mjs",
+    "source": "mockup/Portfolio Conversacional.html",
+    "warning": "GENERADO. No editar a mano."
+  },
+  "projects": [
+    {
+      "tag": "DESTACADO",
+      "title": "Leadia",
+      "client": "Producto propio",
+      "role": "AI Engineer",
+      "desc": "Agente de voz con IA que atiende llamadas de forma autónoma y automatiza la gestión de leads: capta la consulta, la cualifica y la registra sin intervención humana.",
+      "tech": [
+        "Agentes de voz",
+        "LLMs",
+        "FastAPI",
+        "Telefonía IA"
+      ],
+      "url": "https://leadia.es",
+      "img": "leadia.webp"
+    },
+    {
+      "tag": "DISEÑO",
+      "title": "Nami",
+      "client": "Producto propio",
+      "role": "AI Engineer / Product",
+      "desc": "App de bienestar y productividad para adultos con TDAH, diseñada con un equipo clínico detrás de cada decisión. No mide si el usuario mejora usando la app, sino si logra completar sus tareas reales del día a día y cómo se siente al hacerlo. Sin rachas ni penalización por abandonar: volver siempre cuenta. El terapeuta habilita los módulos a su ritmo, y el propio patrón de uso se convierte en una señal clínica que solo él interpreta. Actualmente en fase de diseño: estas pantallas son el primer aterrizaje para validar con el equipo antes de construir el MVP.",
+      "tech": [
+        "Diseño de producto",
+        "UX clínico",
+        "TCC / ACT",
+        "Flujos de agente"
+      ],
+      "url": "",
+      "img": "nami-cover.png"
+    }
+  ],
+  "skillGroups": [
+    {
+      "name": "IA / Machine Learning",
+      "items": [
+        {
+          "name": "LangGraph",
+          "n": 5
+        },
+        {
+          "name": "LangChain",
+          "n": 5
+        },
+        {
+          "name": "RAG",
+          "n": 5
+        },
+        {
+          "name": "Scikit-learn",
+          "n": 5
+        },
+        {
+          "name": "PyTorch",
+          "n": 4
+        },
+        {
+          "name": "HuggingFace",
+          "n": 4
+        }
+      ]
+    },
+    {
+      "name": "Datos / MLOps",
+      "items": [
+        {
+          "name": "Python",
+          "n": 5
+        },
+        {
+          "name": "Pandas",
+          "n": 5
+        },
+        {
+          "name": "FastAPI",
+          "n": 5
+        },
+        {
+          "name": "Docker",
+          "n": 4
+        },
+        {
+          "name": "BigQuery",
+          "n": 4
+        },
+        {
+          "name": "PostgreSQL",
+          "n": 4
+        }
+      ]
+    },
+    {
+      "name": "Backend · Cloud",
+      "items": [
+        {
+          "name": "Flask",
+          "n": 4
+        },
+        {
+          "name": "Microservicios",
+          "n": 4
+        },
+        {
+          "name": "Azure",
+          "n": 4
+        },
+        {
+          "name": "GCP",
+          "n": 4
+        },
+        {
+          "name": "Node.js",
+          "n": 3
+        }
+      ]
+    },
+    {
+      "name": "Agentes de IA · desarrollo",
+      "items": [
+        {
+          "name": "Claude Code",
+          "n": 5
+        },
+        {
+          "name": "Codex",
+          "n": 4
+        },
+        {
+          "name": "Cursor",
+          "n": 4
+        },
+        {
+          "name": "Harness de desarrollo agéntico",
+          "n": 4
+        },
+        {
+          "name": "MCP (Model Context Protocol)",
+          "n": 4
+        }
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "role": "Ingeniero de Inteligencia Artificial",
+      "org": "Cidatum · Logroño · presencial",
+      "years": "DIC 2025 — HOY",
+      "bullets": [
+        "Formación y capacitación en IA para el centro, socios estratégicos y empresas externas.",
+        "Consultoría estratégica de IA: evaluación, viabilidad e implantación de soluciones.",
+        "Desarrollo a medida de sistemas y arquitecturas de IA para clientes."
+      ]
+    },
+    {
+      "role": "Data Scientist · AI Engineer · Project Manager",
+      "org": "TalentTools · Logroño · remoto",
+      "years": "ABR 2021 — HOY",
+      "bullets": [
+        "InclunIA (Fundación ONCE): coordinación, desarrollo y despliegue en Azure/GCP del sistema de recomendación de demandantes y ofertas.",
+        "Habla con InclunIA: técnico de selección virtual basado en LLMs que interpreta los datos del sistema para facilitar el reclutamiento inclusivo.",
+        "Clara (UPSA): diseño e implementación del chatbot Orientador Profesional basado en LLMs.",
+        "2KBot: recomendador colaborativo híbrido que optimiza el matching entre perfil profesional y ocupaciones.",
+        "Dat4me: pipelines de datos para analítica, visualización y entrenamiento de modelos.",
+        "Coordinación del área de datos: estrategia técnica, gestión de proyectos de IA y evaluación de tecnologías emergentes.",
+        "Logros: −65% en tiempo de análisis de datos de talento; despliegue seguro en Azure/GCP interoperable con ERP/CRM; interpretabilidad y trazabilidad en modelos y chatbots."
+      ]
+    },
+    {
+      "role": "Ingeniero de Diseño y Desarrollo de Producto",
+      "org": "CMP Automotive Group · Logroño",
+      "years": "SEP 2012 — ABR 2021",
+      "bullets": [
+        "Gestión técnica de nuevos productos antivibratorios, de la oferta a producción.",
+        "Diseño CAD 3D y análisis FEA de componentes mecánicos.",
+        "Coordinación de fabricación, ensayos y validación de prototipos.",
+        "Seguimiento técnico con clientes internacionales durante todo el ciclo de desarrollo."
+      ]
+    },
+    {
+      "role": "Ingeniero de Instalaciones",
+      "org": "POPE Building Services Consulting Engineers · Chichester, UK",
+      "years": "JUL — AGO 2012",
+      "bullets": [
+        "Planos y cálculos de instalaciones HVAC, ACS y saneamiento.",
+        "Apoyo en el dimensionamiento de sistemas de energías renovables: solar térmica, fotovoltaica, biomasa y geotermia."
+      ]
+    },
+    {
+      "role": "Investigador",
+      "org": "GI-TENECO · Termodinámica aplicada, energía y construcción · Logroño",
+      "years": "SEP 2011 — DIC 2012",
+      "bullets": [
+        "Análisis del consumo energético mundial y nacional.",
+        "Estimación del potencial de biomasa y residuos energéticamente aprovechables en La Rioja."
+      ]
+    }
+  ],
+  "services": [
+    {
+      "title": "Agentes y chatbots IA",
+      "desc": "Agentes conversacionales, asistentes y chatbots con LLMs, listos para tus usuarios.",
+      "long": "Diseño y construyo agentes conversacionales sobre LLMs (LangChain, LangGraph) que resuelven una tarea de negocio de punta a punta: atención al cliente, cualificación de leads, orientación o soporte interno. Incluye orquestación de herramientas, memoria de conversación, integración con tus sistemas (CRM, calendario, base de datos) y control de calidad de las respuestas antes de salir a producción.",
+      "icon": "M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.3-.6L3 21l1.7-5.1A8.4 8.4 0 1 1 21 11.5z"
+    },
+    {
+      "title": "Ingeniería de datos",
+      "desc": "Pipelines fiables que mueven y transforman tus datos sin intervención manual.",
+      "long": "Construyo pipelines de datos automatizados: ingesta, limpieza, transformación y carga entre tus fuentes y tus modelos o cuadros de mando. El objetivo es que el dato llegue siempre correcto y a tiempo, sin procesos manuales ni hojas de cálculo intermedias que se rompen con el tiempo.",
+      "icon": "M3 12a9 9 0 0 1 9-9 9 9 0 0 1 9 9M3 12a9 9 0 0 0 9 9 9 9 0 0 0 9-9M3 12h18"
+    },
+    {
+      "title": "ML y modelos predictivos",
+      "desc": "Modelos de machine learning que anticipan, clasifican y recomiendan.",
+      "long": "Desarrollo modelos de machine learning para predicción, clasificación y recomendación adaptados a tu caso de uso: desde sistemas de recomendación híbridos hasta modelos de scoring o detección de patrones. Cubro desde la exploración de datos hasta la validación del modelo con métricas de negocio, no solo técnicas.",
+      "icon": "M3 3v18h18M7 15l3-4 3 3 5-7"
+    },
+    {
+      "title": "MLOps y producción",
+      "desc": "Del notebook a producción: contenedores, APIs y monitorización.",
+      "long": "Llevo modelos y agentes del notebook a un entorno productivo real: contenedorización (Docker), despliegue en Azure/GCP, exposición vía API (FastAPI) y monitorización de rendimiento y coste. Así el modelo sigue funcionando bien meses después de lanzarlo, no solo el día de la demo.",
+      "icon": "M12 2l8 4.5v9L12 20l-8-4.5v-9zM12 11l8-4.5M12 11v9M12 11L4 6.5"
+    },
+    {
+      "title": "Analítica y visualización",
+      "desc": "Cuadros de mando y análisis para decidir con datos, no con intuición.",
+      "long": "Diseño cuadros de mando y análisis a medida que responden preguntas concretas de negocio, no solo muestran métricas. Trabajo con BigQuery, PostgreSQL y las herramientas de visualización que ya use tu equipo, priorizando claridad sobre cantidad de datos.",
+      "icon": "M4 19V5M9 19v-7M14 19v-10M19 19V8"
+    },
+    {
+      "title": "Desarrollo con agentes de IA",
+      "desc": "Programo apoyado en Claude Code y Codex para entregar más rápido sin bajar el estándar.",
+      "long": "Uso agentes de IA de desarrollo (Claude Code, Codex) como parte de mi flujo diario de programación, dentro de un harness que mantiene control de calidad, revisión y trazabilidad sobre lo que el agente escribe. Esto acelera la entrega de prototipos, integraciones y pipelines, sin renunciar a código legible y mantenible.",
+      "icon": "M4 17l6-6-6-6M12 19h8"
+    }
+  ],
+  "education": [
+    {
+      "title": "Especialista implantador ISO 42001 (IA Responsable)",
+      "org": "AENOR · S-39 / S-44 / S-45 · 42 h",
+      "year": "2026",
+      "desc": "Formación de especialización en el estándar internacional de gestión de IA responsable: implantación de un sistema de gestión de IA, evaluación de riesgos y cumplimiento normativo."
+    },
+    {
+      "title": "Máster oficial en Big Data",
+      "org": "UEMC · Universidad Europea Miguel de Cervantes · Valladolid",
+      "year": "2020 — 2021",
+      "desc": "Especialización en analítica avanzada, machine learning y arquitecturas de datos a gran escala, con proyectos aplicados de extremo a extremo."
+    },
+    {
+      "title": "Goethe-Zertifikat B1 (alemán)",
+      "org": "Carl Duisberg Centren · Berlín, Alemania",
+      "year": "2017",
+      "desc": "Estancia formativa de dos meses en Berlín. Certificación oficial de nivel B1 de alemán."
+    },
+    {
+      "title": "Cambridge Advanced C1 (inglés)",
+      "org": "Chichester College · Chichester, Reino Unido",
+      "year": "2012",
+      "desc": "Diez meses en Reino Unido compaginando la certificación C1 con la práctica profesional en ingeniería de instalaciones."
+    },
+    {
+      "title": "Ingeniería Industrial",
+      "org": "Universidad de La Rioja · Logroño",
+      "year": "2009 — 2011",
+      "desc": "Formación generalista en ingeniería: procesos, diseño de producto y gestión de proyectos técnicos."
+    },
+    {
+      "title": "Ingeniería Técnica Industrial, especialidad Mecánica",
+      "org": "Universidad de La Rioja · Logroño",
+      "year": "2005 — 2009",
+      "desc": "Base en diseño mecánico, cálculo estructural y modelado CAD, punto de partida de mi carrera técnica."
+    }
+  ],
+  "interests": [
+    {
+      "title": "IA generativa y agentes",
+      "desc": "Explorando modelos, frameworks de agentes y patrones RAG.",
+      "icon": "M12 2a4 4 0 0 1 4 4c0 1.5 1 2 1.5 3a4.5 4.5 0 0 1-3 7.5h-5a4.5 4.5 0 0 1-3-7.5C7 8 8 7.5 8 6a4 4 0 0 1 4-4z"
+    },
+    {
+      "title": "Gobernanza de IA",
+      "desc": "IA explicable, responsable y auditable.",
+      "icon": "M12 2l8 3v6c0 5-3.5 8.5-8 11-4.5-2.5-8-6-8-11V5z"
+    },
+    {
+      "title": "Divulgación técnica",
+      "desc": "Escribir y compartir sobre lo que construyo en IA y datos.",
+      "icon": "M4 4h12a2 2 0 0 1 2 2v14l-4-3H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"
+    },
+    {
+      "title": "Open source",
+      "desc": "Aprender y contribuir al ecosistema de herramientas de datos e IA.",
+      "icon": "M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3-.3 6-1.5 6-6.5a5 5 0 0 0-1.4-3.5A4.7 4.7 0 0 0 19 5s-1.1-.3-3.5 1.3a12 12 0 0 0-6 0C7.1 4.7 6 5 6 5a4.7 4.7 0 0 0-.1 3.5A5 5 0 0 0 4.5 12c0 5 3 6.2 6 6.5a3.4 3.4 0 0 0-1 2.6V22"
+    },
+    {
+      "title": "Aficiones",
+      "desc": "Dibujar, gimnasio, música, cine y viajar.",
+      "icon": "M12 19l7-7 3 3-7 7-3-3zM18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5zM2 2l7.6 7.6"
+    }
+  ],
+  "posts": [
+    {
+      "title": "Por qué el 80% de los proyectos de IA fracasan antes de llegar a producción",
+      "category": "Gobernanza IA",
+      "date": "3 jun 2025",
+      "readTime": 5,
+      "indexed": true,
+      "excerpt": "No es un problema técnico. Es un problema de expectativas, gobernanza y falta de ownership. Después de ver fallar decenas de proyectos, aquí está el patrón que se repite siempre."
+    },
+    {
+      "title": "Cómo evalué tres frameworks de agentes antes de elegir LangGraph",
+      "category": "Agentes",
+      "date": "15 may 2025",
+      "readTime": 7,
+      "indexed": true,
+      "excerpt": "Probé CrewAI, AutoGen y LangGraph durante tres semanas. El criterio no fue cuál era el más popular, sino cuál me dejaba depurar cuando algo salía mal en producción."
+    },
+    {
+      "title": "EU AI Act: lo que realmente cambia para una pyme española en 2025",
+      "category": "Regulación",
+      "date": "28 abr 2025",
+      "readTime": 6,
+      "indexed": false,
+      "excerpt": "El reglamento europeo entró en vigor. Pero entre la complejidad jurídica y la cobertura mediática, lo práctico se pierde. Esto es lo que una empresa pequeña necesita hacer ahora."
+    },
+    {
+      "title": "Leadia: decisiones de arquitectura para un agente de voz en producción",
+      "category": "Casos de uso",
+      "date": "10 abr 2025",
+      "readTime": 8,
+      "indexed": true,
+      "excerpt": "Construir un agente de voz que funcione de verdad implica resolver problemas que no aparecen en los tutoriales: latencia, gestión de contexto, recuperación de errores y handoff humano."
+    },
+    {
+      "title": "Cuándo NO usar un LLM (y qué usar en su lugar)",
+      "category": "MLOps",
+      "date": "22 mar 2025",
+      "readTime": 4,
+      "indexed": true,
+      "excerpt": "Los LLMs son potentes pero caros, lentos y poco predecibles. Para clasificaciones simples, reglas de negocio o predicciones acotadas, hay herramientas mejores que cuestan cien veces menos."
+    }
+  ]
+}

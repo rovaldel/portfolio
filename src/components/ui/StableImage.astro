@@ -1,0 +1,20 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  fallbackLabel: string;
+  sources: { src: string; type: 'image/avif' | 'image/webp' }[];
+  class?: string;
+}
+const { src, alt, width, height, fallbackLabel, class: className } = Astro.props;
+---
+
+<div class:list={['stable-image', className]} data-image-frame>
+  <img data-stable-image src={src} alt={alt} width={width} height={height} loading="lazy" />
+  <span data-image-fallback class="image-fallback" role="img" aria-label={fallbackLabel} hidden
+    >{fallbackLabel}</span
+  >
+</div>
+<script src="../../scripts/image-fallback.ts"></script>
