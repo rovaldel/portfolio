@@ -99,12 +99,31 @@ jobs:
           DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
         run: |
           set -euo pipefail
-          [[ -n "$DEPLOY_HOST" && -n "$SSH_FINGERPRINT" && -n "$DEPLOY_SSH_KEY" ]] || { echo 'Faltan DEPLOY_HOST, SSH_FINGERPRINT o DEPLOY_SSH_KEY.' >&2; exit 1; }
+          [[ -n "$DEPLOY_HOST" ]] || { echo 'Falta la variable DEPLOY_HOST.' >&2; exit 1; }
+          [[ -n "$SSH_FINGERPRINT" ]] || { echo 'Falta la variable SSH_FINGERPRINT.' >&2; exit 1; }
+          [[ -n "$DEPLOY_SSH_KEY" ]] || { echo 'Falta el secreto DEPLOY_SSH_KEY.' >&2; exit 1; }
           printf '%s\n' "$DEPLOY_SSH_KEY" > "$RUNNER_TEMP/deploy_key"
           chmod 600 "$RUNNER_TEMP/deploy_key"
-          ssh-keyscan -T 8 -t ed25519 "$DEPLOY_HOST" 2>/dev/null > "$RUNNER_TEMP/known_hosts"
-          test -s "$RUNNER_TEMP/known_hosts"
-          ssh-keygen -lf "$RUNNER_TEMP/known_hosts" -E sha256 | awk -v expected="$SSH_FINGERPRINT" '$2 == expected { found = 1 } END { exit !found }'
+          if ! ssh-keygen -y -f "$RUNNER_TEMP/deploy_key" >/dev/null 2>&1; then
+            echo 'DEPLOY_SSH_KEY no es una clave privada SSH válida sin passphrase.' >&2
+            exit 1
+          fi
+          if ! ssh-keyscan -T 8 -t ed25519 "$DEPLOY_HOST" 2>/dev/null > "$RUNNER_TEMP/known_hosts" || ! test -s "$RUNNER_TEMP/known_hosts"; then
+            echo 'No se pudo obtener la clave ED25519 de DEPLOY_HOST por SSH.' >&2
+            exit 1
+          fi
+          expected_fingerprint="${SSH_FINGERPRINT//[[:space:]]/}"
+          observed_fingerprints="$(ssh-keygen -lf "$RUNNER_TEMP/known_hosts" -E sha256 | awk '{print $2}')"
+          if ! grep -Fxq -- "$expected_fingerprint" <<< "$observed_fingerprints"; then
+            echo 'SSH_FINGERPRINT no coincide con la clave ED25519 publicada por DEPLOY_HOST.' >&2
+            echo "Huella observada: $observed_fingerprints" >&2
+            exit 1
+          fi
+          SSH_ARGS=(-i "$RUNNER_TEMP/deploy_key" -o IdentitiesOnly=yes -o BatchMode=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile="$RUNNER_TEMP/known_hosts" -o ConnectTimeout=10)
+          if ! ssh "${SSH_ARGS[@]}" "deploy@$DEPLOY_HOST" true; then
+            echo 'La huella coincide, pero la clave no puede autenticarse como usuario deploy.' >&2
+            exit 1
+          fi
       - name: Escribir la configuración SMTP en el servidor
         env:
           DEPLOY_HOST: ${{ vars.DEPLOY_HOST }}
