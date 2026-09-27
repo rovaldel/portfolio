@@ -98,6 +98,7 @@ async function main() {
     accessibilityReview,
   });
   if (!report.allowed) {
+    for (const error of report.errors) console.error(`::error title=D-08::${error}`);
     console.error(JSON.stringify(report, null, 2));
     process.exitCode = 1;
     return;
