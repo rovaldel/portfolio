@@ -5,7 +5,7 @@ const repository = process.env.GITHUB_REPOSITORY;
 const currentRunId = process.env.GITHUB_RUN_ID;
 const githubToken = process.env.GITHUB_TOKEN;
 const smtpPassword = process.env.GMAIL_SMTP_APP_PASSWORD?.replaceAll(' ', '');
-const smtpUser = 'rodr.valdelvira@gmail.com';
+const smtpUser = 'rodrigo.valdelvira@gmail.com';
 const alertTo = 'rodrigo.valdelvira@gmail.com';
 const siteUrl = 'https://rodrigovaldelvira.com';
 

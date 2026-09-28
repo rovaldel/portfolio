@@ -72,10 +72,10 @@ deploy() {
   [[ -f "$DEPLOY_DIR/compose.next" ]] || fail 'Falta el Compose candidato.'
   [[ -f "$DEPLOY_DIR/runtime.env" ]] || fail 'Falta el archivo de entorno de producción.'
   [[ "$(stat -c '%a' "$DEPLOY_DIR/runtime.env")" == 600 ]] || fail 'runtime.env debe tener permisos 0600.'
-  grep --quiet --fixed-strings 'GMAIL_SMTP_USER=rodr.valdelvira@gmail.com' "$DEPLOY_DIR/runtime.env" || fail 'GMAIL_SMTP_USER no coincide con la decisión D-03.'
+  grep --quiet --fixed-strings 'GMAIL_SMTP_USER=rodrigo.valdelvira@gmail.com' "$DEPLOY_DIR/runtime.env" || fail 'GMAIL_SMTP_USER no coincide con la decisión D-03.'
   grep --quiet --fixed-strings 'GMAIL_SMTP_APP_PASSWORD=' "$DEPLOY_DIR/runtime.env" || fail 'Falta GMAIL_SMTP_APP_PASSWORD.'
-  grep --quiet --fixed-strings 'CONTACT_FROM=rodr.valdelvira@gmail.com' "$DEPLOY_DIR/runtime.env" || fail 'CONTACT_FROM no coincide con la decisión D-03.'
-  grep --quiet --fixed-strings 'CONTACT_TO=rodr.valdelvira@gmail.com' "$DEPLOY_DIR/runtime.env" || fail 'CONTACT_TO no coincide con la decisión D-03.'
+  grep --quiet --fixed-strings 'CONTACT_FROM=rodrigo.valdelvira@gmail.com' "$DEPLOY_DIR/runtime.env" || fail 'CONTACT_FROM no coincide con la decisión D-03.'
+  grep --quiet --fixed-strings 'CONTACT_TO=rodrigo.valdelvira@gmail.com' "$DEPLOY_DIR/runtime.env" || fail 'CONTACT_TO no coincide con la decisión D-03.'
   if ! grep --quiet --extended-regexp '^GMAIL_SMTP_APP_PASSWORD=..+' "$DEPLOY_DIR/runtime.env"; then
     fail 'La contraseña SMTP está vacía.'
   fi

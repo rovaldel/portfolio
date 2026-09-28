@@ -140,10 +140,10 @@ jobs:
           [[ -n "$SMTP_PASSWORD" ]]
           umask 077
           {
-            printf 'GMAIL_SMTP_USER=%s\n' 'rodr.valdelvira@gmail.com'
+            printf 'GMAIL_SMTP_USER=%s\n' 'rodrigo.valdelvira@gmail.com'
             printf 'GMAIL_SMTP_APP_PASSWORD=%s\n' "$SMTP_PASSWORD"
-            printf 'CONTACT_FROM=%s\n' 'rodr.valdelvira@gmail.com'
-            printf 'CONTACT_TO=%s\n' 'rodr.valdelvira@gmail.com'
+            printf 'CONTACT_FROM=%s\n' 'rodrigo.valdelvira@gmail.com'
+            printf 'CONTACT_TO=%s\n' 'rodrigo.valdelvira@gmail.com'
           } > "$RUNNER_TEMP/runtime.env"
           SSH_ARGS=(-i "$RUNNER_TEMP/deploy_key" -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile="$RUNNER_TEMP/known_hosts" -o ConnectTimeout=10)
           TARGET="deploy@$DEPLOY_HOST"

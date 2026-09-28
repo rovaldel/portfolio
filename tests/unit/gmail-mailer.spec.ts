@@ -27,8 +27,9 @@ it('envía por Gmail con TLS, destino fijo y Reply-To del visitante', async () =
   expect(nodemailer.createTransport).toHaveBeenCalledWith(
     expect.objectContaining({
       host: 'smtp.gmail.com',
-      port: 465,
-      secure: true,
+      port: 587,
+      secure: false,
+      requireTLS: true,
       auth: { user: env.GMAIL_SMTP_USER, pass: env.GMAIL_SMTP_APP_PASSWORD },
     }),
   );

@@ -21,8 +21,11 @@ function gmailTransport(env: NodeJS.ProcessEnv): MailTransport | undefined {
 
   const client = nodemailer.createTransport({
     host: 'smtp.gmail.com',
-    port: 465,
-    secure: true,
+    // Hetzner permits Gmail's submission service on 587 but not implicit TLS on 465.
+    // requireTLS forces a verified STARTTLS upgrade before credentials are sent.
+    port: 587,
+    secure: false,
+    requireTLS: true,
     auth: { user, pass: appPassword },
     connectionTimeout: 10_000,
     greetingTimeout: 10_000,
