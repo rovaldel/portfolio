@@ -11,6 +11,12 @@ import PortfolioActions from './PortfolioActions.astro';
 >
   <div class="conversation-dock__panel">
     <form class="query-form" id="portfolio-query-form" data-query-form aria-label="Consulta local">
+      <span class="query-form__spark" aria-hidden="true"
+        ><svg viewBox="0 0 24 24"
+          ><path d="M12 2c.6 5.4 4.6 9.4 10 10-5.4.6-9.4 4.6-10 10-.6-5.4-4.6-9.4-10-10 5.4-.6 9.4-4.6 10-10Z"
+          ></path></svg
+        ></span
+      >
       <label class="sr-only" for="portfolio-query">Escribe tu pregunta</label>
       <textarea
         id="portfolio-query"
@@ -18,7 +24,7 @@ import PortfolioActions from './PortfolioActions.astro';
         maxlength="300"
         rows="1"
         aria-describedby="query-guidance query-count"
-        placeholder="Prueba con: sobre mí, servicios o proyectos…"></textarea>
+        placeholder="Pregúntame por mi experiencia, proyectos…"></textarea>
       <button class="query-submit" type="submit" data-query-submit aria-label="Enviar consulta">
         <svg
           aria-hidden="true"

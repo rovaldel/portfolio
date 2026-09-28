@@ -1,6 +1,7 @@
 ---
 import { siteProfile } from '../../content/site';
 import ThemeSelector from '../ui/ThemeSelector.astro';
+import MobileMenu from './MobileMenu.astro';
 ---
 
 <header class="site-header">
@@ -8,7 +9,12 @@ import ThemeSelector from '../ui/ThemeSelector.astro';
     <a class="brand" href="/" aria-label="Rodrigo Valdelvira, volver a portada"
       ><span class="brand__portrait"
         ><img class="avatar" src={siteProfile.portrait.src} alt="" width="32" height="32" /></span
-      ><span>{siteProfile.displayName}</span></a
+      ><span class="brand__text"
+        ><span class="brand__name">{siteProfile.displayName}</span><span
+          class="brand__status"
+          aria-hidden="true">{siteProfile.primaryRole} · disponible</span
+        ></span
+      ></a
     >
     <div class="header-controls">
       <a
@@ -20,7 +26,7 @@ import ThemeSelector from '../ui/ThemeSelector.astro';
         <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
           <path d="M12 3v12"></path><path d="m7.5 10.5 4.5 4.5 4.5-4.5"></path><path d="M4 19h16"></path>
         </svg><span>CV</span></a
-      ><ThemeSelector />
+      ><ThemeSelector /><MobileMenu />
     </div>
   </div>
 </header>

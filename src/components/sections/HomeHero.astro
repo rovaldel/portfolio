@@ -21,6 +21,12 @@ if (!aboutAction || !projectsAction) {
 
 <section class="mockup-hero" aria-label={backdrop ? undefined : 'Presentación de Rodrigo'}>
   <div class="mockup-hero__title">
+    <span class="mockup-hero__spark" aria-hidden="true"
+      ><svg viewBox="0 0 24 24"
+        ><path d="M12 2c.6 5.4 4.6 9.4 10 10-5.4.6-9.4 4.6-10 10-.6-5.4-4.6-9.4-10-10 5.4-.6 9.4-4.6 10-10Z"
+        ></path></svg
+      ></span
+    >
     <p class="eyebrow">¡Hola!</p>
     {
       backdrop ? (
@@ -37,6 +43,7 @@ if (!aboutAction || !projectsAction) {
         </h1>
       )
     }
+    <p class="mockup-hero__ask">¿En qué puedo ayudarte?</p>
   </div>
   <div class="mockup-hero__stage">
     <aside class="mockup-hero__quote">

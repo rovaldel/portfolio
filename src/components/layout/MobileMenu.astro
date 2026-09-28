@@ -1,0 +1,52 @@
+---
+import { navigationActions } from '../../content/site';
+
+// Only rendered visibly on narrow screens: the header there keeps the brand and
+// two round controls, so sections, CV and legal links move into this panel.
+const currentPath = Astro.url.pathname;
+const items = [
+  { label: 'Inicio', href: '/' },
+  ...navigationActions.map((action) => ({ label: action.label, href: action.destination })),
+  { label: 'Bitácora', href: '/bitacora' },
+];
+---
+
+<details class="mobile-menu" data-mobile-menu>
+  <summary class="mobile-menu__trigger" aria-label="Menú del portfolio">
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.8"
+      stroke-linecap="round"
+    >
+      <path class="mobile-menu__bars" d="M4 7h16M4 12h16M4 17h16"></path>
+      <path class="mobile-menu__close" d="M6 6l12 12M18 6 6 18"></path>
+    </svg>
+  </summary>
+  <div class="mobile-menu__panel">
+    <nav aria-label="Menú móvil">
+      <ul class="mobile-menu__list">
+        {
+          items.map((item) => (
+            <li>
+              <a href={item.href} aria-current={currentPath === item.href ? 'page' : undefined}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    <a class="mobile-menu__cv" href="/Rodrigo-Valdelvira-CV.pdf" download="Rodrigo-Valdelvira-CV.pdf">
+      <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M12 3v12"></path><path d="m7.5 10.5 4.5 4.5 4.5-4.5"></path><path d="M4 19h16"></path>
+      </svg>Descargar CV (PDF)
+    </a>
+    <p class="mobile-menu__legal">
+      <a href="/privacidad">Privacidad</a><a href="/cookies">Cookies</a><a href="/terminos">Términos</a>
+    </p>
+  </div>
+</details>
+<script src="../../scripts/mobile-menu.ts"></script>
