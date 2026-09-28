@@ -153,9 +153,24 @@ jobs:
           [[ "$COMMIT_SHA" =~ ^[a-f0-9]{40}$ ]]
           SSH_ARGS=(-i "$RUNNER_TEMP/deploy_key" -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile="$RUNNER_TEMP/known_hosts" -o ConnectTimeout=10)
           TARGET="deploy@$DEPLOY_HOST"
-          scp "${SSH_ARGS[@]}" ops/hetzner/compose.yaml "$TARGET:/srv/projects/portfolio/deploy/compose.next"
-          scp "${SSH_ARGS[@]}" scripts/deploy/deploy.sh "$TARGET:/srv/projects/portfolio/deploy/deploy.sh"
-          ssh "${SSH_ARGS[@]}" "$TARGET" "bash /srv/projects/portfolio/deploy/deploy.sh deploy '$IMAGE_REF' '$COMMIT_SHA' '$RUN_ID'"
+          report_failure() {
+            local message="${1:0:2000}"
+            message="${message//'%'/'%25'}"
+            message="${message//$'\r'/'%0D'}"
+            message="${message//$'\n'/'%0A'}"
+            echo "::error title=Promoción a Hetzner::$message"
+            exit 1
+          }
+          if ! transfer_output="$(scp "${SSH_ARGS[@]}" ops/hetzner/compose.yaml "$TARGET:/srv/projects/portfolio/deploy/compose.next" 2>&1)"; then
+            report_failure "No se pudo copiar compose.next: $transfer_output"
+          fi
+          if ! transfer_output="$(scp "${SSH_ARGS[@]}" scripts/deploy/deploy.sh "$TARGET:/srv/projects/portfolio/deploy/deploy.sh" 2>&1)"; then
+            report_failure "No se pudo copiar deploy.sh: $transfer_output"
+          fi
+          if ! remote_output="$(ssh "${SSH_ARGS[@]}" "$TARGET" "bash /srv/projects/portfolio/deploy/deploy.sh deploy '$IMAGE_REF' '$COMMIT_SHA' '$RUN_ID'" 2>&1)"; then
+            report_failure "Falló el despliegue remoto: $remote_output"
+          fi
+          [[ -z "$remote_output" ]] || printf '%s\n' "$remote_output"
       - name: Verificar HTTPS, dominio, health y cabeceras desde fuera
         id: public_health
         continue-on-error: true
