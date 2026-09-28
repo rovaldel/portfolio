@@ -7,8 +7,8 @@ test('Tab, Shift+Tab y controles devuelven foco con nombre visible', async ({ pa
   await expect(skip).toBeFocused();
   await expect(skip).toHaveCSS('outline-style', 'solid');
   await page.keyboard.press('Tab');
-  const navigation = page.getByRole('navigation', { name: 'Navegación principal' });
-  await expect(navigation.getByRole('link', { name: 'Portada' })).toBeFocused();
+  const cv = page.getByRole('link', { name: 'Descargar CV en PDF' });
+  await expect(cv).toBeFocused();
   await page.keyboard.press('Shift+Tab');
   await expect(skip).toBeFocused();
 
