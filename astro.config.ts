@@ -12,6 +12,9 @@ export default defineConfig({
   // Astro 7.3 emits this internal import for image-runtime logging but does
   // not yet expose its specifier. Resolve it to the matching public build file.
   vite: {
+    ssr: {
+      noExternal: ['nodemailer'],
+    },
     resolve: {
       alias: {
         'astro/_internal/logger': fileURLToPath(

@@ -5,12 +5,9 @@ interface Props {
 }
 const { backdrop = false } = Astro.props;
 const homePortrait = {
-  // This is the original portrait used by the approved mockup. The alternate
-  // "home" crop changes the silhouette of the suit and no longer aligns with
-  // the colour and shape of the background blob.
-  src: '/images/rodrigo-valdelvira.png',
-  avif: '/images/rodrigo-valdelvira.avif',
-  webp: '/images/rodrigo-valdelvira.webp',
+  // This is the portrait selected for the public home page. Keep its AVIF
+  // resource explicit so every compatible browser uses the same approved image.
+  src: '/images/rodrigo-valdelvira.avif',
   width: 896,
   height: 1152,
 };
@@ -48,18 +45,14 @@ if (!aboutAction || !projectsAction) {
     </aside>
     <div class="mockup-hero__portrait">
       <div class="portrait" data-image-frame>
-        <picture>
-          <source srcset={homePortrait.avif} type="image/avif" />
-          <source srcset={homePortrait.webp} type="image/webp" />
-          <img
-            class="portrait__image"
-            data-stable-image
-            src={homePortrait.src}
-            alt={backdrop ? '' : siteProfile.portrait.alt}
-            width={homePortrait.width}
-            height={homePortrait.height}
-          />
-        </picture>
+        <img
+          class="portrait__image"
+          data-stable-image
+          src={homePortrait.src}
+          alt={backdrop ? '' : siteProfile.portrait.alt}
+          width={homePortrait.width}
+          height={homePortrait.height}
+        />
         <span
           data-image-fallback
           class="image-fallback"

@@ -27,14 +27,12 @@ test('cada destino público abre y conserva su canonical al recargar', async ({ 
   }
 });
 
-test('los enlaces canónicos funcionan con atrás y adelante', async ({ page }) => {
+test('la cabecera no duplica secciones y el prompt conserva la exploración', async ({ page }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  const navigation = page.getByRole('navigation', { name: 'Navegación principal' });
+  await expect(page.getByRole('navigation', { name: 'Navegación principal' })).toHaveCount(0);
+  const navigation = page.getByRole('navigation', { name: 'Secciones del portfolio' });
   await navigation.getByRole('link', { name: 'Sobre mí' }).click();
-  await expect(page).toHaveURL(/\/sobre-mi$/);
-  await page.goBack();
+  await expect(page.locator('[data-conversation-thread]')).toBeVisible();
+  await expect(page.locator('[data-conversation-thread]')).toContainText('Rodrigo Valdelvira');
   await expect(page).toHaveURL(/\/$/);
-  await page.goForward();
-  await expect(page).toHaveURL(/\/sobre-mi$/);
-  await expect(page.locator('h1')).toHaveText('Sobre mí');
 });

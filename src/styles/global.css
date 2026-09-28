@@ -3382,3 +3382,99 @@ a.contact-channel:hover {
     transition: none !important;
   }
 }
+
+/* Home on narrow screens keeps a single, readable navigation surface in the dock. */
+@media (max-width: 560px) {
+  .is-home .site-header .brand {
+    visibility: visible;
+  }
+  .is-home .site-header .brand > span:last-child {
+    display: inline;
+  }
+  .header-inner {
+    min-height: 3.75rem;
+    align-items: center;
+    padding-top: 0.65rem;
+    padding-bottom: 0.65rem;
+  }
+  .brand {
+    gap: 0.5rem;
+    font-size: 0.9rem;
+  }
+  .header-controls {
+    gap: 0.35rem;
+  }
+  .header-controls .button,
+  .header-controls .theme-trigger {
+    min-height: 2.25rem;
+    height: 2.25rem;
+  }
+  .mockup-hero {
+    min-height: 0;
+    gap: 0.75rem;
+    padding: 0.65rem 0 0.9rem;
+  }
+  .mockup-hero__title .eyebrow {
+    margin-bottom: 0.35rem;
+  }
+  .mockup-hero__title h1,
+  .mockup-hero__heading {
+    font-size: clamp(2rem, 9vw, 2.35rem);
+    line-height: 1;
+  }
+  .mockup-hero__stage {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.65rem;
+    margin-top: 0;
+  }
+  .mockup-hero__portrait {
+    width: min(62vw, 15rem);
+    justify-self: center;
+  }
+  .mockup-hero .portrait {
+    width: 100%;
+  }
+  .mockup-hero__actions {
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+    gap: 0.5rem;
+    padding-bottom: 0;
+  }
+  .mockup-hero__actions .button {
+    min-width: 7.5rem;
+  }
+  .is-home .conversation-dock {
+    width: min(100% - 1.25rem, 32rem);
+    margin-top: 0.35rem;
+  }
+  .conversation-dock__panel {
+    min-height: 0;
+    padding: 1rem 0.8rem 0.75rem;
+    border-radius: 1.25rem;
+  }
+  .conversation-dock__panel > .query-form {
+    margin-bottom: 0.45rem;
+  }
+  .conversation-dock__actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.45rem;
+  }
+  .conversation-dock__chip {
+    justify-content: center;
+    min-height: 2.35rem;
+    padding: 0.45rem 0.55rem;
+    font-size: 0.81rem;
+  }
+  .conversation-dock__actions .conversation-dock__chip:last-child {
+    grid-column: 1 / -1;
+  }
+  .upcoming-resources {
+    gap: 0.45rem;
+    font-size: 0.75rem;
+  }
+  .is-home .site-footer {
+    padding-top: 0.8rem;
+  }
+}

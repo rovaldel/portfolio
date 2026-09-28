@@ -1,13 +1,6 @@
 ---
 import { siteProfile } from '../../content/site';
-import Navigation from './Navigation.astro';
 import ThemeSelector from '../ui/ThemeSelector.astro';
-
-interface Props {
-  currentPath: string;
-}
-
-const { currentPath } = Astro.props;
 ---
 
 <header class="site-header">
@@ -17,7 +10,6 @@ const { currentPath } = Astro.props;
         ><img class="avatar" src={siteProfile.portrait.src} alt="" width="32" height="32" /></span
       ><span>{siteProfile.displayName}</span></a
     >
-    <Navigation currentPath={currentPath} />
     <div class="header-controls">
       <a
         class="button header-cv"
