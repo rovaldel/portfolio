@@ -154,7 +154,10 @@ jobs:
           SSH_ARGS=(-i "$RUNNER_TEMP/deploy_key" -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile="$RUNNER_TEMP/known_hosts" -o ConnectTimeout=10)
           TARGET="deploy@$DEPLOY_HOST"
           report_failure() {
-            local message="${1:0:2000}"
+            local message="$1"
+            if (( ${#message} > 1800 )); then
+              message="[salida recortada; últimas líneas] ${message: -1800}"
+            fi
             message="${message//'%'/'%25'}"
             message="${message//$'\r'/'%0D'}"
             message="${message//$'\n'/'%0A'}"
