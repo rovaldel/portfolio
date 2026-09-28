@@ -3,7 +3,7 @@ services:
     image: ${PORTFOLIO_IMAGE:?Set PORTFOLIO_IMAGE to a verified GHCR digest}
     container_name: rodrigo_portfolio
     env_file:
-      - runtime.env
+      - deploy/runtime.env
     environment:
       HOST: 0.0.0.0
       NODE_ENV: production
