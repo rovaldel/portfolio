@@ -16,13 +16,13 @@ const copyAs = async (from, to) => {
   await mkdir(join(target, to.split('/').slice(0, -1).join('/')), { recursive: true });
   await cp(join(source, from), join(target, to));
 };
-await copyAs('portrait.png', 'images/rodrigo-valdelvira.png');
-await copyAs('portrait-home-white-shirt.png', 'images/rodrigo-valdelvira-home.png');
+// The published portrait must keep an opaque white shirt: the older portrait.png
+// has a transparent shirt that lets the page background show through.
+await copyAs('portrait-home-white-shirt.png', 'images/rodrigo-valdelvira.png');
 await copy('leadia.webp', 'images');
 await copy('nami-cover.png', 'images');
 for (const { sourceFile, targetName } of [
-  { sourceFile: 'portrait.png', targetName: 'rodrigo-valdelvira' },
-  { sourceFile: 'portrait-home-white-shirt.png', targetName: 'rodrigo-valdelvira-home' },
+  { sourceFile: 'portrait-home-white-shirt.png', targetName: 'rodrigo-valdelvira' },
   { sourceFile: 'leadia.webp', targetName: 'leadia' },
   { sourceFile: 'nami-cover.png', targetName: 'nami-cover' },
 ]) {
@@ -49,9 +49,6 @@ for (const file of [
   'images/rodrigo-valdelvira.png',
   'images/rodrigo-valdelvira.avif',
   'images/rodrigo-valdelvira.webp',
-  'images/rodrigo-valdelvira-home.png',
-  'images/rodrigo-valdelvira-home.avif',
-  'images/rodrigo-valdelvira-home.webp',
   'images/leadia.avif',
   'images/leadia.webp',
   'images/nami-cover.avif',

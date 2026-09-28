@@ -385,7 +385,12 @@
   .upcoming-resources__item + .upcoming-resources__item {
     border-left: 1px solid var(--line);
   }
-  a.upcoming-resources__item small {
+  /* Both resources are upcoming: one shared label instead of two badges fits one line. */
+  .is-home:not(.is-chat-active) .upcoming-resources .upcoming-resources__label {
+    display: inline;
+    margin-right: 0.35rem;
+  }
+  .upcoming-resources__item small {
     display: none;
   }
 
@@ -555,8 +560,11 @@
   .conversation-dock__panel > .query-form {
     padding-left: 0.9rem;
   }
+  .is-home:not(.is-chat-active) .upcoming-resources {
+    font-size: 0.8rem;
+  }
   .upcoming-resources__item {
-    padding-inline: 0.75rem;
+    padding-inline: 0.55rem;
   }
   .upcoming-resources__item small {
     display: none;

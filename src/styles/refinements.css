@@ -278,3 +278,59 @@ a.upcoming-resources__item:hover {
   flex: 0 1 auto;
   text-align: left;
 }
+
+/* Each role carries an icon tile, matching the education list. */
+.experience-item__summary {
+  grid-template-columns: 2.4rem minmax(0, 1fr) minmax(7rem, auto) 1.2rem;
+}
+.experience-item__icon {
+  display: grid;
+  grid-column: 1;
+  grid-row: 1;
+  width: 2.2rem;
+  height: 2.2rem;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 0.7rem;
+  background: var(--surface-2);
+  color: var(--fill);
+}
+.experience-item__icon svg {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+.experience-item__summary > .experience-item__identity {
+  grid-column: 2;
+  padding-left: 0;
+}
+.experience-item__summary > .experience-item__identity::before {
+  content: none;
+}
+.experience-item__summary > .experience-item__date {
+  grid-column: 3;
+}
+.experience-item__summary > .experience-item__toggle {
+  grid-column: 4;
+}
+@media (max-width: 600px) {
+  .experience-item__summary {
+    grid-template-columns: 2.4rem minmax(0, 1fr) 1.2rem;
+    column-gap: 0.75rem;
+  }
+  .experience-item__icon {
+    grid-row: 1 / span 2;
+    align-self: center;
+  }
+  .experience-item__summary > .experience-item__date {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .experience-item__summary > .experience-item__identity {
+    grid-column: 2;
+    grid-row: 2;
+  }
+  .experience-item__summary > .experience-item__toggle {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+  }
+}

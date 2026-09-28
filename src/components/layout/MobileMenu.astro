@@ -7,7 +7,6 @@ const currentPath = Astro.url.pathname;
 const items = [
   { label: 'Inicio', href: '/' },
   ...navigationActions.map((action) => ({ label: action.label, href: action.destination })),
-  { label: 'Bitácora', href: '/bitacora' },
 ];
 ---
 

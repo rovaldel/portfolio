@@ -143,7 +143,7 @@ export const siteProfile = {
       { src: '/images/rodrigo-valdelvira.avif', type: 'image/avif' },
       { src: '/images/rodrigo-valdelvira.webp', type: 'image/webp' },
     ],
-    sourceHash: 'f6ea4c9ce436fd29632268eeec8827c29a352b6b4cdb2544679525222106d6fd',
+    sourceHash: '5b1ab3e2762931d277709193c3fd41a55a71d17f2803bfee787cea7db0a82ce4',
     fallbackLabel: 'Retrato de Rodrigo Valdelvira no disponible',
   } satisfies ImageAsset,
 } as const;

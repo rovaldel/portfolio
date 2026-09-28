@@ -6,10 +6,11 @@ interface Props {
 const { backdrop = false } = Astro.props;
 const homePortrait = {
   // This is the portrait selected for the public home page. Keep its AVIF
-  // resource explicit so every compatible browser uses the same approved image.
-  src: '/images/rodrigo-valdelvira.avif?v=camisa-opaca-20260928',
-  width: 896,
-  height: 1152,
+  // resource explicit so every compatible browser uses the same approved image;
+  // bump the version when the source changes so caches drop the old file.
+  src: '/images/rodrigo-valdelvira.avif?v=camisa-blanca-20260929',
+  width: 1106,
+  height: 1422,
 };
 const aboutAction = navigationActions.find((action) => action.id === 'about');
 const projectsAction = navigationActions.find((action) => action.id === 'projects');
