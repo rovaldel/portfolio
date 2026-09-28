@@ -16,13 +16,13 @@ const copyAs = async (from, to) => {
   await mkdir(join(target, to.split('/').slice(0, -1).join('/')), { recursive: true });
   await cp(join(source, from), join(target, to));
 };
-// The published portrait must keep an opaque white shirt: the older portrait.png
-// has a transparent shirt that lets the page background show through.
-await copyAs('portrait-home-white-shirt.png', 'images/rodrigo-valdelvira.png');
+// The published portrait must keep an opaque white shirt and the original blue
+// tie: portrait.png has a transparent shirt, portrait-home-white-shirt.png lost the tie.
+await copyAs('portrait-white-shirt-tie.png', 'images/rodrigo-valdelvira.png');
 await copy('leadia.webp', 'images');
 await copy('nami-cover.png', 'images');
 for (const { sourceFile, targetName } of [
-  { sourceFile: 'portrait-home-white-shirt.png', targetName: 'rodrigo-valdelvira' },
+  { sourceFile: 'portrait-white-shirt-tie.png', targetName: 'rodrigo-valdelvira' },
   { sourceFile: 'leadia.webp', targetName: 'leadia' },
   { sourceFile: 'nami-cover.png', targetName: 'nami-cover' },
 ]) {

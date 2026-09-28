@@ -1,5 +1,11 @@
 ---
 import { education } from '../../content/site';
+
+// Degrees get a graduation cap; certifications get a diploma.
+const degreeIds = new Set(['mecanica', 'industrial', 'uemc']);
+const capIcon = 'm2 9 10-5 10 5-10 5L2 9Z M6 11v5c3 3 9 3 12 0v-5';
+const diplomaIcon =
+  'M3 5h18v12h-4M3 5v12h9M7 9h10M7 12h5M16 12a2.5 2.5 0 1 0 0 .01M14.5 14.2 14 20l2-1.2 2 1.2-.5-5.8';
 ---
 
 <section class="education-list" aria-labelledby="formacion-title">
@@ -17,7 +23,7 @@ import { education } from '../../content/site';
               stroke-linecap="round"
               stroke-linejoin="round"
             >
-              <path d="m2 9 10-5 10 5-10 5L2 9Z M6 11v5c3 3 9 3 12 0v-5" />
+              <path d={degreeIds.has(item.id) ? capIcon : diplomaIcon} />
             </svg>
           </span>
           <span class="education-item__identity">

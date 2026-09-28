@@ -249,33 +249,33 @@ a.upcoming-resources__item:hover {
   }
 }
 
-/* Center the icon and contact details together, with the icon at card center. */
+/* Contact cards read left to right: icon tile, then the details beside it. */
 .contact-channel {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 0.7rem;
-  min-height: 6.25rem;
-  padding: 0.8rem 0.65rem;
+  justify-content: flex-start;
+  gap: 0.8rem;
+  min-height: 5rem;
+  padding: 0.85rem 1rem;
   text-align: left;
 }
-.contact-channel__icon {
+/* The generic `.contact-channel span { display: block }` must not reach the icon
+   tile, or its SVG sits at the top instead of the tile's centre. */
+.contact-channel > .contact-channel__icon {
   display: grid;
   width: 2.4rem;
   height: 2.4rem;
   flex: 0 0 2.4rem;
-  align-self: center;
   margin: 0;
   place-items: center;
 }
 .contact-channel__icon svg {
   display: block;
-  align-self: center;
-  justify-self: center;
 }
 .contact-channel > span:last-child {
   width: auto;
-  flex: 0 1 auto;
+  flex: 1 1 auto;
+  min-width: 0;
   text-align: left;
 }
 
@@ -330,6 +330,41 @@ a.upcoming-resources__item:hover {
     grid-row: 2;
   }
   .experience-item__summary > .experience-item__toggle {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+  }
+}
+
+/* Education keeps its cap or diploma tile on narrow screens too. */
+.education-item__icon {
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 0.7rem;
+}
+.education-item__icon svg {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+@media (max-width: 600px) {
+  .education-item__summary {
+    grid-template-columns: 2.4rem minmax(0, 1fr) 1.2rem;
+    column-gap: 0.75rem;
+  }
+  .education-item__summary > .education-item__icon {
+    display: grid;
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    align-self: center;
+  }
+  .education-item__summary > .education-item__identity {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .education-item__summary > .education-item__date {
+    grid-column: 2;
+    grid-row: 2;
+  }
+  .education-item__summary > .education-item__toggle {
     grid-column: 3;
     grid-row: 1 / span 2;
   }
