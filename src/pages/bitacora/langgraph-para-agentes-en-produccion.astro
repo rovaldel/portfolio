@@ -1,15 +1,5 @@
 ---
-import Article from '../../components/journal/Article.astro';
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getCollection, render } from 'astro:content';
-import { selectCompletePublishedArticles } from '../../lib/content';
-
-const [article] = selectCompletePublishedArticles(await getCollection('bitacora'));
-if (!article) throw new Error('Falta el artículo aprobado de Bitácora.');
-const { Content: ArticleContent } = await render(article);
-const frontmatter = article.data;
+import JournalArticlePage from '../../components/pages/JournalArticlePage.astro';
 ---
 
-<BaseLayout title={frontmatter.title} description={frontmatter.description} articleMode>
-  <Article Content={ArticleContent} data={frontmatter} />
-</BaseLayout>
+<JournalArticlePage />

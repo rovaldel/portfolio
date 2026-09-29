@@ -1,14 +1,17 @@
 ---
 import type { LegalDocument } from '../../content/site';
+import { useLocale } from '../../lib/locale';
+
 interface Props {
   document: LegalDocument;
 }
 const { document } = Astro.props;
+const { t } = useLocale(Astro.url);
 ---
 
 <article
   class="legal-document"
-  aria-label={`${document.title}, ${document.status === 'approved' ? 'texto legal aprobado' : 'borrador de trabajo'}`}
+  aria-label={`${document.title}, ${document.status === 'approved' ? t.legal.approved : t.legal.draft}`}
 >
   <h1 id="legal-title" tabindex="-1">{document.title}</h1>
   <p class="legal-document__kicker">{document.kicker}</p>
@@ -22,11 +25,12 @@ const { document } = Astro.props;
       ))
     }
   </div>
+  {t.legal.translationNote && <p class="legal-document__status">{t.legal.translationNote}</p>}
   <p class="legal-document__status">
     {
       document.status === 'approved'
-        ? `Revisión final aprobada por el titular · ${document.reviewedAt ?? '2026-09-27'}`
-        : 'Borrador de trabajo · Pendiente de revisión final antes de publicar.'
+        ? t.legal.approvedNote(document.reviewedAt ?? '2026-09-27')
+        : t.legal.draftNote
     }
   </p>
 </article>

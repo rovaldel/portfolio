@@ -1,0 +1,19 @@
+---
+import ConversationPage from '../layout/ConversationPage.astro';
+import Profile from '../sections/Profile.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { useLocale } from '../../lib/locale';
+
+const { t, path, actionLabel } = useLocale(Astro.url);
+const label = actionLabel('about');
+---
+
+<BaseLayout>
+  <ConversationPage action={label} label={label} modifier="conversation-page--profile">
+    <Profile />
+    <div class="conversation-actions">
+      <a class="button button--fill" href={path('skills')}>{t.conversation.viewSkills}</a>
+      <a class="button button--quiet" href={path('experience')}>{t.conversation.viewExperience}</a>
+    </div>
+  </ConversationPage>
+</BaseLayout>

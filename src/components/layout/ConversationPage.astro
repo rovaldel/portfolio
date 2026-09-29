@@ -1,5 +1,5 @@
 ---
-import { siteProfile } from '../../content/site';
+import { useLocale } from '../../lib/locale';
 
 interface Props {
   action?: string;
@@ -9,9 +9,10 @@ interface Props {
   modifier?: string;
 }
 
+const { t, c } = useLocale(Astro.url);
 const {
   action,
-  label = 'Respuesta del portfolio',
+  label = t.layout.responseLabel,
   heading = action,
   hideHeading = false,
   modifier = '',
@@ -27,7 +28,13 @@ const {
     )
   }
   <article class="conversation-message">
-    <img class="conversation-message__avatar" src={siteProfile.portrait.src} alt="" width="34" height="34" />
+    <img
+      class="conversation-message__avatar"
+      src={c.siteProfile.portrait.src}
+      alt=""
+      width="34"
+      height="34"
+    />
     <div class="conversation-message__body"><slot /></div>
   </article>
 </section>

@@ -1,36 +1,5 @@
 ---
-import ConversationPage from '../components/layout/ConversationPage.astro';
-import Services from '../components/sections/Services.astro';
-import { services } from '../content/site';
-import ServiceDialog from '../components/sections/ServiceDialog.astro';
-import BaseLayout from '../layouts/BaseLayout.astro';
-
-const requestedService = Astro.url.searchParams.get('servicio');
-const selectedService = services.find((service) => service.slug === requestedService);
+import ServicesPage from '../components/pages/ServicesPage.astro';
 ---
 
-<BaseLayout modalMode={Boolean(selectedService)}>
-  <ConversationPage action="Servicios" label="Servicios" modifier="conversation-page--services">
-    <p class="conversation-lead">
-      Áreas en las que puedo aportar a un equipo de producto o ingeniería: del dato a una solución de IA en
-      producción.
-    </p>
-    <Services />
-    <div class="conversation-actions">
-      <a class="button button--fill" href="/proyectos">Ver proyectos</a>
-      <a class="button button--quiet" href="/contacto?asunto=agentes-y-chatbots-ia"
-        >Hablar de una oportunidad</a
-      >
-    </div>
-  </ConversationPage>
-  {
-    selectedService && (
-      <Fragment slot="modal">
-        <div class="modal-backdrop" data-modal-backdrop>
-          <ServiceDialog service={selectedService} />
-        </div>
-      </Fragment>
-    )
-  }
-</BaseLayout>
-<script src="../scripts/service-dialog.ts"></script>
+<ServicesPage />

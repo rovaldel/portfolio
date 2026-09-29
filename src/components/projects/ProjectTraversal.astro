@@ -1,27 +1,29 @@
 ---
-import { projects } from '../../content/site';
 import type { Project } from '../../content/site';
+import { useLocale } from '../../lib/locale';
 
 interface Props {
   project: Project;
 }
 
 const { project } = Astro.props;
+const { t, c, path } = useLocale(Astro.url);
+const { projects } = c;
 const currentIndex = project.position - 1;
 const previous = project.position > 1 ? projects[currentIndex - 1] : null;
 const next = project.position < projects.length ? projects[currentIndex + 1] : null;
 ---
 
-<nav class="project-index__traversal" aria-label="Navegación entre proyectos">
+<nav class="project-index__traversal" aria-label={t.projects.traversalLabel}>
   {
     previous && (
       <a
         class="button button--quiet"
-        href={'/proyectos/' + previous.slug}
+        href={path(`project.${previous.slug}`)}
         data-project-previous={previous.slug}
-        aria-label={'Proyecto anterior: ' + previous.title}
+        aria-label={t.projects.previousAria(previous.title)}
       >
-        <span aria-hidden="true">←</span> Anterior
+        <span aria-hidden="true">←</span> {t.projects.previous}
       </a>
     )
   }
@@ -29,15 +31,15 @@ const next = project.position < projects.length ? projects[currentIndex + 1] : n
     next && (
       <a
         class="button button--fill"
-        href={'/proyectos/' + next.slug}
+        href={path(`project.${next.slug}`)}
         data-project-next={next.slug}
-        aria-label={'Siguiente proyecto: ' + next.title}
+        aria-label={t.projects.nextAria(next.title)}
       >
-        Siguiente <span aria-hidden="true">→</span>
+        {t.projects.next} <span aria-hidden="true">→</span>
       </a>
     )
   }
-  <a class="button button--quiet" href="/experiencia" data-conversation-followup="experience"
-    >Ver trayectoria</a
+  <a class="button button--quiet" href={path('experience')} data-conversation-followup="experience"
+    >{t.conversation.viewExperience}</a
   >
 </nav>

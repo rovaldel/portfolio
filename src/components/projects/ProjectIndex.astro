@@ -1,6 +1,6 @@
 ---
-import { projects } from '../../content/site';
 import type { Project } from '../../content/site';
+import { useLocale } from '../../lib/locale';
 import ProjectCard from './ProjectCard.astro';
 
 interface Props {
@@ -8,17 +8,19 @@ interface Props {
 }
 
 const { activeSlug } = Astro.props;
+const { t, c } = useLocale(Astro.url);
+const { projects } = c;
 const activeProject = activeSlug ? projects.find((project) => project.slug === activeSlug) : projects[0];
 const visibleProjects = activeSlug ? projects.filter((project) => project.slug === activeSlug) : projects;
 ---
 
 {
   activeProject ? (
-    <section class="stack project-index" aria-label="Proyectos publicados">
+    <section class="stack project-index" aria-label={t.projects.label}>
       {visibleProjects.map((project) => (
         <div class="project-index__slide">
           <p class="project-index__position">
-            Proyecto {project.position} de {projects.length} <span aria-hidden="true">·</span>{' '}
+            {t.projects.position(project.position, projects.length)} <span aria-hidden="true">·</span>{' '}
             <strong>{project.title}</strong>
           </p>
           <ProjectCard project={project} />

@@ -3,17 +3,25 @@ import { canonicalOrigin } from '../../src/lib/site-urls';
 import { configureContactMailTransport, type MailMessage } from '../../src/lib/contact-mailer';
 import { POST } from '../../src/pages/api/contacto';
 
-const callPost = async (idempotencyKey: string, message = 'Necesito ayuda con un proyecto real.') => {
+const callPost = async (
+  idempotencyKey: string,
+  message = 'Necesito ayuda con un proyecto real.',
+  { lang, json = false, name = 'Ada Lovelace' }: { lang?: string; json?: boolean; name?: string } = {},
+) => {
   const form = new URLSearchParams({
-    name: 'Ada Lovelace',
+    name,
     email: 'ada@example.com',
     message,
     idempotencyKey,
     contact_check_field: '',
   });
-  const request = new Request(`${canonicalOrigin}/api/contacto`, {
+  const request = new Request(`${canonicalOrigin}/api/contacto${lang ? `?lang=${lang}` : ''}`, {
     method: 'POST',
-    headers: { origin: canonicalOrigin, 'content-type': 'application/x-www-form-urlencoded' },
+    headers: {
+      origin: canonicalOrigin,
+      'content-type': 'application/x-www-form-urlencoded',
+      ...(json ? { accept: 'application/json' } : {}),
+    },
     body: form,
   });
   const context = {
@@ -64,4 +72,46 @@ it('retains failed values as escaped text in a no-store accessible response', as
   expect(body).toContain('name="message"');
   expect(body).toContain('href="/privacidad"');
   expect(body).toContain('name="contact_check_field" value="">');
+});
+
+it('answers in English when the form was sent from the English site', async () => {
+  const send = vi.fn(async (message: MailMessage, timeout: number) => {
+    void message;
+    void timeout;
+  });
+  vi.stubEnv('CONTACT_FROM', 'portfolio@example.com');
+  vi.stubEnv('CONTACT_TO', 'owner@example.com');
+  configureContactMailTransport({ secure: true, send });
+  const accepted = await callPost(`contact-${crypto.randomUUID()}`, 'I need help with a real project.', {
+    lang: 'en',
+  });
+  expect(accepted.status).toBe(303);
+  expect(accepted.headers.get('location')).toBe('/en/contact?enviado=1');
+  configureContactMailTransport(undefined);
+  vi.unstubAllEnvs();
+
+  const failed = await callPost(`contact-${crypto.randomUUID()}`, 'I need help with a real project.', {
+    lang: 'en',
+  });
+  const body = await failed.text();
+  expect(failed.status).toBe(503);
+  expect(body).toContain('<html lang="en">');
+  expect(body).toContain('Delivery could not be confirmed');
+  expect(body).toContain('action="/api/contacto?lang=en"');
+  expect(body).toContain('href="/en/privacy"');
+  expect(body).toContain('href="/en/contact"');
+
+  const json = await callPost(`contact-${crypto.randomUUID()}`, 'Too short', { lang: 'en', json: true });
+  expect(json.status).toBe(400);
+  expect(await json.json()).toEqual({
+    ok: false,
+    message:
+      'Check that your name, email and message are complete. The message must be at least 20 characters long.',
+  });
+});
+
+it('falls back to Spanish for a missing or unknown language', async () => {
+  const unknown = await callPost(`contact-${crypto.randomUUID()}`, 'Too short', { lang: 'fr', json: true });
+  expect(unknown.status).toBe(400);
+  expect((await unknown.json()).message).toContain('Revisa que el nombre');
 });

@@ -1,16 +1,5 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import ConversationPage from '../components/layout/ConversationPage.astro';
-import { getContactSubject } from '../lib/contact';
-import ContactInfo from '../components/sections/ContactInfo.astro';
-
-const subjectValues = Astro.url.searchParams.getAll('asunto');
-const subject = subjectValues.length === 1 ? getContactSubject(subjectValues[0] ?? null) : null;
-const sent = Astro.url.searchParams.get('enviado') === '1';
+import ContactPage from '../components/pages/ContactPage.astro';
 ---
 
-<BaseLayout>
-  <ConversationPage action="Contacto" label="Contacto">
-    <ContactInfo subject={subject} sent={sent} />
-  </ConversationPage>
-</BaseLayout>
+<ContactPage />

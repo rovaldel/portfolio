@@ -1,4 +1,5 @@
-import { intents, type PortfolioIntent } from './intents';
+import type { Locale } from './i18n';
+import { getIntents, type PortfolioIntent } from './intents';
 
 export type IntentDecision =
   | { state: 'recognized'; intent: PortfolioIntent }
@@ -14,11 +15,11 @@ export const normalizeQuery = (value: string): string =>
     .trim()
     .replace(/\s+/g, ' ');
 
-export const resolveIntent = (query: string): IntentDecision => {
+export const resolveIntent = (query: string, locale: Locale = 'es'): IntentDecision => {
   const normalizedQuery = normalizeQuery(query);
   if (!normalizedQuery) return { state: 'unknown' };
 
-  const candidates = intents.filter((intent) =>
+  const candidates = getIntents(locale).filter((intent) =>
     intent.phrases.some((phrase) => {
       const normalizedPhrase = normalizeQuery(phrase);
       return (' ' + normalizedQuery + ' ').includes(' ' + normalizedPhrase + ' ');

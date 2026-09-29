@@ -1,5 +1,6 @@
 import { defineMiddleware } from 'astro:middleware';
 import { isAllowedContactSubject } from './lib/contact';
+import { pathFor } from './lib/i18n';
 import { canonicalPaths, legacyRedirects } from './lib/routes';
 import { canonicalOrigin } from './lib/site-urls';
 
@@ -35,7 +36,8 @@ export const onRequest = defineMiddleware(async (context, next) => {
     const subjects = searchParams.getAll('asunto');
     const subject = subjects.length === 1 ? (subjects[0] ?? null) : null;
     const safeQuery =
-      target === '/contacto' && isAllowedContactSubject(subject)
+      (target === pathFor('contact', 'es') || target === pathFor('contact', 'en')) &&
+      isAllowedContactSubject(subject)
         ? `?asunto=${encodeURIComponent(subject ?? '')}`
         : '';
     return Response.redirect(new URL(`${target}${safeQuery}`, context.url), 308);

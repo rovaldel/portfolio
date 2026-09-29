@@ -1,12 +1,15 @@
 ---
 import { themes } from '../../lib/themes';
+import { useLocale } from '../../lib/locale';
+
+const { t } = useLocale(Astro.url);
 ---
 
 <div class="theme-wrapper" data-theme-selector data-current-theme="rioja">
   <button
     class="theme-trigger"
     type="button"
-    aria-label="Cambiar tema visual"
+    aria-label={t.header.themeChange}
     aria-expanded="false"
     aria-controls="theme-menu"
     data-theme-trigger
@@ -27,13 +30,13 @@ import { themes } from '../../lib/themes';
         cy="7.8"
         r=".8"></circle><circle cx="17.2" cy="11.6" r=".8"></circle></svg
     >
-    <span>Tema</span><span class="theme-trigger__swatch" aria-hidden="true"></span>
+    <span>{t.header.theme}</span><span class="theme-trigger__swatch" aria-hidden="true"></span>
   </button>
   <div
     id="theme-menu"
     class="theme-menu"
     role="group"
-    aria-label="Paleta de temas visuales"
+    aria-label={t.header.themePalette}
     data-theme-menu
     hidden
   >
@@ -47,7 +50,7 @@ import { themes } from '../../lib/themes';
         >
           <>
             <span class:list={['swatch', `swatch--${theme.id}`]} />
-            <span>{theme.label}</span>
+            <span>{t.themeLabels[theme.id]}</span>
           </>
         </button>
       ))

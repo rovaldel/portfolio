@@ -1,4 +1,6 @@
-export {};
+import { documentLocale, getUi } from '../lib/i18n';
+
+const t = getUi(documentLocale());
 
 const controller = new AbortController();
 
@@ -30,7 +32,7 @@ document.querySelectorAll<HTMLAnchorElement>('[data-portfolio-action]').forEach(
       window.dispatchEvent(
         new CustomEvent('portfolio:action', {
           detail: {
-            label: action.textContent?.trim() ?? 'Sección del portfolio',
+            label: action.textContent?.trim() ?? t.query.sectionFallback,
             response: action.dataset['response'] ?? '',
             destination: action.href,
             kind: action.dataset['responseKind'],

@@ -70,7 +70,8 @@
     flex: none;
     gap: 0.25rem;
   }
-  .header-controls .header-cv {
+  .header-controls .header-cv,
+  .header-controls .header-language {
     display: none;
   }
   .header-controls .theme-trigger {
@@ -152,6 +153,21 @@
   }
   .mobile-menu__list a:hover,
   .mobile-menu__list a[aria-current='page'] {
+    background: var(--surface-2);
+  }
+  .mobile-menu__language {
+    display: flex;
+    width: 100%;
+    min-height: 2.75rem;
+    justify-content: flex-start;
+    padding-inline: 0.9rem;
+    border: 0;
+    border-radius: 0.85rem;
+    background: transparent;
+    font-size: 1rem;
+    letter-spacing: 0;
+  }
+  .mobile-menu__language:hover {
     background: var(--surface-2);
   }
   .mobile-menu__cv {

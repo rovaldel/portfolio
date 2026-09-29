@@ -13,6 +13,17 @@ pnpm run dev
 
 La aplicación utiliza `http://localhost:3000`. El explorador de preguntas funciona en el navegador, sin llamadas a un LLM ni almacenamiento de conversaciones. Las fuentes, imágenes y scripts son locales. Solo se guarda `rv_theme` cuando el visitante elige un tema.
 
+## Idiomas
+
+El sitio existe en español (URLs originales) e inglés (bajo `/en`). El selector `ES`/`EN` de la cabecera, o la entrada «English»/«Español» del menú móvil, lleva a la página equivalente y conserva `?asunto=` y `?servicio=`. No hay redirección automática por `Accept-Language`.
+
+- `src/content/site.ts` es la fuente en español; `src/content/site.en.ts` traduce solo el texto y reutiliza estructura, identificadores, orden, iconos e imágenes. `getContent(locale)` (`src/content/index.ts`) devuelve la edición pedida y `validateLocaleParity` falla si ambas divergen.
+- `src/lib/i18n.ts` reúne el idioma de la URL, la tabla de rutas equivalentes y las cadenas de interfaz (también las usan los scripts del navegador, que leen `<html lang>`).
+- Las páginas viven en `src/components/pages/`; `src/pages/*.astro` y `src/pages/en/*.astro` son envoltorios de una línea. El artículo de Bitácora tiene un archivo por idioma (`locale:` en su cabecera).
+- El formulario de contacto envía a `/api/contacto?lang=en` desde la versión inglesa para que el servidor responda en ese idioma; el correo que recibe el titular no cambia.
+- Las páginas legales inglesas son una traducción de cortesía de los textos españoles aprobados y así lo indican; prevalece el original español.
+- `Descargar CV` entrega el mismo PDF (en español) desde ambas versiones; no hay un CV en inglés.
+
 ## Contacto
 
 En local, rellena `GMAIL_SMTP_APP_PASSWORD` en `.env` con una contraseña de aplicación de Google. `.env.example` solo es una plantilla sin secretos. No uses la contraseña normal ni guardes credenciales en el repositorio. La cuenta SMTP, el remitente y el destino aprobados para el formulario son `rodr.valdelvira@gmail.com`. El canal público alternativo del portfolio sigue siendo el email aprobado en `src/content/site.ts`.

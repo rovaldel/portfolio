@@ -1,17 +1,19 @@
 ---
-import { navigationActions } from '../../content/site';
+import LanguageSwitch from '../ui/LanguageSwitch.astro';
+import { useLocale } from '../../lib/locale';
 
 // Only rendered visibly on narrow screens: the header there keeps the brand and
-// two round controls, so sections, CV and legal links move into this panel.
+// two round controls, so sections, language, CV and legal links move into this panel.
+const { t, c, path } = useLocale(Astro.url);
 const currentPath = Astro.url.pathname;
 const items = [
-  { label: 'Inicio', href: '/' },
-  ...navigationActions.map((action) => ({ label: action.label, href: action.destination })),
+  { label: t.header.home, href: path('home') },
+  ...c.navigationActions.map((action) => ({ label: action.label, href: action.destination })),
 ];
 ---
 
 <details class="mobile-menu" data-mobile-menu>
-  <summary class="mobile-menu__trigger" aria-label="Menú del portfolio">
+  <summary class="mobile-menu__trigger" aria-label={t.header.menuLabel}>
     <svg
       aria-hidden="true"
       viewBox="0 0 24 24"
@@ -25,7 +27,7 @@ const items = [
     </svg>
   </summary>
   <div class="mobile-menu__panel">
-    <nav aria-label="Menú móvil">
+    <nav aria-label={t.header.mobileNav}>
       <ul class="mobile-menu__list">
         {
           items.map((item) => (
@@ -38,13 +40,16 @@ const items = [
         }
       </ul>
     </nav>
+    <LanguageSwitch class="mobile-menu__language" display="name" />
     <a class="mobile-menu__cv" href="/Rodrigo-Valdelvira-CV.pdf" download="Rodrigo-Valdelvira-CV.pdf">
       <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
         <path d="M12 3v12"></path><path d="m7.5 10.5 4.5 4.5 4.5-4.5"></path><path d="M4 19h16"></path>
-      </svg>Descargar CV (PDF)
+      </svg>{t.header.cvDownload}
     </a>
     <p class="mobile-menu__legal">
-      <a href="/privacidad">Privacidad</a><a href="/cookies">Cookies</a><a href="/terminos">Términos</a>
+      <a href={path('privacy')}>{t.footer.privacy}</a><a href={path('cookies')}>{t.footer.cookies}</a><a
+        href={path('terms')}>{t.footer.terms}</a
+      >
     </p>
   </div>
 </details>

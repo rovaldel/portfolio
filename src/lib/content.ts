@@ -8,7 +8,10 @@ import {
   siteProfile,
   skillGroups,
 } from '../content/site';
-import { surfaces } from './routes';
+import { getContent } from '../content';
+import { locales } from './i18n';
+import type { Locale } from './i18n';
+import { allSurfaces, surfaces } from './routes';
 import { themes } from './themes';
 
 function assert(condition: unknown, message: string): asserts condition {
@@ -185,6 +188,74 @@ export const validatePublicContent = () => {
   );
 };
 
+/** Every language must publish the same catalogue, in the same order, with translated wording. */
+export const validateLocaleParity = () => {
+  const spanish = getContent('es');
+  for (const locale of locales.filter((item) => item !== 'es')) {
+    const other = getContent(locale);
+    const ids = (records: { id?: string; slug?: string }[]) => records.map((item) => item.id ?? item.slug);
+    assert(
+      ids(other.experiences).join() === ids(spanish.experiences).join() &&
+        other.experiences.every(
+          (item, index) =>
+            item.start === spanish.experiences[index]!.start &&
+            item.end === spanish.experiences[index]!.end &&
+            item.highlights.length === spanish.experiences[index]!.highlights.length &&
+            (item.achievements?.length ?? 0) === (spanish.experiences[index]!.achievements?.length ?? 0),
+        ),
+      `Experiencia desalineada entre idiomas (${locale})`,
+    );
+    assert(
+      other.internationalExperience.length === spanish.internationalExperience.length,
+      `Experiencia internacional desalineada (${locale})`,
+    );
+    assert(
+      ids(other.education).join() === ids(spanish.education).join() &&
+        ids(other.services).join() === ids(spanish.services).join() &&
+        ids(other.projects).join() === ids(spanish.projects).join() &&
+        ids(other.skillGroups).join() === ids(spanish.skillGroups).join() &&
+        other.skillGroups.every(
+          (group, index) => group.skills.length === spanish.skillGroups[index]!.skills.length,
+        ),
+      `Catálogos desalineados entre idiomas (${locale})`,
+    );
+    assert(
+      other.legalDocuments.map((item) => item.kind).join() ===
+        spanish.legalDocuments.map((item) => item.kind).join() &&
+        other.legalDocuments.every(
+          (item, index) => item.sections.length === spanish.legalDocuments[index]!.sections.length,
+        ),
+      `Documentos legales desalineados entre idiomas (${locale})`,
+    );
+    assert(
+      other.services.every(
+        (item) =>
+          item.title.trim() && item.summary.trim() && item.description.trim() && item.contactSubject.trim(),
+      ) &&
+        other.navigationActions.map((item) => item.id).join() ===
+          spanish.navigationActions.map((item) => item.id).join(),
+      `Servicios o acciones sin traducir (${locale})`,
+    );
+    assert(
+      other.navigationActions.every((action) =>
+        allSurfaces.some(
+          (surface) => surface.locale === locale && surface.canonicalPath === action.destination,
+        ),
+      ),
+      `Acción con destino no canónico (${locale})`,
+    );
+    assert(
+      allSurfaces.filter((surface) => surface.locale === locale).length === surfaces.length,
+      `Catálogo de superficies desalineado (${locale})`,
+    );
+    assert(
+      other.siteProfile.channels.email.href === spanish.siteProfile.channels.email.href &&
+        other.siteProfile.channels.phone.href === spanish.siteProfile.channels.phone.href,
+      `Canales de contacto desalineados (${locale})`,
+    );
+  }
+};
+
 const approvedPublicContentRefs = new Set([
   'siteProfile',
   'siteProfile.channels',
@@ -206,7 +277,7 @@ const normalizeMetadataText = (value: string) =>
     .replace(/[\u0300-\u036f]/g, '')
     .toLocaleLowerCase('es-ES');
 
-export const indexableSurfaces = surfaces.filter((surface) => surface.indexable);
+export const indexableSurfaces = allSurfaces.filter((surface) => surface.indexable);
 
 export const validatePublicMetadata = () => {
   assert(indexableSurfaces.length > 0, 'No hay rutas públicas indexables');
@@ -254,7 +325,7 @@ export const validatePublicMetadata = () => {
   }
 
   assert(
-    surfaces
+    allSurfaces
       .filter((surface) => surface.publicationState === 'working-draft')
       .every((surface) => !surface.indexable && surface.indexability === 'noindex'),
     'Los borradores deben quedar fuera del índice',
@@ -268,6 +339,7 @@ export interface JournalEntryCandidate {
   data: {
     title: string;
     slug: string;
+    locale?: string;
     description: string;
     excerpt: string;
     category: string;
@@ -277,11 +349,17 @@ export interface JournalEntryCandidate {
   };
 }
 
+const articleSlugs: Record<Locale, string> = {
+  es: 'langgraph-para-agentes-en-produccion',
+  en: 'langgraph-for-production-agents',
+};
+
 export const selectCompletePublishedArticles = <T extends JournalEntryCandidate>(
   entries: readonly T[],
+  locale: Locale = 'es',
 ): T[] => {
-  const articleSurface = surfaces.find(
-    (surface) => surface.path === '/bitacora/langgraph-para-agentes-en-produccion',
+  const articleSurface = allSurfaces.find(
+    (surface) => surface.locale === locale && surface.routeId === 'journal.langgraph',
   );
 
   return entries.filter((entry) => {
@@ -293,7 +371,8 @@ export const selectCompletePublishedArticles = <T extends JournalEntryCandidate>
 
     return (
       entry.data.status === 'published' &&
-      entry.data.slug === 'langgraph-para-agentes-en-produccion' &&
+      entry.data.slug === articleSlugs[locale] &&
+      (entry.data.locale ?? 'es') === locale &&
       title === articleSurface?.title &&
       entry.data.description === articleSurface?.description &&
       title.length > 0 &&
@@ -309,4 +388,5 @@ export const selectCompletePublishedArticles = <T extends JournalEntryCandidate>
 };
 
 validatePublicContent();
+validateLocaleParity();
 validatePublicMetadata();

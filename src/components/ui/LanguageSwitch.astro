@@ -1,0 +1,34 @@
+---
+import { alternatePath, otherLocale } from '../../lib/i18n';
+import { useLocale } from '../../lib/locale';
+
+interface Props {
+  class?: string;
+  /** "code" shows EN/ES for the compact header; "name" shows English/Español. */
+  display?: 'code' | 'name';
+}
+
+const { class: className, display = 'code' } = Astro.props;
+const { locale, t } = useLocale(Astro.url);
+const target = otherLocale(locale);
+
+// Deep links that mean the same thing in both languages survive the switch.
+const carried = new URLSearchParams();
+for (const key of ['asunto', 'servicio']) {
+  const value = Astro.url.searchParams.get(key);
+  if (value) carried.set(key, value);
+}
+const query = carried.toString();
+const href = alternatePath(Astro.url.pathname, target) + (query ? '?' + query : '');
+---
+
+<a
+  class:list={['language-switch', className]}
+  href={href}
+  hreflang={target}
+  lang={target}
+  aria-label={t.header.languageLabel}
+  data-language-switch={target}
+>
+  {display === 'name' ? t.header.languageName : t.header.languageShort}
+</a>

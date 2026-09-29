@@ -1,0 +1,511 @@
+// Locale helpers and interface strings. This module is shared by server
+// components and browser scripts, so it must stay free of heavy imports.
+export type Locale = 'es' | 'en';
+
+export const locales: readonly Locale[] = ['es', 'en'];
+export const defaultLocale: Locale = 'es';
+
+export const isLocale = (value: unknown): value is Locale => value === 'es' || value === 'en';
+
+/** Spanish keeps the original URLs; English lives under /en. */
+export const getLocale = (source: URL | string): Locale => {
+  const pathname = typeof source === 'string' ? source : source.pathname;
+  return pathname === '/en' || pathname.startsWith('/en/') ? 'en' : 'es';
+};
+
+export const otherLocale = (locale: Locale): Locale => (locale === 'es' ? 'en' : 'es');
+
+/** The locale of the document a browser script is running in. */
+export const documentLocale = (): Locale => (document.documentElement.lang === 'en' ? 'en' : 'es');
+
+export const routePaths = {
+  home: { es: '/', en: '/en' },
+  about: { es: '/sobre-mi', en: '/en/about' },
+  skills: { es: '/habilidades', en: '/en/skills' },
+  services: { es: '/servicios', en: '/en/services' },
+  experience: { es: '/experiencia', en: '/en/experience' },
+  education: { es: '/formacion', en: '/en/education' },
+  projects: { es: '/proyectos', en: '/en/projects' },
+  'project.leadia': { es: '/proyectos/leadia', en: '/en/projects/leadia' },
+  'project.nami': { es: '/proyectos/nami', en: '/en/projects/nami' },
+  journal: { es: '/bitacora', en: '/en/journal' },
+  'journal.langgraph': {
+    es: '/bitacora/langgraph-para-agentes-en-produccion',
+    en: '/en/journal/langgraph-for-production-agents',
+  },
+  contact: { es: '/contacto', en: '/en/contact' },
+  privacy: { es: '/privacidad', en: '/en/privacy' },
+  cookies: { es: '/cookies', en: '/en/cookies' },
+  terms: { es: '/terminos', en: '/en/terms' },
+} as const satisfies Record<string, Record<Locale, string>>;
+
+export type RouteId = keyof typeof routePaths;
+
+export const pathFor = (id: RouteId, locale: Locale): string => routePaths[id][locale];
+
+export const routeIdForPath = (pathname: string): RouteId | undefined =>
+  (Object.keys(routePaths) as RouteId[]).find((id) =>
+    locales.some((locale) => routePaths[id][locale] === pathname),
+  );
+
+/** The equivalent page in another language; unknown pages fall back to that language’s home. */
+export const alternatePath = (pathname: string, target: Locale): string => {
+  const id = routeIdForPath(pathname);
+  return pathFor(id ?? 'home', target);
+};
+
+const es = {
+  htmlLang: 'es',
+  ogLocale: 'es_ES',
+  dateLocale: 'es-ES',
+  layout: {
+    skipLink: 'Saltar al contenido',
+    notFoundTitle: 'Página no encontrada · Rodrigo Valdelvira',
+    notFoundDescription: 'Página de recuperación del portfolio.',
+    threadLabel: 'Conversación del portfolio',
+    responseLabel: 'Respuesta del portfolio',
+    closeLegal: 'Cerrar documento legal',
+    breadcrumbHome: 'Inicio',
+    siteName: 'Rodrigo Valdelvira · AI Engineer',
+    location: 'Logroño, La Rioja, España',
+  },
+  header: {
+    brandLabel: 'Rodrigo Valdelvira, volver a portada',
+    available: 'disponible',
+    cvShort: 'CV',
+    cvAria: 'Descargar CV en PDF',
+    cvDownload: 'Descargar CV',
+    languageShort: 'EN',
+    languageLabel: 'View the site in English',
+    languageName: 'English',
+    languageNavLabel: 'Idioma',
+    menuLabel: 'Menú del portfolio',
+    mobileNav: 'Menú móvil',
+    home: 'Inicio',
+    theme: 'Tema',
+    themeChange: 'Cambiar tema visual',
+    themePalette: 'Paleta de temas visuales',
+  },
+  themeLabels: { light: 'Claro', dark: 'Oscuro', cobalto: 'Cobalto', rioja: 'Rioja', bosque: 'Bosque' },
+  footer: { legalNav: 'Enlaces legales', privacy: 'Privacidad', cookies: 'Cookies', terms: 'Términos' },
+  query: {
+    dockLabel: 'Explora el portfolio',
+    formLabel: 'Consulta local',
+    fieldLabel: 'Escribe tu pregunta',
+    placeholder: 'Pregúntame por mi experiencia, proyectos…',
+    submitLabel: 'Enviar consulta',
+    guidance: 'Máximo 300 caracteres. Enter envía; Shift+Enter añade una línea.',
+    count: (length: number, max: number) => `${length} de ${max} caracteres`,
+    limitReached: (max: number) => `Límite de ${max} caracteres alcanzado.`,
+    resourcesLabel: 'Recursos',
+    upcoming: 'En preparación',
+    toolkit: 'Toolkit IA',
+    journal: 'Bitácora',
+    soon: 'Próximamente',
+    sectionsNav: 'Secciones del portfolio',
+    sectionFallback: 'Sección del portfolio',
+    thinking: 'razonando',
+    stepContext: 'recuperando contexto',
+    stepFragments: 'seleccionando fragmentos',
+    stepComposing: 'componiendo respuesta',
+    preparing: 'Preparando una respuesta.',
+    ready: 'Respuesta lista.',
+    ambiguous: 'Hay varias secciones posibles. ¿Cuál quieres consultar?',
+    unknown: 'No encuentro una respuesta clara para esa consulta.',
+    continueConversation: 'Continuar conversación',
+    tellMeMore: (title: string) => `Cuéntame más sobre ${title}`,
+    followUps: {
+      skills: 'Habilidades',
+      projects: 'Proyectos',
+      experience: 'Experiencia',
+      contact: 'Contacto',
+    },
+  },
+  home: {
+    hello: '¡Hola!',
+    headingLine1: 'Soy Rodrigo,',
+    headingLine2: 'AI Engineer',
+    ask: '¿En qué puedo ayudarte?',
+    heroLabel: 'Presentación de Rodrigo',
+    about: 'Sobre mí',
+    viewProjects: 'Ver proyectos',
+  },
+  conversation: {
+    profileLead: 'Un perfil que combina ingeniería, datos e inteligencia artificial aplicada.',
+    skillsLead:
+      'Estas son las herramientas y tecnologías que uso a diario, con foco en fiabilidad y puesta en producción.',
+    servicesLead:
+      'Áreas en las que puedo aportar a un equipo de producto o ingeniería: del dato a una solución de IA en producción.',
+    projectsLead:
+      'Te muestro mi trabajo, proyecto a proyecto. Pulsa una tarjeta para ver la información completa.',
+    projectDetailLead: 'Te muestro mis proyectos, uno a uno.',
+    experienceLead: 'Una trayectoria de ingeniería, producto, datos e inteligencia artificial aplicada.',
+    educationLead:
+      'Formación técnica, datos, IA responsable e idiomas para trabajar en entornos internacionales.',
+    articleLead:
+      'Evalué CrewAI, AutoGen y LangGraph durante tres semanas para construir agentes en producción. Elegí LangGraph por su estado explícito y el control que ofrece para depurar fallos.',
+    readArticle: 'Leer la evaluación completa',
+    fallbackLead: 'No tengo una respuesta clara para eso. Puedo ayudarte con:',
+    viewSkills: 'Ver habilidades',
+    viewExperience: 'Ver trayectoria',
+    viewProjects: 'Ver proyectos',
+    talkOpportunity: 'Hablar de una oportunidad',
+  },
+  sections: {
+    profile: 'Perfil profesional',
+    languages: 'Idiomas',
+    interests: 'Intereses',
+    since: 'desde dic. 2025',
+    factAgents: 'Agentes, RAG y chatbots con LLMs',
+    factDevelopment: 'Desarrollo con agentes de IA: Claude Code, Codex',
+    skillsLabel: 'Habilidades agrupadas',
+    skillLevel: (level: number) => `Nivel orientativo: ${level} de 5`,
+    skillsNote: 'Autoevaluación orientativa · escala de 1 a 5.',
+    servicesLabel: 'Catálogo de servicios',
+    serviceClose: 'Cerrar detalle del servicio',
+    serviceTalk: 'Hablar de esto',
+    experienceTitle: 'Experiencia profesional',
+    achievements: 'Logros destacados',
+    current: 'actualidad',
+    workMode: { presencial: 'presencial', remoto: 'remoto' },
+    internationalTitle: 'Experiencia internacional',
+    educationTitle: 'Formación',
+  },
+  projects: {
+    label: 'Proyectos publicados',
+    position: (position: number, total: number) => `Proyecto ${position} de ${total}`,
+    open: (title: string) => `Abrir proyecto ${title}`,
+    close: 'Cerrar detalle del proyecto',
+    detailOf: (title: string) => `Detalle de ${title}`,
+    client: 'Cliente',
+    role: 'Rol',
+    technologies: 'Tecnologías',
+    visit: 'Visitar proyecto',
+    designStage: 'En fase de diseño.',
+    noExternal: 'Nami todavía no tiene un destino externo publicado.',
+    traversalLabel: 'Navegación entre proyectos',
+    previous: 'Anterior',
+    next: 'Siguiente',
+    previousAria: (title: string) => `Proyecto anterior: ${title}`,
+    nextAria: (title: string) => `Siguiente proyecto: ${title}`,
+    notFoundTitle: 'Proyecto no encontrado',
+    backToProjects: 'Volver a proyectos',
+    pageTitle: (title: string) => `${title} · Rodrigo Valdelvira`,
+  },
+  contact: {
+    info: 'Información de contacto',
+    intro: '¿Buscas un AI Engineer para tu equipo? Escríbeme por el canal que prefieras.',
+    channels: 'Canales de contacto',
+    location: 'Ubicación',
+    form: 'Formulario de contacto',
+    name: 'Tu nombre',
+    email: 'Tu email',
+    message: 'Cuéntame brevemente tu proyecto',
+    messagePlaceholder: 'Cuéntame brevemente tu proyecto…',
+    honeypot: 'No rellenes este campo',
+    send: 'Enviar mensaje',
+    sending: 'Enviando…',
+    privacyBefore:
+      'Rodrigo Valdelvira Ortigosa tratará tu nombre, email y mensaje para responder a tu consulta. Puedes ejercer tus derechos en rodrigo.valdelvira@gmail.com. Más información en ',
+    privacyLink: 'Privacidad',
+    privacyAfter: '.',
+    sentTitle: 'Mensaje enviado correctamente',
+    sentMessage: 'Gracias por escribirme. Te responderé con la mayor brevedad posible.',
+    failedTitle: 'No se pudo enviar el mensaje',
+    failedMessage: 'Inténtalo de nuevo o escríbeme por email.',
+    offlineTitle: 'No se pudo conectar',
+    offlineMessage: 'Revisa tu conexión e inténtalo de nuevo. También puedes escribirme por email.',
+    subjectPrefix: 'Consulta sobre',
+  },
+  journal: {
+    kicker: 'Artículos',
+    title: 'Bitácora',
+    lead: 'Decisiones de arquitectura, aprendizajes y notas sobre IA aplicada a producción.',
+    browserLabel: 'Artículos de Bitácora',
+    filterLabel: 'Filtrar artículos por categoría',
+    all: 'Todos',
+    search: 'Filtrar artículos',
+    empty: 'No hay artículos que coincidan con los filtros.',
+    published: 'Artículo publicado',
+    readingTime: (minutes: number) => `${minutes} min de lectura`,
+    minutes: (minutes: number) => `${minutes} min`,
+    read: 'Leer el artículo',
+    by: 'Por',
+    askAboutThis: 'Pregúntame sobre esto',
+    backHome: 'Volver a portada',
+    backJournal: 'Volver a Bitácora',
+    descriptor: 'Artículos · IA y producción',
+  },
+  legal: {
+    approved: 'texto legal aprobado',
+    draft: 'borrador de trabajo',
+    approvedNote: (date: string) => `Revisión final aprobada por el titular · ${date}`,
+    draftNote: 'Borrador de trabajo · Pendiente de revisión final antes de publicar.',
+    translationNote: '',
+  },
+  errors: {
+    notFoundHeading: 'No encontramos esta página',
+    notFoundLead: 'La dirección no está disponible, pero puedes volver a explorar el portfolio.',
+    serverTitle: 'Error temporal · Rodrigo Valdelvira',
+    serverHeading: 'Ha ocurrido un error temporal',
+    serverLead: 'No podemos mostrar esta página ahora. Puedes continuar por una de estas rutas.',
+    home: 'Portada',
+    projects: 'Proyectos',
+    contact: 'Contacto',
+  },
+  contactApi: {
+    unconfirmed: 'No se pudo confirmar el envío. Inténtalo de nuevo o escríbeme por email.',
+    invalid:
+      'Revisa que el nombre, el email y el mensaje estén completos. El mensaje debe tener al menos 20 caracteres.',
+    tooLarge: 'El mensaje supera el tamaño permitido. Acórtalo y vuelve a intentarlo.',
+    contentType: 'No se pudo leer el formulario. Vuelve a Contacto e inténtalo de nuevo.',
+    origin:
+      'No se pudo validar el origen del envío. Vuelve a cargar Contacto desde el sitio e inténtalo otra vez.',
+    honeypot: 'No se pudo validar el envío. Vuelve a cargar Contacto e inténtalo de nuevo.',
+    failedPageTitle: 'Entrega no confirmada · Contacto',
+    failedHeading: 'No se pudo confirmar la entrega',
+    failedBody: 'El mensaje no ha sido confirmado. Tus campos se conservan aquí. También puedes escribir a ',
+    labelName: 'Nombre',
+    labelEmail: 'Email',
+    labelMessage: 'Mensaje',
+    retry: 'Intentar de nuevo',
+    backToContact: 'Volver a Contacto',
+    rejectedPageTitle: 'Revisa el envío · Contacto',
+    rejectedHeading: 'No se ha enviado el mensaje',
+    writeEmail: 'Escribir por email',
+  },
+};
+
+export type UiStrings = typeof es;
+
+const en: UiStrings = {
+  htmlLang: 'en',
+  ogLocale: 'en_GB',
+  dateLocale: 'en-GB',
+  layout: {
+    skipLink: 'Skip to content',
+    notFoundTitle: 'Page not found · Rodrigo Valdelvira',
+    notFoundDescription: 'Recovery page of the portfolio.',
+    threadLabel: 'Portfolio conversation',
+    responseLabel: 'Portfolio answer',
+    closeLegal: 'Close legal document',
+    breadcrumbHome: 'Home',
+    siteName: 'Rodrigo Valdelvira · AI Engineer',
+    location: 'Logroño, La Rioja, Spain',
+  },
+  header: {
+    brandLabel: 'Rodrigo Valdelvira, back to the home page',
+    available: 'available',
+    cvShort: 'CV',
+    cvAria: 'Download CV as PDF',
+    cvDownload: 'Download CV',
+    languageShort: 'ES',
+    languageLabel: 'Ver el sitio en español',
+    languageName: 'Español',
+    languageNavLabel: 'Language',
+    menuLabel: 'Portfolio menu',
+    mobileNav: 'Mobile menu',
+    home: 'Home',
+    theme: 'Theme',
+    themeChange: 'Change visual theme',
+    themePalette: 'Visual theme palette',
+  },
+  themeLabels: { light: 'Light', dark: 'Dark', cobalto: 'Cobalt', rioja: 'Rioja', bosque: 'Forest' },
+  footer: { legalNav: 'Legal links', privacy: 'Privacy', cookies: 'Cookies', terms: 'Terms' },
+  query: {
+    dockLabel: 'Explore the portfolio',
+    formLabel: 'Local query',
+    fieldLabel: 'Type your question',
+    placeholder: 'Ask me about my experience, projects…',
+    submitLabel: 'Send question',
+    guidance: 'Maximum 300 characters. Enter sends; Shift+Enter adds a new line.',
+    count: (length: number, max: number) => `${length} of ${max} characters`,
+    limitReached: (max: number) => `${max}-character limit reached.`,
+    resourcesLabel: 'Resources',
+    upcoming: 'In preparation',
+    toolkit: 'AI Toolkit',
+    journal: 'Journal',
+    soon: 'Coming soon',
+    sectionsNav: 'Portfolio sections',
+    sectionFallback: 'Portfolio section',
+    thinking: 'reasoning',
+    stepContext: 'retrieving context',
+    stepFragments: 'selecting fragments',
+    stepComposing: 'composing answer',
+    preparing: 'Preparing an answer.',
+    ready: 'Answer ready.',
+    ambiguous: 'There are several possible sections. Which one would you like to see?',
+    unknown: 'I can’t find a clear answer to that question.',
+    continueConversation: 'Continue the conversation',
+    tellMeMore: (title: string) => `Tell me more about ${title}`,
+    followUps: { skills: 'Skills', projects: 'Projects', experience: 'Experience', contact: 'Contact' },
+  },
+  home: {
+    hello: 'Hello!',
+    headingLine1: 'I’m Rodrigo,',
+    headingLine2: 'AI Engineer',
+    ask: 'How can I help you?',
+    heroLabel: 'Rodrigo’s introduction',
+    about: 'About me',
+    viewProjects: 'View projects',
+  },
+  conversation: {
+    profileLead: 'A profile that combines engineering, data and applied artificial intelligence.',
+    skillsLead:
+      'These are the tools and technologies I use every day, with a focus on reliability and getting things into production.',
+    servicesLead:
+      'Areas where I can contribute to a product or engineering team: from data to an AI solution in production.',
+    projectsLead: 'Here’s my work, project by project. Tap a card to see the full details.',
+    projectDetailLead: 'Here are my projects, one by one.',
+    experienceLead: 'A career in engineering, product, data and applied artificial intelligence.',
+    educationLead:
+      'Technical training, data, responsible AI and languages for working in international environments.',
+    articleLead:
+      'I evaluated CrewAI, AutoGen and LangGraph for three weeks to build production agents. I chose LangGraph for its explicit state and the control it gives me to debug failures.',
+    readArticle: 'Read the full evaluation',
+    fallbackLead: 'I don’t have a clear answer for that. I can help you with:',
+    viewSkills: 'View skills',
+    viewExperience: 'View career',
+    viewProjects: 'View projects',
+    talkOpportunity: 'Discuss an opportunity',
+  },
+  sections: {
+    profile: 'Professional profile',
+    languages: 'Languages',
+    interests: 'Interests',
+    since: 'since Dec 2025',
+    factAgents: 'Agents, RAG and chatbots with LLMs',
+    factDevelopment: 'Development with AI agents: Claude Code, Codex',
+    skillsLabel: 'Grouped skills',
+    skillLevel: (level: number) => `Approximate level: ${level} out of 5`,
+    skillsNote: 'Approximate self-assessment · scale of 1 to 5.',
+    servicesLabel: 'Service catalogue',
+    serviceClose: 'Close service details',
+    serviceTalk: 'Let’s talk about this',
+    experienceTitle: 'Professional experience',
+    achievements: 'Key achievements',
+    current: 'present',
+    workMode: { presencial: 'on-site', remoto: 'remote' },
+    internationalTitle: 'International experience',
+    educationTitle: 'Education',
+  },
+  projects: {
+    label: 'Published projects',
+    position: (position: number, total: number) => `Project ${position} of ${total}`,
+    open: (title: string) => `Open project ${title}`,
+    close: 'Close project details',
+    detailOf: (title: string) => `Details of ${title}`,
+    client: 'Client',
+    role: 'Role',
+    technologies: 'Technologies',
+    visit: 'Visit project',
+    designStage: 'In the design phase.',
+    noExternal: 'Nami does not have a published external destination yet.',
+    traversalLabel: 'Navigation between projects',
+    previous: 'Previous',
+    next: 'Next',
+    previousAria: (title: string) => `Previous project: ${title}`,
+    nextAria: (title: string) => `Next project: ${title}`,
+    notFoundTitle: 'Project not found',
+    backToProjects: 'Back to projects',
+    pageTitle: (title: string) => `${title} · Rodrigo Valdelvira`,
+  },
+  contact: {
+    info: 'Contact information',
+    intro: 'Looking for an AI Engineer for your team? Write to me through the channel you prefer.',
+    channels: 'Contact channels',
+    location: 'Location',
+    form: 'Contact form',
+    name: 'Your name',
+    email: 'Your email',
+    message: 'Briefly tell me about your project',
+    messagePlaceholder: 'Briefly tell me about your project…',
+    honeypot: 'Do not fill in this field',
+    send: 'Send message',
+    sending: 'Sending…',
+    privacyBefore:
+      'Rodrigo Valdelvira Ortigosa will process your name, email and message to reply to your enquiry. You can exercise your rights at rodrigo.valdelvira@gmail.com. More information in ',
+    privacyLink: 'Privacy',
+    privacyAfter: '.',
+    sentTitle: 'Message sent successfully',
+    sentMessage: 'Thank you for writing to me. I’ll reply as soon as possible.',
+    failedTitle: 'The message could not be sent',
+    failedMessage: 'Please try again or write to me by email.',
+    offlineTitle: 'Could not connect',
+    offlineMessage: 'Check your connection and try again. You can also write to me by email.',
+    subjectPrefix: 'Enquiry about',
+  },
+  journal: {
+    kicker: 'Articles',
+    title: 'Journal',
+    lead: 'Architecture decisions, lessons learned and notes on AI applied to production.',
+    browserLabel: 'Journal articles',
+    filterLabel: 'Filter articles by category',
+    all: 'All',
+    search: 'Filter articles',
+    empty: 'No articles match the filters.',
+    published: 'Published article',
+    readingTime: (minutes: number) => `${minutes} min read`,
+    minutes: (minutes: number) => `${minutes} min`,
+    read: 'Read the article',
+    by: 'By',
+    askAboutThis: 'Ask me about this',
+    backHome: 'Back to home',
+    backJournal: 'Back to Journal',
+    descriptor: 'Articles · AI and production',
+  },
+  legal: {
+    approved: 'approved legal text',
+    draft: 'working draft',
+    approvedNote: (date: string) => `Final review of the Spanish original approved by the owner · ${date}`,
+    draftNote: 'Working draft · Pending final review before publication.',
+    translationNote:
+      'Courtesy translation of the Spanish original. If there is any discrepancy, the Spanish version prevails.',
+  },
+  errors: {
+    notFoundHeading: 'We couldn’t find this page',
+    notFoundLead: 'The address is not available, but you can go back to exploring the portfolio.',
+    serverTitle: 'Temporary error · Rodrigo Valdelvira',
+    serverHeading: 'A temporary error has occurred',
+    serverLead: 'We can’t show this page right now. You can continue through one of these routes.',
+    home: 'Home',
+    projects: 'Projects',
+    contact: 'Contact',
+  },
+  contactApi: {
+    unconfirmed: 'We couldn’t confirm delivery. Please try again or write to me by email.',
+    invalid:
+      'Check that your name, email and message are complete. The message must be at least 20 characters long.',
+    tooLarge: 'The message exceeds the allowed size. Shorten it and try again.',
+    contentType: 'The form could not be read. Go back to Contact and try again.',
+    origin:
+      'The origin of the submission could not be validated. Reload Contact from the site and try again.',
+    honeypot: 'The submission could not be validated. Reload Contact and try again.',
+    failedPageTitle: 'Delivery not confirmed · Contact',
+    failedHeading: 'Delivery could not be confirmed',
+    failedBody: 'The message has not been confirmed. Your fields are kept here. You can also write to ',
+    labelName: 'Name',
+    labelEmail: 'Email',
+    labelMessage: 'Message',
+    retry: 'Try again',
+    backToContact: 'Back to Contact',
+    rejectedPageTitle: 'Check your submission · Contact',
+    rejectedHeading: 'The message has not been sent',
+    writeEmail: 'Write by email',
+  },
+};
+
+export const ui: Record<Locale, UiStrings> = { es, en };
+
+export const getUi = (locale: Locale): UiStrings => ui[locale];
+
+/** Month and year label for a `YYYY-MM` value, or the "present" label when null. */
+export const formatMonthYear = (value: string | null, locale: Locale): string => {
+  if (!value) return ui[locale].sections.current;
+  const [year, month] = value.split('-');
+  // en-US abbreviates September as "Sep"; en-GB would give "Sept".
+  const monthLocale = locale === 'en' ? 'en-US' : ui[locale].dateLocale;
+  return new Intl.DateTimeFormat(monthLocale, { month: 'short', year: 'numeric', timeZone: 'UTC' })
+    .format(new Date(Date.UTC(Number(year), Number(month) - 1, 1)))
+    .replace(/\./g, '');
+};

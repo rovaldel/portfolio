@@ -3,6 +3,8 @@ import { createHash, randomUUID } from 'node:crypto';
 import { contactAbuseGuard } from '../../lib/contact-abuse';
 import { deliverContact } from '../../lib/contact-mailer';
 import { parseContactSubmission } from '../../lib/contact-submission';
+import { getUi, isLocale, pathFor } from '../../lib/i18n';
+import type { Locale } from '../../lib/i18n';
 
 export const prerender = false;
 
@@ -29,23 +31,30 @@ const jsonResponse = (
     },
   });
 
+/** The visitor's language travels in the form action (?lang=en); anything else is Spanish. */
+const requestLocale = (url: URL): Locale => {
+  const value = url.searchParams.get('lang');
+  return isLocale(value) ? value : 'es';
+};
+
 const failedDelivery = (
   input: { name: string; email: string; message: string },
+  locale: Locale,
   status = 503,
   retryAfter?: string,
   wantsJson = false,
 ) => {
+  const text = getUi(locale).contactApi;
+  const footer = getUi(locale).footer;
+  const action = locale === 'en' ? '/api/contacto?lang=en' : '/api/contacto';
   if (wantsJson)
     return jsonResponse(
       status,
-      {
-        ok: false,
-        message: 'No se pudo confirmar el envío. Inténtalo de nuevo o escríbeme por email.',
-      },
+      { ok: false, message: text.unconfirmed },
       retryAfter ? { 'Retry-After': retryAfter } : {},
     );
   return new Response(
-    `<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Entrega no confirmada · Contacto</title><main><h1>No se pudo confirmar la entrega</h1><p role="alert">El mensaje no ha sido confirmado. Tus campos se conservan aquí. También puedes escribir a <a href="mailto:rodrigo.valdelvira@gmail.com">rodrigo.valdelvira@gmail.com</a>.</p><form method="post" action="/api/contacto"><label for="name">Nombre</label><input id="name" name="name" value="${escapeHtml(input.name)}" required minlength="2" maxlength="80"><label for="email">Email</label><input id="email" name="email" type="email" value="${escapeHtml(input.email)}" required maxlength="254"><label for="message">Mensaje</label><textarea id="message" name="message" required minlength="20" maxlength="3000">${escapeHtml(input.message)}</textarea><input type="hidden" name="idempotencyKey" value="${randomUUID()}"><input type="hidden" name="contact_check_field" value=""><button type="submit">Intentar de nuevo</button></form><p><a href="/privacidad">Privacidad</a> · <a href="/contacto">Volver a Contacto</a></p></main></html>`,
+    `<!doctype html><html lang="${locale}"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>${text.failedPageTitle}</title><main><h1>${text.failedHeading}</h1><p role="alert">${text.failedBody}<a href="mailto:rodrigo.valdelvira@gmail.com">rodrigo.valdelvira@gmail.com</a>.</p><form method="post" action="${action}"><label for="name">${text.labelName}</label><input id="name" name="name" value="${escapeHtml(input.name)}" required minlength="2" maxlength="80"><label for="email">${text.labelEmail}</label><input id="email" name="email" type="email" value="${escapeHtml(input.email)}" required maxlength="254"><label for="message">${text.labelMessage}</label><textarea id="message" name="message" required minlength="20" maxlength="3000">${escapeHtml(input.message)}</textarea><input type="hidden" name="idempotencyKey" value="${randomUUID()}"><input type="hidden" name="contact_check_field" value=""><button type="submit">${text.retry}</button></form><p><a href="${pathFor('privacy', locale)}">${footer.privacy}</a> · <a href="${pathFor('contact', locale)}">${text.backToContact}</a></p></main></html>`,
     {
       status,
       headers: {
@@ -61,20 +70,20 @@ const failedDelivery = (
 const rejectedSubmission = (
   status: 400 | 413 | 415,
   reason: 'invalid' | 'too-large' | 'content-type' | 'origin' | 'honeypot',
+  locale: Locale,
   wantsJson = false,
 ) => {
+  const text = getUi(locale).contactApi;
   const explanation = {
-    invalid:
-      'Revisa que el nombre, el email y el mensaje estén completos. El mensaje debe tener al menos 20 caracteres.',
-    'too-large': 'El mensaje supera el tamaño permitido. Acórtalo y vuelve a intentarlo.',
-    'content-type': 'No se pudo leer el formulario. Vuelve a Contacto e inténtalo de nuevo.',
-    origin:
-      'No se pudo validar el origen del envío. Vuelve a cargar Contacto desde el sitio e inténtalo otra vez.',
-    honeypot: 'No se pudo validar el envío. Vuelve a cargar Contacto e inténtalo de nuevo.',
+    invalid: text.invalid,
+    'too-large': text.tooLarge,
+    'content-type': text.contentType,
+    origin: text.origin,
+    honeypot: text.honeypot,
   }[reason];
   if (wantsJson) return jsonResponse(status, { ok: false, message: explanation });
   return new Response(
-    `<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Revisa el envío · Contacto</title><main><h1>No se ha enviado el mensaje</h1><p role="alert">${explanation}</p><p><a href="/contacto">Volver a Contacto</a> · <a href="mailto:rodrigo.valdelvira@gmail.com">Escribir por email</a></p><p><a href="/privacidad">Privacidad</a></p></main></html>`,
+    `<!doctype html><html lang="${locale}"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>${text.rejectedPageTitle}</title><main><h1>${text.rejectedHeading}</h1><p role="alert">${explanation}</p><p><a href="${pathFor('contact', locale)}">${text.backToContact}</a> · <a href="mailto:rodrigo.valdelvira@gmail.com">${text.writeEmail}</a></p><p><a href="${pathFor('privacy', locale)}">${getUi(locale).footer.privacy}</a></p></main></html>`,
     {
       status,
       headers: {
@@ -87,19 +96,21 @@ const rejectedSubmission = (
 };
 
 export const POST: APIRoute = async ({ request, redirect, url, clientAddress }) => {
+  const locale = requestLocale(url);
   const wantsJson = request.headers.get('accept')?.includes('application/json') === true;
   const siteOrigin = import.meta.env.SITE ? new URL(import.meta.env.SITE).origin : url.origin;
   const allowedOrigins = import.meta.env.DEV ? [url.origin] : [url.origin, siteOrigin];
   const parsed = await parseContactSubmission(request, allowedOrigins);
   if (!parsed.ok) {
     console.info('contact_submission_rejected', parsed.reason);
-    return rejectedSubmission(parsed.status, parsed.reason, wantsJson);
+    return rejectedSubmission(parsed.status, parsed.reason, locale, wantsJson);
   }
   const connectionKey = createHash('sha256').update(clientAddress).digest('hex');
   const abuse = contactAbuseGuard.take(connectionKey, parsed.value.idempotencyKey);
   if (abuse !== 'allowed')
     return failedDelivery(
       parsed.value,
+      locale,
       abuse === 'duplicate' ? 503 : 429,
       abuse === 'rate-limited' ? '900' : undefined,
       wantsJson,
@@ -107,8 +118,8 @@ export const POST: APIRoute = async ({ request, redirect, url, clientAddress }) 
   const result = await deliverContact(parsed.value);
   if (result === 'accepted') {
     if (wantsJson) return jsonResponse(200, { ok: true });
-    return redirect('/contacto?enviado=1', 303);
+    return redirect(pathFor('contact', locale) + '?enviado=1', 303);
   }
   console.info(`contact_delivery_${result}`);
-  return failedDelivery(parsed.value, 503, undefined, wantsJson);
+  return failedDelivery(parsed.value, locale, 503, undefined, wantsJson);
 };

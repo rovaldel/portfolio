@@ -1,5 +1,8 @@
 ---
-import { skillGroups } from '../../content/site';
+import { useLocale } from '../../lib/locale';
+
+const { t, c } = useLocale(Astro.url);
+const { skillGroups } = c;
 
 const icons: Record<string, string> = {
   ia: 'M12 3v3M7 6h10a3 3 0 0 1 3 3v7a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V9a3 3 0 0 1 3-3ZM9 11.5v1.5M15 11.5v1.5M9.5 16h5M2 11v4M22 11v4',
@@ -9,7 +12,7 @@ const icons: Record<string, string> = {
 };
 ---
 
-<section class="skills-catalog" data-visual-anchor="skills" aria-label="Habilidades agrupadas">
+<section class="skills-catalog" data-visual-anchor="skills" aria-label={t.sections.skillsLabel}>
   {
     skillGroups.map((group) => (
       <article class="skills-catalog__group" data-skill-group={group.id}>
@@ -31,7 +34,7 @@ const icons: Record<string, string> = {
           {group.skills.map((skill) => (
             <li>
               <span>{skill.name}</span>
-              <span class="skill-rating" role="img" aria-label={`Nivel orientativo: ${skill.level} de 5`}>
+              <span class="skill-rating" role="img" aria-label={t.sections.skillLevel(skill.level)}>
                 {Array.from({ length: 5 }, (_, index) => (
                   <svg
                     class:list={['skill-rating__star', index < skill.level && 'is-filled']}
@@ -48,5 +51,5 @@ const icons: Record<string, string> = {
       </article>
     ))
   }
-  <p class="skills-catalog__note">Autoevaluación orientativa · escala de 1 a 5.</p>
+  <p class="skills-catalog__note">{t.sections.skillsNote}</p>
 </section>

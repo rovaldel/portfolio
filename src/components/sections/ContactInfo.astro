@@ -1,6 +1,6 @@
 ---
 import { randomUUID } from 'node:crypto';
-import { siteProfile } from '../../content/site';
+import { useLocale } from '../../lib/locale';
 
 interface Props {
   subject?: string | null;
@@ -8,11 +8,15 @@ interface Props {
 }
 
 const { subject = null, sent = false } = Astro.props;
+const { locale, t, c, path } = useLocale(Astro.url);
+const { siteProfile } = c;
 const channels = [siteProfile.channels.linkedin, siteProfile.channels.phone];
 const idempotencyKey = randomUUID();
+// The endpoint answers in the language the visitor is reading.
+const formAction = locale === 'en' ? '/api/contacto?lang=en' : '/api/contacto';
 ---
 
-<section class="contact-layout" aria-label="Información de contacto">
+<section class="contact-layout" aria-label={t.contact.info}>
   <div
     class="contact-form__success"
     data-contact-status
@@ -35,16 +39,14 @@ const idempotencyKey = randomUUID();
       hidden>!</span
     >
     <span class="contact-form__success-copy">
-      <strong data-contact-status-title>{sent ? 'Mensaje enviado correctamente' : ''}</strong>
+      <strong data-contact-status-title>{sent ? t.contact.sentTitle : ''}</strong>
       <span data-contact-status-message>
-        {sent ? 'Gracias por escribirme. Te responderé con la mayor brevedad posible.' : ''}
+        {sent ? t.contact.sentMessage : ''}
       </span>
     </span>
   </div>
-  <p class="contact-introduction">
-    ¿Buscas un AI Engineer para tu equipo? Escríbeme por el canal que prefieras.
-  </p>
-  <div class="contact-channel-list" role="group" aria-label="Canales de contacto">
+  <p class="contact-introduction">{t.contact.intro}</p>
+  <div class="contact-channel-list" role="group" aria-label={t.contact.channels}>
     {
       channels.map((channel) => (
         <a
@@ -80,52 +82,52 @@ const idempotencyKey = randomUUID();
         </svg>
       </span>
       <span>
-        <strong>Ubicación</strong>
+        <strong>{t.contact.location}</strong>
         <span>{siteProfile.location}</span>
       </span>
     </div>
   </div>
   <form
     class="contact-form-preview contact-form-preview--full"
-    action="/api/contacto"
+    action={formAction}
     method="post"
-    aria-label="Formulario de contacto"
+    aria-label={t.contact.form}
     data-contact-form
   >
     {subject && <p class="tag">{subject}</p>}
-    <label class="sr-only" for="contact-name">Tu nombre</label>
+    <label class="sr-only" for="contact-name">{t.contact.name}</label>
     <input
       id="contact-name"
       name="name"
       type="text"
-      placeholder="Tu nombre"
+      placeholder={t.contact.name}
       autocomplete="name"
       required
       minlength="2"
       maxlength="80"
     />
-    <label class="sr-only" for="contact-email">Tu email</label>
+    <label class="sr-only" for="contact-email">{t.contact.email}</label>
     <input
       id="contact-email"
       name="email"
       type="email"
-      placeholder="Tu email"
+      placeholder={t.contact.email}
       autocomplete="email"
       required
       maxlength="254"
     />
-    <label class="sr-only" for="contact-message">Cuéntame brevemente tu proyecto</label>
+    <label class="sr-only" for="contact-message">{t.contact.message}</label>
     <textarea
       id="contact-message"
       name="message"
-      placeholder="Cuéntame brevemente tu proyecto…"
+      placeholder={t.contact.messagePlaceholder}
       rows="3"
       required
       minlength="20"
       maxlength="3000"></textarea>
     <input type="hidden" name="idempotencyKey" value={idempotencyKey} />
     <label class="contact-form__honeypot" aria-hidden="true">
-      No rellenes este campo
+      {t.contact.honeypot}
       <input
         name="contact_check_field"
         type="text"
@@ -135,12 +137,9 @@ const idempotencyKey = randomUUID();
         spellcheck="false"
       />
     </label>
-    <button type="submit">Enviar mensaje</button>
+    <button type="submit">{t.contact.send}</button>
     <p class="contact-card__privacy">
-      Rodrigo Valdelvira Ortigosa tratará tu nombre, email y mensaje para responder a tu consulta. Puedes
-      ejercer tus derechos en rodrigo.valdelvira@gmail.com. Más información en <a href="/privacidad"
-        >Privacidad</a
-      >.
+      {t.contact.privacyBefore}<a href={path('privacy')}>{t.contact.privacyLink}</a>{t.contact.privacyAfter}
     </p>
   </form>
 </section>

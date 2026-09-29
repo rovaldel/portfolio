@@ -1,5 +1,7 @@
 ---
-import { navigationActions } from '../../content/site';
+import { useLocale } from '../../lib/locale';
+
+const { t, c } = useLocale(Astro.url);
 const currentPath = Astro.url.pathname;
 const icons: Record<string, string> = {
   about: 'M14 3v4a1 1 0 0 0 1 1h4 M5 3h9l5 5v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z',
@@ -13,9 +15,9 @@ const icons: Record<string, string> = {
 };
 ---
 
-<nav class="conversation-dock__actions" data-actions aria-label="Secciones del portfolio">
+<nav class="conversation-dock__actions" data-actions aria-label={t.query.sectionsNav}>
   {
-    navigationActions.map((action) => (
+    c.navigationActions.map((action) => (
       <a
         class="conversation-dock__chip portfolio-action"
         href={action.destination}

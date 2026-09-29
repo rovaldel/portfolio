@@ -58,6 +58,12 @@ input {
 button {
   color: inherit;
 }
+/* Touch browsers paint a translucent box over whatever is tapped. Every control
+   here has its own pressed state, so the default flash is switched off; the
+   keyboard focus ring below stays. */
+html {
+  -webkit-tap-highlight-color: transparent;
+}
 :focus-visible {
   outline: 3px solid var(--fill);
   outline-offset: 3px;

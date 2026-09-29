@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ConversationPage from '../layout/ConversationPage.astro';
+import Skills from '../sections/Skills.astro';
+import { useLocale } from '../../lib/locale';
+
+const { t, path, actionLabel } = useLocale(Astro.url);
+const label = actionLabel('skills');
+---
+
+<BaseLayout>
+  <ConversationPage action={label} label={label}>
+    <p class="conversation-lead">{t.conversation.skillsLead}</p>
+    <Skills />
+    <div class="conversation-actions">
+      <a class="button button--fill" href={path('projects')}>{t.conversation.viewProjects}</a>
+      <a class="button button--quiet" href="/Rodrigo-Valdelvira-CV.pdf" download="Rodrigo-Valdelvira-CV.pdf"
+        >{t.header.cvDownload}</a
+      >
+    </div>
+  </ConversationPage>
+</BaseLayout>

@@ -1,27 +1,5 @@
 ---
-import JournalIndex from '../../components/journal/JournalIndex.astro';
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getCollection } from 'astro:content';
-import { selectCompletePublishedArticles } from '../../lib/content';
-
-const articles = selectCompletePublishedArticles(await getCollection('bitacora')).map(({ data }) => ({
-  slug: data.slug,
-  title: data.title,
-  description: data.description,
-  excerpt: data.excerpt,
-  category: data.category,
-  publishedAt: data.publishedAt,
-  readingMinutes: data.readingMinutes,
-}));
+import JournalIndexPage from '../../components/pages/JournalIndexPage.astro';
 ---
 
-<BaseLayout journalIndexMode>
-  <section class="journal-page" aria-labelledby="journal-title">
-    <p class="eyebrow">Artículos</p>
-    <h1 id="journal-title">Bitácora</h1>
-    <p class="journal-page__lead">
-      Decisiones de arquitectura, aprendizajes y notas sobre IA aplicada a producción.
-    </p>
-    <JournalIndex articles={articles} />
-  </section>
-</BaseLayout>
+<JournalIndexPage />

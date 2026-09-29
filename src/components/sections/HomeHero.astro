@@ -1,9 +1,12 @@
 ---
-import { navigationActions, siteProfile } from '../../content/site';
+import { useLocale } from '../../lib/locale';
+
 interface Props {
   backdrop?: boolean;
 }
 const { backdrop = false } = Astro.props;
+const { t, c } = useLocale(Astro.url);
+const { siteProfile, navigationActions } = c;
 const homePortrait = {
   // This is the portrait selected for the public home page. Keep its AVIF
   // resource explicit so every compatible browser uses the same approved image;
@@ -20,7 +23,7 @@ if (!aboutAction || !projectsAction) {
 }
 ---
 
-<section class="mockup-hero" aria-label={backdrop ? undefined : 'Presentación de Rodrigo'}>
+<section class="mockup-hero" aria-label={backdrop ? undefined : t.home.heroLabel}>
   <div class="mockup-hero__title">
     <span class="mockup-hero__spark" aria-hidden="true"
       ><svg viewBox="0 0 24 24"
@@ -28,28 +31,28 @@ if (!aboutAction || !projectsAction) {
         ></path></svg
       ></span
     >
-    <p class="eyebrow">¡Hola!</p>
+    <p class="eyebrow">{t.home.hello}</p>
     {
       backdrop ? (
         <p class="mockup-hero__heading">
-          Soy Rodrigo,
+          {t.home.headingLine1}
           <br />
-          AI Engineer
+          {t.home.headingLine2}
         </p>
       ) : (
         <h1>
-          Soy Rodrigo,
+          {t.home.headingLine1}
           <br />
-          AI Engineer
+          {t.home.headingLine2}
         </h1>
       )
     }
-    <p class="mockup-hero__ask">¿En qué puedo ayudarte?</p>
+    <p class="mockup-hero__ask">{t.home.ask}</p>
   </div>
   <div class="mockup-hero__stage">
     <aside class="mockup-hero__quote">
       <p>{siteProfile.professionalSummary}</p>
-      <strong>{siteProfile.totalExperienceLabel.replace(' de experiencia profesional total', '')}</strong>
+      <strong>{siteProfile.experienceBadge}</strong>
     </aside>
     <div class="mockup-hero__portrait">
       <div class="portrait" data-image-frame>
@@ -76,14 +79,14 @@ if (!aboutAction || !projectsAction) {
         href={aboutAction.destination}
         data-portfolio-action
         data-response={aboutAction.response}
-        data-response-kind={aboutAction.responseKind}>Sobre mí</a
+        data-response-kind={aboutAction.responseKind}>{t.home.about}</a
       >
       <a
         class="button button--quiet"
         href={projectsAction.destination}
         data-portfolio-action
         data-response={projectsAction.response}
-        data-response-kind={projectsAction.responseKind}>Ver proyectos</a
+        data-response-kind={projectsAction.responseKind}>{t.home.viewProjects}</a
       >
     </div>
   </div>

@@ -1,4 +1,7 @@
-export {};
+import { documentLocale, getUi, pathFor } from '../lib/i18n';
+
+const locale = documentLocale();
+const t = getUi(locale);
 
 const thread = document.querySelector<HTMLElement>('[data-conversation-thread]');
 const shell = document.querySelector<HTMLElement>('.site-shell');
@@ -94,7 +97,10 @@ const openDialog = (template: HTMLTemplateElement, trigger: HTMLAnchorElement) =
       if (askLink && activeDialog && thread?.contains(activeDialog.trigger)) {
         event.preventDefault();
         const serviceSlug = askLink.dataset['serviceAsk'];
-        const title = activeDialog.dialog.querySelector('h2')?.textContent?.trim().toLocaleLowerCase('es-ES');
+        const title = activeDialog.dialog
+          .querySelector('h2')
+          ?.textContent?.trim()
+          .toLocaleLowerCase(t.dateLocale);
         const response = activeDialog.dialog
           .querySelector<HTMLElement>('[data-service-description]')
           ?.textContent?.trim();
@@ -103,9 +109,9 @@ const openDialog = (template: HTMLTemplateElement, trigger: HTMLAnchorElement) =
           window.dispatchEvent(
             new CustomEvent('portfolio:answer', {
               detail: {
-                question: 'Cuéntame más sobre ' + title,
+                question: t.query.tellMeMore(title),
                 response,
-                destination: '/contacto?asunto=' + serviceSlug,
+                destination: pathFor('contact', locale) + '?asunto=' + serviceSlug,
               },
             }),
           );

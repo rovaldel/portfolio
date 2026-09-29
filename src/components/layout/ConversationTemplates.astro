@@ -8,91 +8,87 @@ import ContactInfo from '../sections/ContactInfo.astro';
 import ProjectIndex from '../projects/ProjectIndex.astro';
 import ProjectDialog from '../projects/ProjectDialog.astro';
 import ServiceDialog from '../sections/ServiceDialog.astro';
-import { projects, services } from '../../content/site';
+import { useLocale } from '../../lib/locale';
+
+const { t, c, path } = useLocale(Astro.url);
+const { projects, services } = c;
+const q = t.query;
+const v = t.conversation;
 ---
 
 <div class="conversation-templates" aria-hidden="true">
   <template data-conversation-template="profile">
-    <p class="conversation-lead">
-      Un perfil que combina ingeniería, datos e inteligencia artificial aplicada.
-    </p>
+    <p class="conversation-lead">{v.profileLead}</p>
     <Profile />
     <div class="conversation-actions">
-      <a class="button button--fill" href="/habilidades" data-conversation-followup="skills"
-        >Ver habilidades</a
+      <a class="button button--fill" href={path('skills')} data-conversation-followup="skills"
+        >{v.viewSkills}</a
       >
-      <a class="button button--quiet" href="/experiencia" data-conversation-followup="experience"
-        >Ver trayectoria</a
+      <a class="button button--quiet" href={path('experience')} data-conversation-followup="experience"
+        >{v.viewExperience}</a
       >
     </div>
   </template>
   <template data-conversation-template="skills">
-    <p class="conversation-lead">
-      Estas son las herramientas y tecnologías que uso a diario, con foco en fiabilidad y puesta en
-      producción.
-    </p>
+    <p class="conversation-lead">{v.skillsLead}</p>
     <Skills />
     <div class="conversation-actions">
-      <a class="button button--fill" href="/proyectos" data-conversation-followup="projects">Ver proyectos</a>
+      <a class="button button--fill" href={path('projects')} data-conversation-followup="projects"
+        >{v.viewProjects}</a
+      >
       <a class="button button--quiet" href="/Rodrigo-Valdelvira-CV.pdf" download="Rodrigo-Valdelvira-CV.pdf"
-        >Descargar CV</a
+        >{t.header.cvDownload}</a
       >
     </div>
   </template>
   <template data-conversation-template="services">
-    <p class="conversation-lead">
-      Áreas en las que puedo aportar a un equipo de producto o ingeniería: del dato a una solución de IA en
-      producción.
-    </p>
+    <p class="conversation-lead">{v.servicesLead}</p>
     <Services />
     <div class="conversation-actions">
-      <a class="button button--fill" href="/proyectos" data-conversation-followup="projects">Ver proyectos</a>
+      <a class="button button--fill" href={path('projects')} data-conversation-followup="projects"
+        >{v.viewProjects}</a
+      >
       <a
         class="button button--quiet"
-        href="/contacto?asunto=agentes-y-chatbots-ia"
-        data-conversation-followup="contact">Hablar de una oportunidad</a
+        href={path('contact') + '?asunto=agentes-y-chatbots-ia'}
+        data-conversation-followup="contact">{v.talkOpportunity}</a
       >
     </div>
   </template>
   <template data-conversation-template="projects">
-    <p class="conversation-lead">
-      Te muestro mi trabajo, proyecto a proyecto. Pulsa una tarjeta para ver la información completa.
-    </p>
+    <p class="conversation-lead">{v.projectsLead}</p>
     <ProjectIndex />
   </template>
   <template data-conversation-template="experience">
-    <p class="conversation-lead">
-      Una trayectoria de ingeniería, producto, datos e inteligencia artificial aplicada.
-    </p>
+    <p class="conversation-lead">{v.experienceLead}</p>
     <Experience />
   </template>
   <template data-conversation-template="education">
-    <p class="conversation-lead">
-      Formación técnica, datos, IA responsable e idiomas para trabajar en entornos internacionales.
-    </p>
+    <p class="conversation-lead">{v.educationLead}</p>
     <Education />
   </template>
   <template data-conversation-template="contact">
     <ContactInfo />
   </template>
   <template data-conversation-template="article">
-    <p class="conversation-lead">
-      Evalué CrewAI, AutoGen y LangGraph durante tres semanas para construir agentes en producción. Elegí
-      LangGraph por su estado explícito y el control que ofrece para depurar fallos.
-    </p>
-    <a class="button button--quiet" href="/bitacora/langgraph-para-agentes-en-produccion"
-      >Leer la evaluación completa</a
-    >
+    <p class="conversation-lead">{v.articleLead}</p>
+    <a class="button button--quiet" href={path('journal.langgraph')}>{v.readArticle}</a>
   </template>
   <template data-conversation-template="fallback">
-    <p class="conversation-lead">No tengo una respuesta clara para eso. Puedo ayudarte con:</p>
+    <p class="conversation-lead">{v.fallbackLead}</p>
     <div class="conversation-actions">
-      <a class="button button--quiet" href="/proyectos" data-conversation-followup="projects">Proyectos</a>
-      <a class="button button--quiet" href="/habilidades" data-conversation-followup="skills">Habilidades</a>
-      <a class="button button--quiet" href="/experiencia" data-conversation-followup="experience"
-        >Experiencia</a
+      <a class="button button--quiet" href={path('projects')} data-conversation-followup="projects"
+        >{q.followUps.projects}</a
       >
-      <a class="button button--quiet" href="/contacto" data-conversation-followup="contact">Contacto</a>
+      <a class="button button--quiet" href={path('skills')} data-conversation-followup="skills"
+        >{q.followUps.skills}</a
+      >
+      <a class="button button--quiet" href={path('experience')} data-conversation-followup="experience"
+        >{q.followUps.experience}</a
+      >
+      <a class="button button--quiet" href={path('contact')} data-conversation-followup="contact"
+        >{q.followUps.contact}</a
+      >
     </div>
   </template>
   {

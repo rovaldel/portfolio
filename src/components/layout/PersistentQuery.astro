@@ -1,5 +1,8 @@
 ---
 import PortfolioActions from './PortfolioActions.astro';
+import { useLocale } from '../../lib/locale';
+
+const { t } = useLocale(Astro.url);
 ---
 
 <aside
@@ -7,25 +10,25 @@ import PortfolioActions from './PortfolioActions.astro';
   id="consulta-langgraph"
   data-action-dock
   data-visual-anchor="query"
-  aria-label="Explora el portfolio"
+  aria-label={t.query.dockLabel}
 >
   <div class="conversation-dock__panel">
-    <form class="query-form" id="portfolio-query-form" data-query-form aria-label="Consulta local">
+    <form class="query-form" id="portfolio-query-form" data-query-form aria-label={t.query.formLabel}>
       <span class="query-form__spark" aria-hidden="true"
         ><svg viewBox="0 0 24 24"
           ><path d="M12 2c.6 5.4 4.6 9.4 10 10-5.4.6-9.4 4.6-10 10-.6-5.4-4.6-9.4-10-10 5.4-.6 9.4-4.6 10-10Z"
           ></path></svg
         ></span
       >
-      <label class="sr-only" for="portfolio-query">Escribe tu pregunta</label>
+      <label class="sr-only" for="portfolio-query">{t.query.fieldLabel}</label>
       <textarea
         id="portfolio-query"
         data-query-field
         maxlength="300"
         rows="1"
         aria-describedby="query-guidance query-count"
-        placeholder="Pregúntame por mi experiencia, proyectos…"></textarea>
-      <button class="query-submit" type="submit" data-query-submit aria-label="Enviar consulta">
+        placeholder={t.query.placeholder}></textarea>
+      <button class="query-submit" type="submit" data-query-submit aria-label={t.query.submitLabel}>
         <svg
           aria-hidden="true"
           viewBox="0 0 24 24"
@@ -38,25 +41,25 @@ import PortfolioActions from './PortfolioActions.astro';
           <path d="M12 19V5M6 11l6-6 6 6"></path>
         </svg>
       </button>
-      <span id="query-guidance" class="sr-only"
-        >Máximo 300 caracteres. Enter envía; Shift+Enter añade una línea.</span
-      >
-      <span id="query-count" class="sr-only" data-query-count>0 de 300 caracteres</span>
+      <span id="query-guidance" class="sr-only">{t.query.guidance}</span>
+      <span id="query-count" class="sr-only" data-query-count>{t.query.count(0, 300)}</span>
       <span class="sr-only" data-query-limit role="status" aria-live="polite"></span>
     </form>
     <div class="conversation-dock__rule" aria-hidden="true"></div>
     <PortfolioActions />
-    <section class="upcoming-resources" aria-label="Recursos">
-      <span class="upcoming-resources__label">En preparación</span>
+    <section class="upcoming-resources" aria-label={t.query.resourcesLabel}>
+      <span class="upcoming-resources__label">{t.query.upcoming}</span>
       <span class="upcoming-resources__item"
         ><svg viewBox="0 0 24 24" aria-hidden="true"
           ><path d="M8 7V4h8v3M3 7h18v13H3zM3 12h18M10 12v3h4v-3"></path></svg
-        >Toolkit IA <small>Próximamente</small></span
+        >{t.query.toolkit}
+        <small>{t.query.soon}</small></span
       >
       <span class="upcoming-resources__item"
         ><svg viewBox="0 0 24 24" aria-hidden="true"
           ><path d="M12 5v15M12 5C8 2 3 3 3 3v15s5-1 9 2c4-3 9-2 9-2V3s-5-1-9 2Z"></path></svg
-        >Bitácora <small>Próximamente</small></span
+        >{t.query.journal}
+        <small>{t.query.soon}</small></span
       >
     </section>
     <span class="sr-only" data-query-status role="status" aria-live="polite"></span>

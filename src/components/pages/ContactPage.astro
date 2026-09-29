@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ConversationPage from '../layout/ConversationPage.astro';
+import ContactInfo from '../sections/ContactInfo.astro';
+import { getContactSubject } from '../../lib/contact';
+import { useLocale } from '../../lib/locale';
+
+const { locale, actionLabel } = useLocale(Astro.url);
+const label = actionLabel('contact');
+const subjectValues = Astro.url.searchParams.getAll('asunto');
+const subject = subjectValues.length === 1 ? getContactSubject(subjectValues[0] ?? null, locale) : null;
+const sent = Astro.url.searchParams.get('enviado') === '1';
+---
+
+<BaseLayout>
+  <ConversationPage action={label} label={label}>
+    <ContactInfo subject={subject} sent={sent} />
+  </ConversationPage>
+</BaseLayout>

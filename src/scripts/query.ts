@@ -1,5 +1,9 @@
-import { intents } from '../lib/intents';
+import { documentLocale, getUi } from '../lib/i18n';
+import { getIntents } from '../lib/intents';
 import { resolveIntent } from '../lib/intent-matching';
+
+const locale = documentLocale();
+const t = getUi(locale);
 
 const controller = new AbortController();
 const form = document.querySelector<HTMLFormElement>('[data-query-form]');
@@ -94,15 +98,23 @@ const createTurn = (question: string, response: string, templateKind?: string) =
   pending.className = 'conversation-response-pending';
   pending.setAttribute('aria-hidden', 'true');
   pending.innerHTML =
-    '<div class="conversation-response-pending__heading"><span class="conversation-response-pending__pulse"></span><span>razonando</span></div>' +
-    '<ol class="conversation-response-pending__steps"><li class="conversation-response-pending__step conversation-response-pending__step--done"><span class="conversation-response-pending__node"></span><span>recuperando contexto</span></li>' +
-    '<li class="conversation-response-pending__step conversation-response-pending__step--active"><span class="conversation-response-pending__node"></span><span>seleccionando fragmentos</span></li>' +
-    '<li class="conversation-response-pending__step"><span class="conversation-response-pending__node"></span><span>componiendo respuesta</span></li></ol>';
+    '<div class="conversation-response-pending__heading"><span class="conversation-response-pending__pulse"></span><span>' +
+    t.query.thinking +
+    '</span></div>' +
+    '<ol class="conversation-response-pending__steps"><li class="conversation-response-pending__step conversation-response-pending__step--done"><span class="conversation-response-pending__node"></span><span>' +
+    t.query.stepContext +
+    '</span></li>' +
+    '<li class="conversation-response-pending__step conversation-response-pending__step--active"><span class="conversation-response-pending__node"></span><span>' +
+    t.query.stepFragments +
+    '</span></li>' +
+    '<li class="conversation-response-pending__step"><span class="conversation-response-pending__node"></span><span>' +
+    t.query.stepComposing +
+    '</span></li></ol>';
   body.append(pending);
   assistant.append(avatar, body);
   turn.append(user, assistant);
   thread.append(turn);
-  if (responseStatus) responseStatus.textContent = 'Preparando una respuesta.';
+  if (responseStatus) responseStatus.textContent = t.query.preparing;
   scrollToLatest();
 
   const showResponse = () => {
@@ -145,7 +157,7 @@ const createTurn = (question: string, response: string, templateKind?: string) =
   // deliberately end with their answer; an extra generic "Ver más" link made
   // every simulated conversation look unfinished.
   const finishResponse = () => {
-    if (responseStatus) responseStatus.textContent = 'Respuesta lista.';
+    if (responseStatus) responseStatus.textContent = t.query.ready;
     scrollToLatest();
   };
 
@@ -172,12 +184,7 @@ const templateForIntent = (intentId: string) => {
   return map[intentId];
 };
 
-const followUpLabels: Record<string, string> = {
-  skills: 'Habilidades',
-  projects: 'Proyectos',
-  experience: 'Experiencia',
-  contact: 'Contacto',
-};
+const followUpLabels: Record<string, string> = t.query.followUps;
 const followUpIntentIds: Record<string, string> = {
   experience: 'experience-cv',
 };
@@ -190,11 +197,11 @@ document.addEventListener(
     if (followUp && thread?.contains(followUp)) {
       const followUpId = followUp.dataset['conversationFollowup'];
       const intentId = followUpId ? (followUpIntentIds[followUpId] ?? followUpId) : undefined;
-      const intent = intents.find((item) => item.id === intentId);
+      const intent = getIntents(locale).find((item) => item.id === intentId);
       if (!intent) return;
       event.preventDefault();
       createTurn(
-        followUpLabels[intent.id] ?? followUp.textContent?.trim() ?? 'Continuar conversación',
+        followUpLabels[intent.id] ?? followUp.textContent?.trim() ?? t.query.continueConversation,
         intent.response,
         templateForIntent(intent.id),
       );
@@ -207,21 +214,20 @@ document.addEventListener(
 if (form && field && submit && count && limitStatus && thread) {
   const updateCount = () => {
     if (field.value.length > maximumLength) field.value = field.value.slice(0, maximumLength);
-    count.textContent = field.value.length + ' de ' + maximumLength + ' caracteres';
-    limitStatus.textContent =
-      field.value.length === maximumLength ? 'Límite de 300 caracteres alcanzado.' : '';
+    count.textContent = t.query.count(field.value.length, maximumLength);
+    limitStatus.textContent = field.value.length === maximumLength ? t.query.limitReached(maximumLength) : '';
   };
 
   const submitQuery = () => {
     const text = field.value.trim();
     if (!text) return;
-    const decision = resolveIntent(text);
+    const decision = resolveIntent(text, locale);
     if (decision.state === 'recognized') {
       createTurn(text, decision.intent.response, templateForIntent(decision.intent.id));
     } else if (decision.state === 'ambiguous') {
-      createTurn(text, 'Hay varias secciones posibles. ¿Cuál quieres consultar?', 'fallback');
+      createTurn(text, t.query.ambiguous, 'fallback');
     } else {
-      createTurn(text, 'No encuentro una respuesta clara para esa consulta.', 'fallback');
+      createTurn(text, t.query.unknown, 'fallback');
     }
     field.value = '';
     updateCount();
@@ -284,7 +290,7 @@ window.addEventListener('pagehide', (event) => {
   thread?.replaceChildren();
   if (field && count && limitStatus) {
     field.value = '';
-    count.textContent = '0 de ' + maximumLength + ' caracteres';
+    count.textContent = t.query.count(0, maximumLength);
     limitStatus.textContent = '';
   }
   for (const timer of timers) {

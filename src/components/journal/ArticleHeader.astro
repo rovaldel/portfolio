@@ -1,11 +1,15 @@
 ---
+import LanguageSwitch from '../ui/LanguageSwitch.astro';
+import { useLocale } from '../../lib/locale';
+
 interface Props {
   indexMode?: boolean;
 }
 
 const { indexMode = false } = Astro.props;
-const backHref = indexMode ? '/' : '/bitacora';
-const backLabel = indexMode ? 'Volver a portada' : 'Volver a Bitácora';
+const { t, path } = useLocale(Astro.url);
+const backHref = indexMode ? path('home') : path('journal');
+const backLabel = indexMode ? t.journal.backHome : t.journal.backJournal;
 ---
 
 <header class="article-header">
@@ -22,7 +26,7 @@ const backLabel = indexMode ? 'Volver a portada' : 'Volver a Bitácora';
       >
       {backLabel}
     </a>
-    <a class="article-header__brand" href="/bitacora">
+    <a class="article-header__brand" href={path('journal')}>
       <span aria-hidden="true" class="article-header__icon"
         ><svg
           viewBox="0 0 24 24"
@@ -35,8 +39,9 @@ const backLabel = indexMode ? 'Volver a portada' : 'Volver a Bitácora';
             d="M4 18a2.5 2.5 0 0 1 2.5-2.5H20"></path><path d="M8 7h8M8 10h8"></path></svg
         ></span
       >
-      Bitácora
+      {t.journal.title}
     </a>
-    <span class="article-header__descriptor">Artículos · IA y producción</span>
+    <span class="article-header__descriptor">{t.journal.descriptor}</span>
+    <LanguageSwitch class="article-header__language" />
   </div>
 </header>

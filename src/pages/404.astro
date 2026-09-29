@@ -1,15 +1,19 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { useLocale } from '../lib/locale';
+
+const { t, path } = useLocale(Astro.url);
 ---
 
-<BaseLayout title="Página no encontrada · Rodrigo Valdelvira" noindex
+<BaseLayout title={t.layout.notFoundTitle} noindex
   ><section class="page-intro">
-    <p class="eyebrow">404</p><h1>No encontramos esta página</h1><p class="lead">
-      La dirección no está disponible, pero puedes volver a explorar el portfolio.
+    <p class="eyebrow">404</p><h1>{t.errors.notFoundHeading}</h1><p class="lead">
+      {t.errors.notFoundLead}
     </p><div class="button-row">
-      <a class="button button--fill" href="/">Portada</a><a class="button button--quiet" href="/proyectos"
-        >Proyectos</a
-      ><a class="button button--quiet" href="/contacto">Contacto</a>
+      <a class="button button--fill" href={path('home')}>{t.errors.home}</a><a
+        class="button button--quiet"
+        href={path('projects')}>{t.errors.projects}</a
+      ><a class="button button--quiet" href={path('contact')}>{t.errors.contact}</a>
     </div>
   </section></BaseLayout
 >

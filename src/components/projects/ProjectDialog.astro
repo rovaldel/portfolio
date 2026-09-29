@@ -1,12 +1,14 @@
 ---
 import ProjectDetail from './ProjectDetail.astro';
 import type { Project } from '../../content/site';
+import { useLocale } from '../../lib/locale';
 
 interface Props {
   project: Project;
 }
 
 const { project } = Astro.props;
+const { t, path } = useLocale(Astro.url);
 ---
 
 <section
@@ -18,7 +20,7 @@ const { project } = Astro.props;
   tabindex="-1"
   data-project-dialog
 >
-  <a class="modal-close" href="/proyectos" aria-label="Cerrar detalle del proyecto">×</a>
-  <h2 id="project-modal-title" class="sr-only">Detalle de {project.title}</h2>
+  <a class="modal-close" href={path('projects')} aria-label={t.projects.close}>×</a>
+  <h2 id="project-modal-title" class="sr-only">{t.projects.detailOf(project.title)}</h2>
   <ProjectDetail project={project} />
 </section>

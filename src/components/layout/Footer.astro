@@ -1,8 +1,16 @@
+---
+import { useLocale } from '../../lib/locale';
+
+const { t, path } = useLocale(Astro.url);
+---
+
 <footer class="site-footer">
   <div class="container footer-inner">
     <span class="muted">© {new Date().getFullYear()} Rodrigo Valdelvira</span>
-    <nav class="footer-links" aria-label="Enlaces legales">
-      <a href="/privacidad">Privacidad</a><a href="/cookies">Cookies</a><a href="/terminos">Términos</a>
+    <nav class="footer-links" aria-label={t.footer.legalNav}>
+      <a href={path('privacy')}>{t.footer.privacy}</a><a href={path('cookies')}>{t.footer.cookies}</a><a
+        href={path('terms')}>{t.footer.terms}</a
+      >
     </nav>
   </div>
 </footer>

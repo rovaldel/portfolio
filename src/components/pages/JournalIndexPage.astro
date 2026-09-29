@@ -1,0 +1,27 @@
+---
+import JournalIndex from '../journal/JournalIndex.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { selectCompletePublishedArticles } from '../../lib/content';
+import { useLocale } from '../../lib/locale';
+
+const { locale, t } = useLocale(Astro.url);
+const articles = selectCompletePublishedArticles(await getCollection('bitacora'), locale).map(({ data }) => ({
+  slug: data.slug,
+  title: data.title,
+  description: data.description,
+  excerpt: data.excerpt,
+  category: data.category,
+  publishedAt: data.publishedAt,
+  readingMinutes: data.readingMinutes,
+}));
+---
+
+<BaseLayout journalIndexMode>
+  <section class="journal-page" aria-labelledby="journal-title">
+    <p class="eyebrow">{t.journal.kicker}</p>
+    <h1 id="journal-title">{t.journal.title}</h1>
+    <p class="journal-page__lead">{t.journal.lead}</p>
+    <JournalIndex articles={articles} />
+  </section>
+</BaseLayout>

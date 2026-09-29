@@ -1,13 +1,15 @@
 ---
 import StableImage from '../ui/StableImage.astro';
 import type { Project } from '../../content/site';
+import { useLocale } from '../../lib/locale';
 
 interface Props {
   project: Project;
 }
 
 const { project } = Astro.props;
-const projectHref = '/proyectos/' + project.slug;
+const { t, path } = useLocale(Astro.url);
+const projectHref = path(`project.${project.slug}`);
 ---
 
 <a
@@ -15,7 +17,7 @@ const projectHref = '/proyectos/' + project.slug;
   href={projectHref}
   data-project-open={project.slug}
   aria-haspopup="dialog"
-  aria-label={'Abrir proyecto ' + project.title}
+  aria-label={t.projects.open(project.title)}
 >
   <div class="project-card__content">
     <div class="project-card__media">

@@ -1,15 +1,19 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { useLocale } from '../lib/locale';
+
+const { t, path } = useLocale(Astro.url);
 ---
 
-<BaseLayout title="Error temporal · Rodrigo Valdelvira" noindex
+<BaseLayout title={t.errors.serverTitle} noindex
   ><section class="page-intro">
-    <p class="eyebrow">500</p><h1>Ha ocurrido un error temporal</h1><p class="lead">
-      No podemos mostrar esta página ahora. Puedes continuar por una de estas rutas.
+    <p class="eyebrow">500</p><h1>{t.errors.serverHeading}</h1><p class="lead">
+      {t.errors.serverLead}
     </p><div class="button-row">
-      <a class="button button--fill" href="/">Portada</a><a class="button button--quiet" href="/proyectos"
-        >Proyectos</a
-      ><a class="button button--quiet" href="/contacto">Contacto</a>
+      <a class="button button--fill" href={path('home')}>{t.errors.home}</a><a
+        class="button button--quiet"
+        href={path('projects')}>{t.errors.projects}</a
+      ><a class="button button--quiet" href={path('contact')}>{t.errors.contact}</a>
     </div>
   </section></BaseLayout
 >

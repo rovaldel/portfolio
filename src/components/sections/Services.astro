@@ -1,13 +1,16 @@
 ---
-import { services } from '../../content/site';
+import { useLocale } from '../../lib/locale';
+
+const { t, c, path } = useLocale(Astro.url);
+const { services } = c;
 ---
 
-<section class="grid service-grid" aria-label="Catálogo de servicios">
+<section class="grid service-grid" aria-label={t.sections.servicesLabel}>
   {
     services.map((service) => (
       <a
         class="card service-card"
-        href={'/servicios?servicio=' + service.slug}
+        href={path('services') + '?servicio=' + service.slug}
         data-service={service.slug}
         data-service-open={service.slug}
         aria-haspopup="dialog"

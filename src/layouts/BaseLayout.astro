@@ -6,14 +6,14 @@ import ConversationTemplates from '../components/layout/ConversationTemplates.as
 import HomeHero from '../components/sections/HomeHero.astro';
 import ArticleHeader from '../components/journal/ArticleHeader.astro';
 import { byPath, canonicalUrl } from '../lib/routes';
-import { siteProfile } from '../content/site';
+import { useLocale } from '../lib/locale';
+import { pathFor } from '../lib/i18n';
 import '../styles/themes.css';
 import '../styles/motion.css';
 import '../styles/global.css';
 import '../styles/refinements.css';
 import '../styles/chat.css';
 import '../styles/mobile.css';
-import { services, skillGroups } from '../content/site';
 
 interface Props {
   title?: string;
@@ -24,11 +24,14 @@ interface Props {
   journalIndexMode?: boolean;
   modalMode?: boolean;
 }
+const { locale, t, c } = useLocale(Astro.url);
+const { siteProfile, services, skillGroups } = c;
 const currentPath = Astro.url.pathname;
 const surface = byPath(currentPath);
+const routeId = surface?.routeId;
 const {
-  title = surface?.title ?? 'Página no encontrada · Rodrigo Valdelvira',
-  description = surface?.description ?? 'Página de recuperación del portfolio.',
+  title = surface?.title ?? t.layout.notFoundTitle,
+  description = surface?.description ?? t.layout.notFoundDescription,
   noindex = surface ? !surface.indexable : true,
   overlayMode = false,
   articleMode = false,
@@ -36,8 +39,8 @@ const {
   modalMode = false,
 } = Astro.props;
 const canonical = canonicalUrl(surface?.canonicalPath ?? currentPath);
-const personId = canonicalUrl('/#rodrigo');
-const websiteId = canonicalUrl('/#website');
+const personId = canonicalUrl(pathFor('home', 'es') + '#rodrigo');
+const websiteId = canonicalUrl(pathFor('home', 'es') + '#website');
 const structuredData = surface?.indexable
   ? JSON.stringify({
       '@context': 'https://schema.org',
@@ -47,37 +50,36 @@ const structuredData = surface?.indexable
           '@id': personId,
           name: siteProfile.fullName,
           alternateName: siteProfile.displayName,
-          url: canonicalUrl('/'),
+          url: canonicalUrl(pathFor('home', locale)),
           jobTitle: siteProfile.primaryRole,
           description: siteProfile.professionalSummary,
           image: canonicalUrl(siteProfile.portrait.src),
           sameAs: [siteProfile.channels.linkedin.href],
           knowsAbout: skillGroups.flatMap((group) => group.skills.map((skill) => skill.name)),
-          homeLocation: { '@type': 'Place', name: 'Logroño, La Rioja, España' },
+          homeLocation: { '@type': 'Place', name: t.layout.location },
         },
         {
           '@type': 'WebSite',
           '@id': websiteId,
-          name: 'Rodrigo Valdelvira · AI Engineer',
-          url: canonicalUrl('/'),
-          inLanguage: 'es',
+          name: t.layout.siteName,
+          url: canonicalUrl(pathFor('home', locale)),
+          inLanguage: locale,
           publisher: { '@id': personId },
         },
         {
-          '@type':
-            currentPath === '/sobre-mi' ? 'ProfilePage' : surface.kind === 'article' ? 'Article' : 'WebPage',
+          '@type': routeId === 'about' ? 'ProfilePage' : surface.kind === 'article' ? 'Article' : 'WebPage',
           '@id': canonical + '#page',
           name: title,
           headline: title,
           description,
           url: canonical,
-          inLanguage: 'es',
+          inLanguage: locale,
           isPartOf: { '@id': websiteId },
           about: { '@id': personId },
           author: { '@id': personId },
-          ...(currentPath === '/sobre-mi' ? { mainEntity: { '@id': personId } } : {}),
+          ...(routeId === 'about' ? { mainEntity: { '@id': personId } } : {}),
         },
-        ...(currentPath === '/servicios'
+        ...(routeId === 'services'
           ? services.map((service) => ({
               '@type': 'Service',
               '@id': canonical + '#' + service.slug,
@@ -86,17 +88,22 @@ const structuredData = surface?.indexable
               provider: { '@id': personId },
               availableChannel: {
                 '@type': 'ServiceChannel',
-                serviceUrl: canonicalUrl('/contacto'),
+                serviceUrl: canonicalUrl(pathFor('contact', locale)),
               },
             }))
           : []),
-        ...(currentPath === '/'
+        ...(routeId === 'home'
           ? []
           : [
               {
                 '@type': 'BreadcrumbList',
                 itemListElement: [
-                  { '@type': 'ListItem', position: 1, name: 'Inicio', item: canonicalUrl('/') },
+                  {
+                    '@type': 'ListItem',
+                    position: 1,
+                    name: t.layout.breadcrumbHome,
+                    item: canonicalUrl(pathFor('home', locale)),
+                  },
                   { '@type': 'ListItem', position: 2, name: surface.navigationLabel, item: canonical },
                 ],
               },
@@ -109,27 +116,36 @@ const bodyClass =
     ? 'is-article'
     : overlayMode
       ? 'is-home legal-overlay-mode'
-      : currentPath === '/'
+      : routeId === 'home'
         ? 'is-home'
         : modalMode
           ? 'is-modal-page'
-          : currentPath === '/contacto'
+          : routeId === 'contact'
             ? 'is-contact'
             : undefined;
 const contentClass =
-  currentPath === '/'
+  routeId === 'home'
     ? 'container'
-    : `conversation-container${currentPath === '/servicios' ? ' conversation-container--services' : ''}`;
+    : `conversation-container${routeId === 'services' ? ' conversation-container--services' : ''}`;
 ---
 
 <!doctype html>
-<html lang="es" data-theme="rioja">
+<html lang={t.htmlLang} data-theme="rioja">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    {
+      surface && (
+        <>
+          <link rel="alternate" hreflang="es" href={canonicalUrl(surface.alternates.es)} />
+          <link rel="alternate" hreflang="en" href={canonicalUrl(surface.alternates.en)} />
+          <link rel="alternate" hreflang="x-default" href={canonicalUrl(surface.alternates.es)} />
+        </>
+      )
+    }
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="author" content={siteProfile.fullName} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
@@ -141,7 +157,7 @@ const contentClass =
           <meta property="og:url" content={canonical} />
           <meta property="og:type" content={surface.kind === 'article' ? 'article' : 'website'} />
           <meta property="og:site_name" content={siteProfile.displayName} />
-          <meta property="og:locale" content="es_ES" />
+          <meta property="og:locale" content={t.ogLocale} />
           <meta property="og:image" content={canonicalUrl('/images/rodrigo-valdelvira.png')} />
           <meta property="og:image:alt" content={siteProfile.portrait.alt} />
           <meta name="twitter:card" content="summary" />
@@ -154,12 +170,12 @@ const contentClass =
   </head>
   <body class={bodyClass}>
     <a class="skip-link" href={modalMode ? '#modal-content' : overlayMode ? '#legal-title' : '#contenido'}
-      >Saltar al contenido</a
+      >{t.layout.skipLink}</a
     >
     {
       articleMode || journalIndexMode ? (
         <div class="article-shell">
-          <ArticleHeader indexMode={journalIndexMode || currentPath === '/bitacora'} />
+          <ArticleHeader indexMode={journalIndexMode || routeId === 'journal'} />
           <main
             id="contenido"
             class:list={['article-main', journalIndexMode && 'article-main--index']}
@@ -189,7 +205,7 @@ const contentClass =
                   class="conversation-container conversation-thread"
                   data-conversation-thread
                   role="log"
-                  aria-label="Conversación del portfolio"
+                  aria-label={t.layout.threadLabel}
                   aria-live="polite"
                   aria-relevant="additions"
                   hidden
@@ -209,7 +225,7 @@ const contentClass =
       overlayMode && (
         <div class="legal-modal-backdrop">
           <dialog class="legal-modal" open aria-modal="true" aria-labelledby="legal-title" data-legal-dialog>
-            <a class="modal-close" href="/" aria-label="Cerrar documento legal">
+            <a class="modal-close" href={pathFor('home', locale)} aria-label={t.layout.closeLegal}>
               ×
             </a>
             <slot />

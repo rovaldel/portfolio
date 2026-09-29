@@ -1,12 +1,14 @@
 ---
 import StableImage from '../ui/StableImage.astro';
 import type { Project } from '../../content/site';
+import { useLocale } from '../../lib/locale';
 
 interface Props {
   project: Project;
 }
 
 const { project } = Astro.props;
+const { t } = useLocale(Astro.url);
 ---
 
 <article class="project-detail">
@@ -19,22 +21,22 @@ const { project } = Astro.props;
     <p class="muted">{project.client} · {project.role}</p>
   </div>
   <dl class="project-detail__metadata">
-    <div><dt>Cliente</dt><dd>{project.client}</dd></div>
-    <div><dt>Rol</dt><dd>{project.role}</dd></div>
+    <div><dt>{t.projects.client}</dt><dd>{project.client}</dd></div>
+    <div><dt>{t.projects.role}</dt><dd>{project.role}</dd></div>
   </dl>
   <p class="project-detail__description">{project.description}</p>
-  <h3>Tecnologías</h3>
+  <h3>{t.projects.technologies}</h3>
   <ul class="project-detail__technologies">
     {project.technologies.map((technology) => <li>{technology}</li>)}
   </ul>
   {
     project.externalUrl ? (
       <a class="button button--fill" href={project.externalUrl} target="_blank" rel="noopener noreferrer">
-        Visitar proyecto <span aria-hidden="true">↗</span>
+        {t.projects.visit} <span aria-hidden="true">↗</span>
       </a>
     ) : (
       <p class="project-detail__availability">
-        <strong>En fase de diseño.</strong> Nami todavía no tiene un destino externo publicado.
+        <strong>{t.projects.designStage}</strong> {t.projects.noExternal}
       </p>
     )
   }

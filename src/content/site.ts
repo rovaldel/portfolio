@@ -86,6 +86,8 @@ export interface Experience {
   id: string;
   role: string;
   organization: string;
+  /** Full name or descriptor shown next to the organisation, when the CV gives one. */
+  organizationDetail?: string;
   location: string;
   workMode: 'presencial' | 'remoto';
   start: string;
@@ -93,10 +95,56 @@ export interface Experience {
   current: boolean;
   order: number;
   highlights: string[];
+  /** "Logros destacados": results the CV calls out separately from the responsibilities. */
+  achievements?: string[];
   provenance: string[];
 }
 
-export const siteProfile = {
+export interface InternationalStay {
+  id: string;
+  place: string;
+  country: string;
+  duration: string;
+  year: number;
+}
+
+export interface SkillGroup {
+  id: string;
+  order: number;
+  provenance: string[];
+  name: string;
+  skills: { name: string; order: number; level: number }[];
+}
+
+export interface AboutSegment {
+  text: string;
+  emphasis?: boolean;
+}
+
+export interface SiteProfile {
+  id: string;
+  provenance: string[];
+  fullName: string;
+  displayName: string;
+  primaryRole: string;
+  professionalSummary: string;
+  totalExperienceLabel: string;
+  /** Short form shown in the home quote: "15+ años · Ingeniería + IA". */
+  experienceBadge: string;
+  /** Short form shown in the profile facts: "15+ años de experiencia profesional". */
+  experienceFact: string;
+  location: string;
+  locationApproval: 'pending' | 'approved' | 'excluded';
+  locationApprovalEvidence: { actor: string; date: string; reference: string } | null;
+  availability: string;
+  languages: string[];
+  interests: string[];
+  about: AboutSegment[][];
+  channels: { email: ContactChannel; phone: ContactChannel; linkedin: ContactChannel };
+  portrait: ImageAsset;
+}
+
+export const siteProfile: SiteProfile = {
   id: 'rodrigo-valdelvira',
   provenance: ['docs/ESPECIFICACION_MAESTRA.md#5.2', 'docs/ESPECIFICACION_MAESTRA.md#5.3'],
   fullName: 'Rodrigo Valdelvira Ortigosa',
@@ -105,9 +153,11 @@ export const siteProfile = {
   professionalSummary:
     'Diseño y llevo a producción agentes, chatbots y sistemas de IA que resuelven problemas reales de negocio.',
   totalExperienceLabel: '15+ años de experiencia profesional total · Ingeniería + IA',
+  experienceBadge: '15+ años · Ingeniería + IA',
+  experienceFact: '15+ años de experiencia profesional',
   location: 'Logroño, La Rioja · remoto',
-  locationApproval: 'pending' as const,
-  locationApprovalEvidence: null as { actor: string; date: string; reference: string } | null,
+  locationApproval: 'pending',
+  locationApprovalEvidence: null,
   availability: 'Disponible para oportunidades profesionales en remoto',
   languages: ['Español', 'Inglés (C1)', 'Alemán (B1)'],
   interests: ['IA aplicada', 'sistemas de datos fiables', 'diseño de producto y lectura técnica'],
@@ -145,30 +195,64 @@ export const siteProfile = {
     ],
     sourceHash: '76f154a1ac7995f2bf4ac27175bb6a75fc5451ae6da0969840e21915888e07ef',
     fallbackLabel: 'Retrato de Rodrigo Valdelvira no disponible',
-  } satisfies ImageAsset,
-} as const;
+  },
+};
 
 export const experiences: Experience[] = [
   {
-    id: 'cidatum', current: true, order: 1, provenance: ['docs/ESPECIFICACION_MAESTRA.md#5.2'], role: 'Ingeniero de Inteligencia Artificial', organization: 'Cidatum', location: 'Logroño', workMode: 'presencial', start: '2025-12', end: null,
-    highlights: ['Formación y capacitación en IA para el centro, socios estratégicos y empresas externas.', 'Consultoría estratégica de IA: evaluación, viabilidad e implantación de soluciones.', 'Desarrollo a medida de sistemas y arquitecturas de IA para clientes.'],
+    id: 'cidatum', current: true, order: 1, provenance: ['docs/ESPECIFICACION_MAESTRA.md#5.2', 'assets/Rodrigo-Valdelvira-CV.pdf'], role: 'Ingeniero de Inteligencia Artificial', organization: 'Cidatum', organizationDetail: 'Centro Tecnológico del Dato', location: 'Logroño', workMode: 'presencial', start: '2025-12', end: null,
+    highlights: [
+      'Programa ActivaIA: liderazgo del marco de diagnóstico y adopción de IA en empresa: madurez digital, priorización de casos de uso de alto impacto, roadmaps de implantación, análisis Go/No-Go y gobernanza del dato.',
+      'Desarrollo técnico a medida: diseño e implementación de sistemas, algoritmos y arquitecturas de IA para necesidades específicas de cliente e industria, con desarrollo asistido por agentes (Claude Code, Codex).',
+      'Consultoría estratégica de IA: asesoramiento en viabilidad técnica y de negocio para la adopción e integración de soluciones basadas en IA.',
+      'Formación y capacitación: diseño e impartición de programas formativos en IA para el equipo interno, socios estratégicos y tejido empresarial.',
+    ],
   },
   {
-    id: 'talenttools', current: false, order: 2, provenance: ['docs/ESPECIFICACION_MAESTRA.md#5.2', 'docs/ESPECIFICACION_MAESTRA.md#5.3'], role: 'Data Scientist · AI Engineer · Project Manager', organization: 'TalentTools', location: 'Logroño', workMode: 'remoto', start: '2021-04', end: '2025-12',
-    highlights: ['InclunIA (Fundación ONCE): coordinación, desarrollo y despliegue en Azure/GCP del sistema de recomendación de demandantes y ofertas.', 'Habla con InclunIA: técnico de selección virtual basado en LLMs para facilitar el reclutamiento inclusivo.', 'Clara (UPSA): diseño e implementación del chatbot Orientador Profesional basado en LLMs.', '2KBot: recomendador colaborativo híbrido para optimizar el matching entre perfil profesional y ocupaciones.', 'Dat4me: pipelines de datos para analítica, visualización y entrenamiento de modelos.', 'Reducción del 65 % en el tiempo de análisis de datos de talento.'],
+    id: 'talenttools', current: false, order: 2, provenance: ['docs/ESPECIFICACION_MAESTRA.md#5.2', 'docs/ESPECIFICACION_MAESTRA.md#5.3', 'assets/Rodrigo-Valdelvira-CV.pdf'], role: 'Data Scientist · AI Engineer · Project Manager', organization: 'TalentTools', location: 'Logroño', workMode: 'remoto', start: '2021-04', end: '2025-12',
+    highlights: [
+      'InclunIA: coordinación, desarrollo y despliegue en Azure/GCP de sistemas de recomendación de demandantes/ofertas (Fundación ONCE).',
+      'Habla con InclunIA: diseño y desarrollo de un técnico de selección virtual basado en LLMs, que actúa como chatbot inteligente interpretando datos del sistema InclunIA para facilitar procesos de reclutamiento inclusivo (Fundación ONCE).',
+      'Dat4me: desarrollo y mantenimiento de pipelines de datos para analítica, visualización y entrenamiento de modelos (TalentTools).',
+      'Clara: diseño e implementación del chatbot Orientador Profesional basado en LLMs (UPSA).',
+      '2KBot: desarrollo de recomendador colaborativo híbrido que optimiza el matching entre perfil profesional y ocupaciones (TalentTools).',
+      'Coordinación del área de datos: definición de estrategia técnica, gestión de proyectos IA y evaluación de tecnologías emergentes.',
+    ],
+    achievements: [
+      'Reducción del tiempo de análisis de datos de talento en un 65% mediante automatización inteligente.',
+      'Despliegue seguro en Azure/GCP de soluciones IA interoperables con ERP/CRM.',
+      'Integración de interpretabilidad y trazabilidad en modelos de recomendación y chatbots (Habla con InclunIA).',
+    ],
   },
   {
-    id: 'cmp', current: false, order: 3, provenance: ['docs/ESPECIFICACION_MAESTRA.md#5.2'], role: 'Ingeniero de Diseño y Desarrollo de Producto', organization: 'CMP Automotive Group', location: 'Logroño', workMode: 'presencial', start: '2012-09', end: '2021-04',
-    highlights: ['Gestión técnica de nuevos productos antivibratorios, de la oferta a producción.', 'Diseño CAD 3D y análisis FEA de componentes mecánicos.'],
+    id: 'cmp', current: false, order: 3, provenance: ['docs/ESPECIFICACION_MAESTRA.md#5.2', 'assets/Rodrigo-Valdelvira-CV.pdf'], role: 'Ingeniero de Diseño y Desarrollo de Producto', organization: 'CMP Automotive Group', location: 'Logroño', workMode: 'presencial', start: '2012-09', end: '2021-04',
+    highlights: [
+      'Gestión técnica de nuevos productos antivibratorios, desde la oferta a producción.',
+      'Diseño CAD 3D y análisis FEA de componentes mecánicos.',
+      'Coordinación de fabricación, ensayos y validación de prototipos.',
+      'Seguimiento técnico con clientes internacionales durante todo el ciclo de desarrollo.',
+    ],
   },
   {
-    id: 'pope', current: false, order: 4, provenance: ['docs/ESPECIFICACION_MAESTRA.md#5.2'], role: 'Ingeniero de Instalaciones', organization: 'POPE Building Services Consulting Engineers', location: 'Chichester, UK', workMode: 'presencial', start: '2012-07', end: '2012-08',
-    highlights: ['Planos y cálculos de instalaciones HVAC, ACS y saneamiento.'],
+    id: 'pope', current: false, order: 4, provenance: ['docs/ESPECIFICACION_MAESTRA.md#5.2', 'assets/Rodrigo-Valdelvira-CV.pdf'], role: 'Ingeniero de Instalaciones', organization: 'POPE', organizationDetail: 'Building Services Consulting Engineers', location: 'Chichester, UK', workMode: 'presencial', start: '2012-07', end: '2012-08',
+    highlights: [
+      'Elaboración de planos y cálculos de instalaciones HVAC, ACS y saneamiento.',
+      'Apoyo en el dimensionamiento de sistemas de energías renovables (solar térmica, FV, biomasa, geotermia).',
+    ],
   },
   {
-    id: 'gi-teneco', current: false, order: 5, provenance: ['docs/ESPECIFICACION_MAESTRA.md#5.2'], role: 'Investigador', organization: 'GI-TENECO', location: 'Logroño', workMode: 'presencial', start: '2011-09', end: '2012-12',
-    highlights: ['Análisis del consumo energético y del potencial de biomasa y residuos aprovechables en La Rioja.'],
+    id: 'gi-teneco', current: false, order: 5, provenance: ['docs/ESPECIFICACION_MAESTRA.md#5.2', 'assets/Rodrigo-Valdelvira-CV.pdf'], role: 'Investigador', organization: 'GI-TENECO', organizationDetail: 'Grupo Termodinámica aplicada, energía y construcción', location: 'Logroño', workMode: 'presencial', start: '2011-09', end: '2012-12',
+    highlights: [
+      'Análisis del consumo energético mundial y nacional.',
+      'Estimación del potencial de biomasa y residuos energéticamente aprovechables en La Rioja.',
+    ],
   },
+];
+
+export const internationalExperience: InternationalStay[] = [
+  { id: 'chichester', place: 'Chichester', country: 'UK', duration: '10 meses', year: 2012 },
+  { id: 'koblenz', place: 'Koblenz', country: 'DE', duration: '4 meses', year: 2016 },
+  { id: 'berlin', place: 'Berlin', country: 'DE', duration: '2 meses', year: 2017 },
 ];
 
 export const education: EducationRecord[] = [
@@ -178,14 +262,14 @@ export const education: EducationRecord[] = [
   { id: 'cambridge', startYear: 2012, endYear: 2012, order: 4, provenance: ['docs/ESPECIFICACION_MAESTRA.md#5.2'], title: 'Cambridge Advanced C1', institution: 'Chichester College · Reino Unido', years: '2012', description: 'Certificación C1 de inglés y práctica profesional en ingeniería.' },
   { id: 'industrial', startYear: 2009, endYear: 2011, order: 5, provenance: ['docs/ESPECIFICACION_MAESTRA.md#5.2'], title: 'Ingeniería Industrial', institution: 'Universidad de La Rioja', years: '2009–2011', description: 'Procesos, diseño de producto y gestión de proyectos técnicos.' },
   { id: 'mecanica', startYear: 2005, endYear: 2009, order: 6, provenance: ['docs/ESPECIFICACION_MAESTRA.md#5.2'], title: 'Ingeniería Técnica Industrial, especialidad Mecánica', institution: 'Universidad de La Rioja', years: '2005–2009', description: 'Base en diseño mecánico, cálculo estructural y modelado CAD.' },
-] as const;
+];
 
-export const skillGroups = [
+export const skillGroups: SkillGroup[] = [
   { id: 'ia', order: 1, provenance: ['docs/ESPECIFICACION_MAESTRA.md#5.2'], name: 'IA / Machine Learning', skills: [{ name: "LangGraph", order: 1, level: 5 }, { name: "LangChain", order: 2, level: 5 }, { name: "RAG", order: 3, level: 5 }, { name: "Scikit-learn", order: 4, level: 5 }, { name: "PyTorch", order: 5, level: 4 }, { name: "Hugging Face", order: 6, level: 4 }] },
   { id: 'datos', order: 2, provenance: ['docs/ESPECIFICACION_MAESTRA.md#5.2'], name: 'Datos / MLOps', skills: [{ name: "Python", order: 1, level: 5 }, { name: "Pandas", order: 2, level: 5 }, { name: "FastAPI", order: 3, level: 5 }, { name: "Docker", order: 4, level: 4 }, { name: "BigQuery", order: 5, level: 4 }, { name: "PostgreSQL", order: 6, level: 4 }] },
   { id: 'cloud', order: 3, provenance: ['docs/ESPECIFICACION_MAESTRA.md#5.2'], name: 'Backend · Cloud', skills: [{ name: "Flask", order: 1, level: 4 }, { name: "Microservicios", order: 2, level: 4 }, { name: "Azure", order: 3, level: 4 }, { name: "GCP", order: 4, level: 4 }, { name: "Node.js", order: 5, level: 3 }] },
   { id: 'desarrollo', order: 4, provenance: ['docs/ESPECIFICACION_MAESTRA.md#5.2'], name: 'Agentes de IA · desarrollo', skills: [{ name: "Claude Code", order: 1, level: 5 }, { name: "Codex", order: 2, level: 4 }, { name: "Cursor", order: 3, level: 4 }, { name: "Harness de desarrollo agéntico", order: 4, level: 4 }, { name: "MCP (Model Context Protocol)", order: 5, level: 4 }] },
-] as const;
+];
 
 export const services: Service[] = [
   { slug: 'agentes-y-chatbots-ia', title: 'Agentes y chatbots IA', summary: "Agentes conversacionales, asistentes y chatbots con LLMs, listos para tus usuarios.", description: "Diseño y construyo agentes conversacionales sobre LLMs (LangChain, LangGraph) que resuelven una tarea de negocio de punta a punta: atención al cliente, cualificación de leads, orientación o soporte interno. Incluye orquestación de herramientas, memoria de conversación, integración con tus sistemas (CRM, calendario, base de datos) y control de calidad de las respuestas antes de salir a producción.", icon: "M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.3-.6L3 21l1.7-5.1A8.4 8.4 0 1 1 21 11.5z", contactSubject: "Consulta sobre: Agentes y chatbots IA", provenance: ['docs/ESPECIFICACION_MAESTRA.md#5.2'], order: 1 },
@@ -316,4 +400,4 @@ export const navigationActions: NavigationAction[] = [
   { id: 'experience', responseKind: 'experience', contentRefs: ["experiences"], label: 'Experiencia', destination: '/experiencia', response: 'Trayectoria profesional de ingeniería, datos e inteligencia artificial.' },
   { id: 'education', responseKind: 'education', contentRefs: ["education"], label: 'Formación', destination: '/formacion', response: 'Formación técnica, datos, IA responsable e idiomas.' },
   { id: 'contact', responseKind: 'contact', contentRefs: ["siteProfile.channels"], label: 'Contacto', destination: '/contacto', response: 'Si buscas un AI Engineer para tu equipo, hablemos.' },
-] as const;
+];

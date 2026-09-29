@@ -1,5 +1,9 @@
 ---
-import { experiences } from '../../content/site';
+import { formatMonthYear } from '../../lib/i18n';
+import { useLocale } from '../../lib/locale';
+
+const { locale, t, c } = useLocale(Astro.url);
+const { experiences, internationalExperience } = c;
 
 // One icon per role so the timeline reads at a glance: AI, data, product, buildings, research.
 const icons: Record<string, string> = {
@@ -12,16 +16,16 @@ const icons: Record<string, string> = {
 };
 const fallbackIcon = 'M3 8h18v12H3zM8 8V5h8v3M3 13h18';
 
-const dateLabel = (value: string | null) =>
-  value
-    ? new Intl.DateTimeFormat('es-ES', { month: 'short', year: 'numeric' })
-        .format(new Date(value + '-01T00:00:00'))
-        .replace('.', '')
-    : 'actualidad';
+// CV bullets that open with a short "Project: description" label get the label in bold.
+const splitLabel = (text: string) => {
+  const match = text.match(/^([^:.]{2,48}):\s+(.+)$/s);
+  return match ? { label: match[1]!, rest: match[2]! } : { label: null, rest: text };
+};
+const showMode = (item: (typeof experiences)[number]) => item.current || item.workMode === 'remoto';
 ---
 
 <section class="experience-list" aria-labelledby="experiencia-title">
-  <h2 id="experiencia-title" class="sr-only">Experiencia profesional</h2>
+  <h2 id="experiencia-title" class="sr-only">{t.sections.experienceTitle}</h2>
   {
     experiences.map((item) => (
       <details class="experience-item">
@@ -39,25 +43,60 @@ const dateLabel = (value: string | null) =>
             </svg>
           </span>
           <span class="experience-item__date meta">
-            {dateLabel(item.start)} — {dateLabel(item.end)}
+            {formatMonthYear(item.start, locale)} — {formatMonthYear(item.end, locale)}
           </span>
           <span class="experience-item__identity">
             <strong>{item.role}</strong>
             <span>
-              {item.organization} · {item.location}
-              {item.current ? ' · ' + item.workMode : ''}
+              {item.organization}
+              {item.organizationDetail ? ` (${item.organizationDetail})` : ''} · {item.location}
+              {showMode(item) ? ' · ' + t.sections.workMode[item.workMode] : ''}
             </span>
           </span>
           <span class="experience-item__toggle" aria-hidden="true" />
         </summary>
         <div class="experience-item__body">
           <ul class="detail-list">
-            {item.highlights.map((highlight) => (
-              <li>{highlight}</li>
-            ))}
+            {item.highlights.map((highlight) => {
+              const { label, rest } = splitLabel(highlight);
+              return (
+                <li>
+                  {label ? <strong>{label}:</strong> : null}
+                  {label ? ' ' : ''}
+                  {rest}
+                </li>
+              );
+            })}
           </ul>
+          {item.achievements?.length ? (
+            <div class="experience-item__achievements">
+              <h3>{t.sections.achievements}</h3>
+              <ul class="detail-list">
+                {item.achievements.map((achievement) => (
+                  <li>{achievement}</li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
         </div>
       </details>
     ))
   }
+  <section class="international-experience" aria-labelledby="international-title">
+    <h3 id="international-title">{t.sections.internationalTitle}</h3>
+    <ul class="international-experience__list">
+      {
+        internationalExperience.map((stay) => (
+          <li>
+            <span class="international-experience__place">
+              {stay.place}, {stay.country}
+            </span>
+            <span class="international-experience__meta">
+              {stay.duration} · {stay.year}
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
 </section>

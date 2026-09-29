@@ -5,7 +5,8 @@ const bitacora = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/bitacora' }),
   schema: z.object({
     title: z.string(),
-    slug: z.literal('langgraph-para-agentes-en-produccion'),
+    slug: z.enum(['langgraph-para-agentes-en-produccion', 'langgraph-for-production-agents']),
+    locale: z.enum(['es', 'en']).default('es'),
     description: z.string(),
     excerpt: z.string(),
     category: z.string(),

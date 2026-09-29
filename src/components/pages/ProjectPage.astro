@@ -1,0 +1,38 @@
+---
+import ConversationPage from '../layout/ConversationPage.astro';
+import ProjectDialog from '../projects/ProjectDialog.astro';
+import ProjectIndex from '../projects/ProjectIndex.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { useLocale } from '../../lib/locale';
+
+interface Props {
+  slug: string | undefined;
+}
+
+const { slug } = Astro.props;
+const { t, c, path, actionLabel } = useLocale(Astro.url);
+const project = c.projects.find((item) => item.slug === slug);
+const label = actionLabel('projects');
+---
+
+{
+  project ? (
+    <BaseLayout title={t.projects.pageTitle(project.title)} description={project.description} modalMode>
+      <ConversationPage action={label} label={project.title}>
+        <p class="conversation-lead">{t.conversation.projectDetailLead}</p>
+        <ProjectIndex activeSlug={project.slug} />
+      </ConversationPage>
+      <Fragment slot="modal">
+        <div class="modal-backdrop" data-modal-backdrop>
+          <ProjectDialog project={project} />
+        </div>
+      </Fragment>
+      <script src="../../scripts/project-dialog.ts" />
+    </BaseLayout>
+  ) : (
+    <BaseLayout title={t.projects.notFoundTitle} noindex>
+      <h1>{t.projects.notFoundTitle}</h1>
+      <a href={path('projects')}>{t.projects.backToProjects}</a>
+    </BaseLayout>
+  )
+}

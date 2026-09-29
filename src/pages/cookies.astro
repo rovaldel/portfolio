@@ -1,10 +1,5 @@
 ---
-import LegalDocument from '../components/sections/LegalDocument.astro';
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { legalDocuments } from '../content/site';
-const document = legalDocuments.find((item) => item.kind === 'cookies')!;
+import LegalPage from '../components/pages/LegalPage.astro';
 ---
 
-<BaseLayout noindex overlayMode>
-  <LegalDocument document={document} />
-</BaseLayout>
+<LegalPage kind="cookies" />

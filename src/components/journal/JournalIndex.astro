@@ -1,4 +1,6 @@
 ---
+import { useLocale } from '../../lib/locale';
+
 interface ArticleData {
   slug: string;
   title: string;
@@ -14,17 +16,19 @@ interface Props {
 }
 
 const { articles } = Astro.props;
+const { t, path } = useLocale(Astro.url);
 const categories = [...new Set(articles.map((article) => article.category))];
 const formatDate = (value: string | Date) =>
-  new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'short', year: 'numeric' })
+  new Intl.DateTimeFormat(t.dateLocale, { day: 'numeric', month: 'short', year: 'numeric' })
     .format(new Date(value))
     .replaceAll('.', '');
+const articleHref = (slug: string) => path('journal') + '/' + slug;
 ---
 
-<section class="journal-browser" aria-label="Artículos de Bitácora">
-  <div class="journal-filters" role="group" aria-label="Filtrar artículos por categoría">
+<section class="journal-browser" aria-label={t.journal.browserLabel}>
+  <div class="journal-filters" role="group" aria-label={t.journal.filterLabel}>
     <button class="conversation-dock__chip" type="button" data-journal-filter="all" aria-pressed="true"
-      >Todos</button
+      >{t.journal.all}</button
     >
     {
       categories.map((category) => (
@@ -39,11 +43,11 @@ const formatDate = (value: string | Date) =>
       ))
     }
     <label class="journal-search">
-      Filtrar artículos
+      {t.journal.search}
       <input type="search" data-journal-search />
     </label>
   </div>
-  <p data-journal-empty role="status" hidden>No hay artículos que coincidan con los filtros.</p>
+  <p data-journal-empty role="status" hidden>{t.journal.empty}</p>
   <div class="journal-list" data-journal-list>
     {
       articles.map((article) => (
@@ -54,15 +58,15 @@ const formatDate = (value: string | Date) =>
               <time datetime={new Date(article.publishedAt).toISOString()}>
                 {formatDate(article.publishedAt)}
               </time>
-              <span>{article.readingMinutes} min de lectura</span>
-              <span class="article-meta__status">Artículo publicado</span>
+              <span>{t.journal.readingTime(article.readingMinutes)}</span>
+              <span class="article-meta__status">{t.journal.published}</span>
             </p>
             <h2>
-              <a href={'/bitacora/' + article.slug}>{article.title}</a>
+              <a href={articleHref(article.slug)}>{article.title}</a>
             </h2>
             <p>{article.excerpt}</p>
-            <a class="journal-card__link" href={'/bitacora/' + article.slug}>
-              Leer el artículo <span aria-hidden="true">→</span>
+            <a class="journal-card__link" href={articleHref(article.slug)}>
+              {t.journal.read} <span aria-hidden="true">→</span>
             </a>
           </div>
         </article>

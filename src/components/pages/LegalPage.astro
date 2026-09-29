@@ -1,0 +1,18 @@
+---
+import LegalDocument from '../sections/LegalDocument.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { useLocale } from '../../lib/locale';
+import type { LegalDocument as LegalDocumentData } from '../../content/site';
+
+interface Props {
+  kind: LegalDocumentData['kind'];
+}
+
+const { kind } = Astro.props;
+const { c } = useLocale(Astro.url);
+const document = c.legalDocuments.find((item) => item.kind === kind)!;
+---
+
+<BaseLayout noindex overlayMode>
+  <LegalDocument document={document} />
+</BaseLayout>

@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ConversationPage from '../layout/ConversationPage.astro';
+import Education from '../sections/Education.astro';
+import { useLocale } from '../../lib/locale';
+
+const { t, actionLabel } = useLocale(Astro.url);
+const label = actionLabel('education');
+---
+
+<BaseLayout>
+  <ConversationPage action={label} label={label}>
+    <p class="conversation-lead">{t.conversation.educationLead}</p>
+    <Education />
+  </ConversationPage>
+</BaseLayout>

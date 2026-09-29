@@ -1,5 +1,6 @@
 ---
 import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
+import { useLocale } from '../../lib/locale';
 
 interface ArticleData {
   title: string;
@@ -21,9 +22,11 @@ interface Props {
 }
 
 const { Content, data } = Astro.props;
-const date = new Intl.DateTimeFormat('es-ES', { day: '2-digit', month: 'short', year: 'numeric' })
+const { t, locale } = useLocale(Astro.url);
+const date = new Intl.DateTimeFormat(t.dateLocale, { day: '2-digit', month: 'short', year: 'numeric' })
   .format(new Date(data.publishedAt))
   .replaceAll('.', '');
+const askHref = (locale === 'en' ? '/en' : '/') + '#consulta-langgraph';
 ---
 
 <article class="article-content" data-visual-anchor="article">
@@ -31,11 +34,11 @@ const date = new Intl.DateTimeFormat('es-ES', { day: '2-digit', month: 'short', 
     <span class="article-meta__category">{data.category}</span>
     <time datetime={new Date(data.publishedAt).toISOString()}>{date}</time>
     <span aria-hidden="true">·</span>
-    <span>{data.readingMinutes} min</span>
-    <span>Por {data.author}</span>
-    <span class="article-meta__status">Artículo publicado</span>
+    <span>{t.journal.minutes(data.readingMinutes)}</span>
+    <span>{t.journal.by} {data.author}</span>
+    <span class="article-meta__status">{t.journal.published}</span>
   </div>
   <h1>{data.title}</h1>
   <Content />
-  <p class="article-query-action"><a href="/#consulta-langgraph">Pregúntame sobre esto</a></p>
+  <p class="article-query-action"><a href={askHref}>{t.journal.askAboutThis}</a></p>
 </article>

@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ConversationPage from '../layout/ConversationPage.astro';
+import Experience from '../sections/Experience.astro';
+import { useLocale } from '../../lib/locale';
+
+const { t, actionLabel } = useLocale(Astro.url);
+const label = actionLabel('experience');
+---
+
+<BaseLayout>
+  <ConversationPage action={label} label={label}>
+    <p class="conversation-lead">{t.conversation.experienceLead}</p>
+    <Experience />
+  </ConversationPage>
+</BaseLayout>

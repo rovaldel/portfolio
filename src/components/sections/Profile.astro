@@ -1,21 +1,24 @@
 ---
-import { experiences, siteProfile } from '../../content/site';
+import { useLocale } from '../../lib/locale';
+
+const { t, c } = useLocale(Astro.url);
+const { siteProfile, experiences } = c;
 
 const currentRole = experiences.find((item) => item.current);
 const profileFacts = [
   {
     kind: 'experience',
-    text: siteProfile.totalExperienceLabel.replace(' total · Ingeniería + IA', ''),
+    text: siteProfile.experienceFact,
     icon: 'M12 2l2.6 6.3L21 9l-5 4.3L17.5 20 12 16.5 6.5 20 8 13.3 3 9l6.4-.7z',
   },
-  { kind: 'code', text: 'Agentes, RAG y chatbots con LLMs', icon: 'M16 18l6-6-6-6M8 6l-6 6 6 6' },
-  { kind: 'code', text: 'Desarrollo con agentes de IA: Claude Code, Codex', icon: 'M4 17l6-6-6-6M12 19h8' },
-  { kind: 'check', text: siteProfile.availability.replace('nuevos ', ''), icon: 'M20 6L9 17l-5-5' },
+  { kind: 'code', text: t.sections.factAgents, icon: 'M16 18l6-6-6-6M8 6l-6 6 6 6' },
+  { kind: 'code', text: t.sections.factDevelopment, icon: 'M4 17l6-6-6-6M12 19h8' },
+  { kind: 'check', text: siteProfile.availability, icon: 'M20 6L9 17l-5-5' },
   ...(currentRole
     ? [
         {
           kind: 'place',
-          text: `${siteProfile.primaryRole} · ${currentRole.organization} · desde dic. 2025`,
+          text: `${siteProfile.primaryRole} · ${currentRole.organization} · ${t.sections.since}`,
           icon: 'M3 7h18v13H3zM7 7V4h10v3M3 12h18',
         },
       ]
@@ -24,7 +27,7 @@ const profileFacts = [
 ---
 
 <section class="profile-response" aria-labelledby="profile-response-title">
-  <h2 id="profile-response-title" class="sr-only">Perfil profesional</h2>
+  <h2 id="profile-response-title" class="sr-only">{t.sections.profile}</h2>
   <div class="profile-response__copy">
     {
       siteProfile.about.map((paragraph) => (
@@ -55,6 +58,8 @@ const profileFacts = [
     }
   </ul>
   <p class="sr-only">
-    Idiomas: {siteProfile.languages.join(', ')}. Intereses: {siteProfile.interests.join(', ')}.
+    {t.sections.languages}: {siteProfile.languages.join(', ')}. {t.sections.interests}: {
+      siteProfile.interests.join(', ')
+    }.
   </p>
 </section>

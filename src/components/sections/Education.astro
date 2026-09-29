@@ -1,5 +1,8 @@
 ---
-import { education } from '../../content/site';
+import { useLocale } from '../../lib/locale';
+
+const { t, c } = useLocale(Astro.url);
+const { education } = c;
 
 // Degrees get a graduation cap; certifications get a diploma.
 const degreeIds = new Set(['mecanica', 'industrial', 'uemc']);
@@ -9,7 +12,7 @@ const diplomaIcon =
 ---
 
 <section class="education-list" aria-labelledby="formacion-title">
-  <h2 id="formacion-title" class="sr-only">Formación</h2>
+  <h2 id="formacion-title" class="sr-only">{t.sections.educationTitle}</h2>
   {
     education.map((item) => (
       <details class="education-item">
